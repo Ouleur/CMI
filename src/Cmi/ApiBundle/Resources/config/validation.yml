@@ -1,0 +1,11 @@
+# src/Cmi/ApiBundle/Resources/config/validation.yml
+Cmi\ApiBundle\Entity\Carte:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: carteNumero
+    properties:
+        carteNumero:
+            - NotBlank: ~
+            - Type: string
+        carteCode:
+            - NotBlank: ~
+            - Type: string
