@@ -19,6 +19,18 @@ Liste des routes definies
 Requettes qui fonctionnent déja
 ===============================
 L'utilisation de l'outil [Postman](https://www.getpostman.com/) facilitera les testes
+
+## Code Statut
+
+| Code statut |	Signification|
+|-|-|
+|200 |	Tout s’est bien passé et la réponse a du contenu|
+|204 |	Tout s’est bien passé mais la réponse est vide|
+|400 |	Les données envoyées par le client sont invalides|
+|404 |	La ressource demandée n’existe pas|
+|500 |	Une erreur interne a eu lieu sur le serveur|
+
+
 ## Ajout d'une carte
  
 
@@ -32,13 +44,3 @@ L'utilisation de l'outil [Postman](https://www.getpostman.com/) facilitera les t
  |   PATCH    | http://127.0.0.1:8000/cartes/{id}   |  Modification Partielle | Les paramettres sont au choix|
 
 
-
-
-
-| Code statut |	Signification|
-|-|-|
-|200 |	Tout s’est bien passé et la réponse a du contenu|
-|204 |	Tout s’est bien passé mais la réponse est vide|
-|400 |	Les données envoyées par le client sont invalides|
-|404 |	La ressource demandée n’existe pas|
-|500 |	Une erreur interne a eu lieu sur le serveur|
