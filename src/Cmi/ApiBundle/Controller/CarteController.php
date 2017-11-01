@@ -119,11 +119,8 @@ class CarteController extends FOSRestController
 
 
 
-    /**
-    * @Rest\View()
-    * @Rest\Put("/cartes/{id}")
-    */
-    public function updateCarteAction(Request $request)
+    
+    public function updateCarte(Request $request, $clearMissing)
     {
         $carte = $this->get("doctrine.orm.entity_manager")
                         ->getRepository("CmiApiBundle:Carte")
@@ -140,7 +137,7 @@ class CarteController extends FOSRestController
         $form = $this->createForm(CarteType::class, $carte);
 
 
-        $form->submit($request->query->all()); // Validation des données
+        $form->submit($request->query->all(),$clearMissing); // Validation des données
 
         if ($form->isValid()){
             $em = $this->get('doctrine.orm.entity_manager');
@@ -151,4 +148,24 @@ class CarteController extends FOSRestController
             return $form;
         }
     }
+
+    /**
+    * @Rest\View()
+    * @Rest\Put("/cartes/{id}")
+    */
+    public function updateCarteAction(Request $request)
+    {
+        return $this->updateCarte($request, true);
+    }
+
+
+    /**
+    * @Rest\View()
+    * @Rest\Patch("/cartes/{id}")
+    */
+    public function patchCarteAction(Request $request)
+    {
+        return $this->updateCarte($request, false);
+    }
+
 }
