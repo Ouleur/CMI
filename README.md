@@ -22,7 +22,7 @@ L'utilisation de l'outil [Postman](https://www.getpostman.com/) facilitera les t
 ## Ajout d'une carte
  
 
- | Verbe HTTP |			URL                  	    |     Utilité             |          Paramettres         |
+ | Verbe HTTP |			URL                  	    |          Utilité        |          Paramettres         |
  |:----------:|:-----------------------------------:|:-----------------------:|:----------------------------:|
  |   GET      | http://127.0.0.1:8000/cartes  	    |  Toute la liste         |								 |
  |   GET      | http://127.0.0.1:8000/cartes/{id}	|     Une ligne           |id 							 |
