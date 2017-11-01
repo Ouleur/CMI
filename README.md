@@ -36,6 +36,7 @@ L'utilisation de l'outil [Postman](https://www.getpostman.com/) facilitera les t
 
 
 | Code statut |	Signification|
+|-|-|
 |200 |	Tout s’est bien passé et la réponse a du contenu|
 |204 |	Tout s’est bien passé mais la réponse est vide|
 |400 |	Les données envoyées par le client sont invalides|
