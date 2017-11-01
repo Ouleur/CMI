@@ -3,7 +3,7 @@ cmi_dev
 
 A Symfony project created on October 31, 2017, 12:34 am.
 
-##Commande 
+## Commande 
 
 Création d'une base de donnée 
 `php bin/console doctrine:database:create`
@@ -16,15 +16,15 @@ Liste des routes definies
 
 
 
-Requette qui fonctionne déja
-============================
-
-##Ajout d'une carte
+Requettes qui fonctionnent déja
+===============================
+L'utilisation de l'outil Postman facilitera les testes
+## Ajout d'une carte
  
 
- | Verbe HTTP |						URL                                 |     Utilité     |
- |------------|---------------------------------------------------------|-----------------|
- |   GET      |           http://127.0.0.1:8000/cartes                  |  Toute la liste |
- |   GET      |          http://127.0.0.1:8000/cartes/1                 |     Une ligne   |
- |   POST     |           http://127.0.0.1:8000/cartes                  | Ajout une ligne |
- |  DELETE    |     	 http://127.0.0.1:8000/cartes/1                 |   Suppression   |
+ | Verbe HTTP |			URL                  	|     Utilité     |          Paramettres         |
+ |------------|---------------------------------------------------|------------------------------|
+ |   GET      | http://127.0.0.1:8000/cartes  	|  Toute la liste |								 |
+ |   GET      | http://127.0.0.1:8000/cartes/1	|     Une ligne   |id 							 |
+ |   POST     | http://127.0.0.1:8000/cartes    | Ajout une ligne |carteNumero,carteCode		 |
+ |  DELETE    | http://127.0.0.1:8000/cartes/1	|   Suppression   |id 							 |
