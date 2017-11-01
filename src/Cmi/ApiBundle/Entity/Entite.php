@@ -22,13 +22,6 @@ class Entite
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="enti_id", type="integer")
-     */
-    private $entiId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="enti_code", type="string", length=10)

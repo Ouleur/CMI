@@ -22,13 +22,6 @@ class Proffession
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="proff_id", type="integer")
-     */
-    private $proffId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="proff_code", type="string", length=10)

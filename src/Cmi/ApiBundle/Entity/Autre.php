@@ -21,7 +21,7 @@ class Autre
      */
     private $id;
 
-    /**
+    /*
      * @var int
      *
      * @ORM\Column(name="autre_proff_id", type="integer")
@@ -83,6 +83,20 @@ class Autre
     public function getAutreProffId()
     {
         return $this->autreProffId;
+    }
+
+    /**
+     * Set autreProffId
+     *
+     * @param string $autreProffId
+     *
+     * @return Autre
+     */
+    public function setAutreProffId($autreProffId)
+    {
+        $this->autreProffId = $autreProffId;
+
+        return $this;
     }
 
     /**

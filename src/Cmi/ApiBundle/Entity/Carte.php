@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Carte
  *
- * @ORM\Table(name="carte",uniqueConstraints={@ORM\UniqueConstraint(name="carte_carteNumero_unique",columns={"name"})})
+ * @ORM\Table(name="carte",uniqueConstraints={@ORM\UniqueConstraint(name="carte_carteNumero_unique",columns={"carte_numero"})})
  * @ORM\Entity(repositoryClass="Cmi\ApiBundle\Repository\CarteRepository")
  */
 class Carte

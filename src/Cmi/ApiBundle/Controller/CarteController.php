@@ -16,7 +16,6 @@ use Cmi\ApiBundle\Entity\Carte;
 class CarteController extends FOSRestController
 {
 
-
     /**
      * @Rest\View()
      * @Rest\Get("/cartes")
@@ -54,10 +53,6 @@ class CarteController extends FOSRestController
 
         return $cartes;
     
-
-    	//$data = array("Fonction" => "modifier");
-        // $view = $this->view($formatted);
-        // return $this->handleView($view);
     }
 
 

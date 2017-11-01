@@ -22,13 +22,6 @@ class Lieu_travail
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="l_trav_id", type="integer")
-     */
-    private $lTravId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="l_trav_code", type="string", length=10)

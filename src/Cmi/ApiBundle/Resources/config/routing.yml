@@ -5,3 +5,47 @@ cmi_api_home:
 carte:
     type:     rest
     resource: Cmi\ApiBundle\Controller\CarteController
+
+agent:
+    type:     rest
+    resource: Cmi\ApiBundle\Controller\AgentController
+
+assurance:
+    type:     rest
+    resource: Cmi\ApiBundle\Controller\AssuranceController
+
+ayant_droit:
+    type:     rest
+    resource: Cmi\ApiBundle\Controller\Ayant_droitController
+
+autre:
+    type:     rest
+    resource: Cmi\ApiBundle\Controller\AutreController
+
+categorie:
+    type:     rest
+    resource: Cmi\ApiBundle\Controller\CategorieController
+
+entite:
+    type:     rest
+    resource: Cmi\ApiBundle\Controller\EntiteController
+
+examen:
+    type:     rest
+    resource: Cmi\ApiBundle\Controller\ExamenController
+
+lieu_travail:
+    type:     rest
+    resource: Cmi\ApiBundle\Controller\Lieu_travailController
+
+praticien:
+    type:     rest
+    resource: Cmi\ApiBundle\Controller\PraticienController
+
+proffession:
+    type:     rest
+    resource: Cmi\ApiBundle\Controller\ProffessionController
+
+type_contrat:
+    type:     rest
+    resource: Cmi\ApiBundle\Controller\Type_contratController

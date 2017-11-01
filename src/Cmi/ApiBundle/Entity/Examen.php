@@ -22,13 +22,6 @@ class Examen
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="exam_id", type="integer")
-     */
-    private $examId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="exam_code", type="string", length=10, unique=true)

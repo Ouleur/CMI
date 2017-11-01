@@ -24,13 +24,6 @@ class Agent
     /**
      * @var int
      *
-     * @ORM\Column(name="agent_id", type="integer")
-     */
-    private $agentId;
-
-    /**
-     * @var int
-     *
      * @ORM\Column(name="agent_entite_id", type="integer")
      */
     private $agentEntiteId;
@@ -86,30 +79,6 @@ class Agent
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set agentId
-     *
-     * @param integer $agentId
-     *
-     * @return Agent
-     */
-    public function setAgentId($agentId)
-    {
-        $this->agentId = $agentId;
-
-        return $this;
-    }
-
-    /**
-     * Get agentId
-     *
-     * @return int
-     */
-    public function getAgentId()
-    {
-        return $this->agentId;
     }
 
     /**
