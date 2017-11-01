@@ -29,7 +29,7 @@ L'utilisation de l'outil [Postman](https://www.getpostman.com/) facilitera les t
  |   POST     | http://127.0.0.1:8000/cartes    | Ajout une ligne       |carteNumero,carteCode		 |
  |  DELETE    | http://127.0.0.1:8000/cartes/1	|   Suppression         |id 							 |
  |	 PUT      | http://127.0.0.1:8000/cartes/6  |  Modificaton Conplete |carteNumero
- carteDateDelivrance[year] 
- carteDateDelivrance[month] 
- carteDateDelivrance[day]
- carteCode
+ 																		|carteDateDelivrance[year] 
+ 																		|carteDateDelivrance[month] 
+ 																		|carteDateDelivrance[day]
+ 																		|carteCode
