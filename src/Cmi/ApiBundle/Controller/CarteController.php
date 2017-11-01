@@ -74,7 +74,7 @@ class CarteController extends FOSRestController
         // $carte->setCarteCode($request->get("code"));
         $carte->setCarteDateEnreg(new \DateTime("now"));
         $carte->setCarteDateModif(new \DateTime("now"));
-        $carte->setCarteDateDelivrance(new Date('Y-m-d'));
+        $carte->setCarteDateDelivrance(new \DateTime(date('Y-m-d')));
 
         $form = $this->createForm(CarteType::class, $carte);
 
@@ -125,21 +125,30 @@ class CarteController extends FOSRestController
     */
     public function updateCarteAction(Request $request)
     {
-    	$carte = $this->get("doctrine.orm.entity_manager")
-    					->getRepository("CmiApiBundle:Carte")
-    					->find($request->get('id'));
+        $carte = $this->get("doctrine.orm.entity_manager")
+                        ->getRepository("CmiApiBundle:Carte")
+                        ->find($request->get('id'));
 
-    	/* @var $carte Carte */
+        
+        $carte->setCarteDateModif(new \DateTime("now"));
 
-    	if (empty($carte)) {
-    		# code...
-    		return new JsonResponse(['message'=>'Carte not found'],Response::HTTP_NOT_FOUND);
-    	}
+        if (empty($carte)) {
+            # code...
+            return new JsonResponse(['message'=>'Carte not found'],Response::HTTP_NOT_FOUND);
+        }
 
-    	$em = $this->get('doctrine.orm.entity_manager');
-    	$em->merge($carte);
-    	
+        $form = $this->createForm(CarteType::class, $carte);
 
+
+        $form->submit($request->query->all()); // Validation des données
+
+        if ($form->isValid()){
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->merge($carte);
+            $em->flush();
+            return $carte;
+        }else{
+            return $form;
+        }
     }
-
 }

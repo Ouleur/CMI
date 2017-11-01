@@ -13,6 +13,7 @@ class CarteType extends AbstractType
 	{
 		$builder->add('carteNumero');
 		$builder->add('carteCode');
+		$builder->add('carteDateDelivrance');
 	}
 
 	public function configureOptions(OptionsResolver $resolver)
