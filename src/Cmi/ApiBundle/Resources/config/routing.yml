@@ -1,0 +1,7 @@
+cmi_api_home:
+    path:     /api
+    defaults: { _controller: CmiApiBundle:Api:index }
+
+carte:
+    type:     rest
+    resource: Cmi\ApiBundle\Controller\CarteController
