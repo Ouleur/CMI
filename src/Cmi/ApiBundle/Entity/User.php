@@ -1,5 +1,5 @@
 <?php
-// src/AppBundle/Entity/User.php
+// src/Cmi\ApiBundle\/Entity/User.php
 
 namespace Cmi\ApiBundle\Entity;
 

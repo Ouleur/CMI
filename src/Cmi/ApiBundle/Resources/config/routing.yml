@@ -49,3 +49,35 @@ proffession:
 type_contrat:
     type:     rest
     resource: Cmi\ApiBundle\Controller\Type_contratController
+    
+famille_pathologies:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\FamillePathologieController
+    
+famille_medicaments:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\FamilleMedicamentController
+    
+pathologies:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\PathologieController
+    
+medicaments:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\MedicamentController
+    
+causes:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\CauseController
+    
+forme_medicaments:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\FormeMedicamentController
+    
+etapes:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\EtapeController
+    
+diagnostiques:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\DiagnostiqueController
