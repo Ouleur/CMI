@@ -157,4 +157,3 @@ class Lieu_travail
         return $this->lTravDateModif;
     }
 }
-

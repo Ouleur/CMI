@@ -30,4 +30,3 @@ class RefreshToken extends BaseRefreshToken
      */
     protected $user;
 }
-

@@ -21,12 +21,6 @@ class Resultat_examen
      */
     private $id;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="res_id", type="integer")
-     */
-    private $resId;
 
     /**
      * @var int
@@ -280,4 +274,3 @@ class Resultat_examen
         return $this->resDateModif;
     }
 }
-

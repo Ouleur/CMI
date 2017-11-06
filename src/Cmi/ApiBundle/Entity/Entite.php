@@ -218,4 +218,3 @@ class Entite
         return $this->entiDateModif;
     }
 }
-

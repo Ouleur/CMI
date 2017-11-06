@@ -3,6 +3,9 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+
 
 /**
  * Assurance
@@ -21,12 +24,16 @@ class Assurance
      */
     private $id;
 
+   
+
+
     /**
      * @var string
      *
      * @ORM\Column(name="assure_code", type="string", length=10)
      */
     private $assureCode;
+
 
     /**
      * @var string
@@ -49,6 +56,17 @@ class Assurance
      */
     private $assureDateModif;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Carte", mappedBy="assurance")
+     * @var Carte[]
+     */
+    private $cartes;
+
+
+    public function __construct()
+    {
+        $this->cartes = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -155,5 +173,38 @@ class Assurance
     {
         return $this->assureDateModif;
     }
-}
 
+    /**
+     * Add carte
+     *
+     * @param \Cmi\ApiBundle\Entity\Carte $carte
+     *
+     * @return Assurance
+     */
+    public function addCarte(\Cmi\ApiBundle\Entity\Carte $carte)
+    {
+        $this->cartes[] = $carte;
+
+        return $this;
+    }
+
+    /**
+     * Remove carte
+     *
+     * @param \Cmi\ApiBundle\Entity\Carte $carte
+     */
+    public function removeCarte(\Cmi\ApiBundle\Entity\Carte $carte)
+    {
+        $this->cartes->removeElement($carte);
+    }
+
+    /**
+     * Get cartes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCartes()
+    {
+        return $this->cartes;
+    }
+}

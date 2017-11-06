@@ -249,4 +249,3 @@ class Agent
         return $this->agentDateModif;
     }
 }
-

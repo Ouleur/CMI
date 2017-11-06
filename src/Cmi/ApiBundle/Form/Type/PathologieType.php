@@ -9,6 +9,7 @@ class PathologieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('patho_id');
         $builder->add('patho_code');
         $builder->add('patho_libelle');
         $builder->add('patho_famille_id');

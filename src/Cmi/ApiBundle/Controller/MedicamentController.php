@@ -1,171 +1,151 @@
-<?php
-#src/Cmi\ApiBundle\/Controller/MedicamentController.php
+<?php 
+// src/Cmi/ApiBundle/Controller/MedicamentController.php
 
 namespace Cmi\ApiBundle\Controller;
 
+
 use FOS\RestBundle\Controller\FOSRestController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use FOS\RestBundle\Controller\Annotations\Route;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use FOS\RestBundle\Controller\Annotations as Rest; 
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Cmi\ApiBundle\Form\Type\MedicamentType;
 use Cmi\ApiBundle\Entity\Medicament;
 
 class MedicamentController extends FOSRestController
 {
-	/*
-	*@Rest\View()
-	*@Rest\Get("/medicament/afficher")
-	*/
-	public function afficherMedicamentAction(Request $request)
-	{
-		$medicaments = $this->get("doctrine.orm.entity_manager")
-			->getRepository('Cmi\ApiBundle\:Medicament')
-			->findAll();
-
-			/* @var $pathos Pathologie[] */
-
-			$formatted = [];
-			foreach ($medicaments as $medicament) {
-				# code...
-				$formatted[] = [
-					'medic_id' => $medicament->getMedicId(),
-					'medic_code' => $medicament->getMedicCode(),
-					'medic_libelle' => $medicament->getMedicLibelle(),
-					'medic_famille_id' => $medicament->getMedicFamilleId(),
-					'medic_forme_id' => $medicament->getMedicFormeId(),
-					'medic_date_enreg' => $medicament->getMedicDateEnreg(),
-					'medic_date_modif' => $medicament->getMedicDateModif()
-				];
-			}
-
-		return new JsonResponse($formatted);
-	}
-
-	
-	/*
-	*@Rest\View()
-	*@Rest\Get("/medicament/rechercher/{medic_id}")
-	*/
-
-	public function rechercherMedicamentAction(Request $request)
-	{
-		$medicament = $this->get('doctrine.orm.entity_manager')
-				->getRepository('Cmi\ApiBundle\:Medicament')
-				->find($request->get('id'));
-
-		/* @var $patho Pathologie */
-		if (empty($medicament)) {
-			# code...
-			return new JsonResponse(['message'=>'Medicament inexistant'], Response::HTTP_NOT_FOUND);
-		}
-
-		$formatted[] = [
-			'medic_id' => $medicament->getMedicId(),
-			'medic_code' => $medicament->getMedicCode(),
-			'medic_libelle' => $medicament->getMedicLibelle(),
-			'medic_famille_id' => $medicament->getMedicFamilleId(),
-			'medic_forme_id' => $medicament->getMedicFormeId(),
-			'medic_date_enreg' => $medicament->getMedicDateEnreg(),
-			'medic_date_modif' => $medicament->getMedicDateModif()
-		];
-
-		return new JsonResponse($formatted);
-		
-	}
-
 
 	/**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @Rest\Post("/medicament/creer")
+     * @Rest\View()
+     * @Rest\Get("/medicaments/afficher")
      */
-	public function creerMedicamentAction(Request $request)
-	{
-		$medicament = new Medicament();
-
-		$medicament->setMedicDateEnreg(new \DateTime("now"));
-		$medicament->setMedicDateModif(new \DateTime("now"));
-
-		$form = $this->createForm(MedicamentType::class, $medicament);
-
-		$form ->submit($request->request->all()); // Validation des données
-
-		if($form->isValid()) {
-
-			$em = $this->get('doctrine.orm.entity_manager');
-			$em->persist($medicament);
-			$em->flush();
-			return $medicament;	
-		} else {
-
-			return $form;
-		}
-	}
-
-
-	/**
-     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
-     * @Rest\Delete("/medicament/supprimer/{medic_id}")
-     */
-    public function supprimerMedicamentAction(Request $request)
+    public function getsMedicamentsAction()
     {
-        $em = $this->get('doctrine.orm.entity_manager');
-        $medicament = $em->getRepository('Cmi\ApiBundle\:Medicament')
-                    ->find($request->get('medic_id'));
-        /* @var $patho Pathologie */
+    	$medicaments = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Medicament')
+                ->findAll();
+        /* @var $medicaments Medicament[] */
 
-       if($medicament){
-	       	$em->remove($medicament);
-	        $em->flush();
-       }
-    }
+         if (empty($medicaments)) {
+            return new JsonResponse(['message' => 'Medicaments not found'], Response::HTTP_NOT_FOUND);
+        }
 
-
-    /*
-    * @Rest\View()
-    * @Rest\Put("/medicament/modifier/{medic_id}")
-    */
-
-    public function modifierMedicamentAction(Request $request)
-    {
-        return $this->modifierMedicament($request, true);
+        return $Medicaments;
     }
 
     /**
      * @Rest\View()
-     * @Rest\Patch("/medicament/modifier/{medic_id}")
+     * @Rest\Get("/medicaments/rechercher/{id}")
      */
-    public function patchMedicamentAction(Request $request)
-    {
-        return $this->modifierMedicament($request, false);
-    }
-
-    public function modifierMedicament(Request $request, $clearMissing)
+    public function getMedicamentAction( Request $request)
     {
     	$medicament = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('Cmi\ApiBundle\:Medicament')
-                ->find($request->get('medic_id'));
-       
+                ->getRepository('CmiApiBundle:Medicament')
+                ->find($request->get('id'));
+        /* @var $medicament Medicament[] */
 
         if (empty($medicament)) {
-            return new JsonResponse(['message' => 'Medicament inexistant'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'Medicament not found'], Response::HTTP_NOT_FOUND);
         }
 
-        $form = $this->createForm(MedicamentType::class, $patho);
+        return $medicament;
+    }
 
-        $form->submit($request->request->all());
+    /**
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\Post("/medicaments/creer")
+     */
+    public function postMedicamentAction(Request $request)
+    {
 
-        if ($form->isValid()) {
+    	$medicament = new Medicament();
+
+        
+        $medicament->setMedicDateEnreg(new \DateTime("now")); 
+        $medicament->setMedicDateModif(new \DateTime("now"));
+
+        $form = $this->createForm(MedicamentType::class, $medicament);
+
+        $form->submit($request->query->all()); // Validation des données
+
+        if ($form->isValid()){
             $em = $this->get('doctrine.orm.entity_manager');
             $em->persist($medicament);
             $em->flush();
             return $medicament;
-        } else {
+        }else{
             return $form;
         }
-	    
+    	
+
+    }
+
+    /**
+    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\Delete("/medicaments/supprimer/{id}")
+    */
+    public function removeMedicamentAction(Request $request)
+    {
+    	$em = $this->get('doctrine.orm.entity_manager');
+    	$medicament = $em->getRepository('CmiApiBundle:Medicament')
+    				->find($request->get('id'));
+    
+    	 /* @var $medicament Medicament */
+
+        if ($medicament) {
+    		$em->remove($medicament);
+    		$em->flush();
+    	}
+    }
+
+
+    public function updateMedicament(Request $request, $clearMissing)
+    {
+
+    	$medicament = $this->get("doctrine.orm.entity_manager")
+                        ->getRepository("CmiApiBundle:Medicament")
+                        ->find($request->get('id'));
+
+        
+        $medicament->setMedicDateModif(new \DateTime("now"));
+
+        if (empty($medicament)) {
+            # code...
+            return new JsonResponse(['message'=>'Medicament not found'],Response::HTTP_NOT_FOUND);
+        }
+
+        $form = $this->createForm(MedicamentType::class, $medicament);
+
+
+        $form->submit($request->query->all(),$clearMissing); // Validation des données
+
+        if ($form->isValid()){
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->merge($medicament);
+            $em->flush();
+            return $medicament;
+        }else{
+            return $form;
+        }
+    }
+
+
+    /**
+    * @Rest\View()
+    * @Rest\Put("/medicaments/modifier/{id}")
+    */
+    public function updateMedicamentAction(Request $request)
+    {
+    	return $this->updateMedicament($request, false);
+    }
+
+    /**
+    * @Rest\View()
+    * @Rest\Patch("/medicaments/modifier/{id}")
+    */
+    public function patchMedicamentAction(Request $request)
+    {
+    	return $this->updateMedicament($request, false);
     }
 }

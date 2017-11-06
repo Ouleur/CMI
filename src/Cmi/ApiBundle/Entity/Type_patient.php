@@ -22,13 +22,6 @@ class Type_patient
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="t_pat_id", type="integer")
-     */
-    private $tPatId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="t_pat_code", type="string", length=20)
@@ -56,6 +49,11 @@ class Type_patient
      */
     private $tPatDateModif;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Patient", mappedBy="type_patient")
+     * @var Patient[]
+     */
+    private $patient;
 
     /**
      * Get id
@@ -163,5 +161,59 @@ class Type_patient
     {
         return $this->tPatDateModif;
     }
-}
 
+    /**
+     * Set patient
+     *
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
+     *
+     * @return Type_patient
+     */
+    public function setPatient(\Cmi\ApiBundle\Entity\Patient $patient = null)
+    {
+        $this->patient = $patient;
+
+        return $this;
+    }
+
+    /**
+     * Get patient
+     *
+     * @return \Cmi\ApiBundle\Entity\Patient
+     */
+    public function getPatient()
+    {
+        return $this->patient;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->patient = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add patient
+     *
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
+     *
+     * @return Type_patient
+     */
+    public function addPatient(\Cmi\ApiBundle\Entity\Patient $patient)
+    {
+        $this->patient[] = $patient;
+
+        return $this;
+    }
+
+    /**
+     * Remove patient
+     *
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
+     */
+    public function removePatient(\Cmi\ApiBundle\Entity\Patient $patient)
+    {
+        $this->patient->removeElement($patient);
+    }
+}

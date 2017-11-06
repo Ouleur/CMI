@@ -9,6 +9,7 @@ class Famille_medicamentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('fam_medic_id');
         $builder->add('fam_medic_code');
         $builder->add('fam_medic_libelle');
     }

@@ -158,4 +158,3 @@ class Ayant_droit
         return $this->ayDroitDateModif;
     }
 }
-

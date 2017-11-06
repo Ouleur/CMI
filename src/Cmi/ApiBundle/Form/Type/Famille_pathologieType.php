@@ -1,4 +1,6 @@
 <?php
+# src/CmiApiBundle/Form/Type/Famille_pathologieType.php
+
 namespace Cmi\ApiBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -9,6 +11,7 @@ class Famille_pathologieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('fam_patho_id');
         $builder->add('fam_patho_code');
         $builder->add('fam_patho_libelle');
     }

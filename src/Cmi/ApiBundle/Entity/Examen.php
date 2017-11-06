@@ -188,4 +188,3 @@ class Examen
         return $this->examDateModif;
     }
 }
-

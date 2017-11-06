@@ -4,98 +4,186 @@ namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
-* @ORM\Entity()
-* @ORM\Table(name="famille_medicament")
-*/
+ * Famille_medicament
+ *
+ * @ORM\Table(name="famille_medicament")
+ * @ORM\Entity(repositoryClass="Cmi\ApiBundle\Repository\Famille_medicamentRepository")
+ */
 class Famille_medicament
 {
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
-	/**
-	* @ORM\Id
-	- @ORM\Column(type="integer")
-	* @ORM\GeneratedValue
-	*/
-	protected $fam_medic_id;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="fam_medic_id", type="integer")
+     */
+    private $fam_medic_id;
 
-	/**
-	* @ORM\Column(type="string")
-	*/
-	protected $fam_medic_code;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fam_medic_code", type="string")
+     */
+    private $fam_medic_code;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fam_medic_libelle", type="string", length=100)
+     */
+    private $fam_medic_libelle;
 
-	/**
-	* @ORM\Column(type="string")
-	*/
-	protected $fam_medic_libelle;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fam_medic_date_enreg", type="datetime")
+     */
+    private $fam_medic_date_enreg;
 
-
-	/**
-	* @ORM\Column(type="date")
-	*/
-	protected $fam_medic_date_enreg;
-
-
-	/**
-	* @ORM\Column(type="date")
-	*/
-	protected $fam_medic_date_modif;
-
-
-	public function getFamMedicId()
-	{
-		return $this->fam_medic_id;
-	}
-
-	public function getFamMedicCode()
-	{
-		return $this->fam_medic_code;
-	}
-
-	public function getFamMedicLibelle()
-	{
-		return $this->fam_medic_libelle;
-	}
-
-	public function getFamMedicDateEnreg()
-	{
-		return $this->fam_medic_date_enreg;
-	}
-
-	public function getFamMedicDateModif()
-	{
-		return $this->fam_medic_date_modif;
-	}
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fam_medic_date_modif", type="datetime")
+     */
+    private $fam_medic_date_modif;
 
 
-	public function setFamMedicId($fam_medic_id)
-	{
-		$this->fam_medic_id = $fam_medic_id;
-		return $this;
-	}
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function setFamMedicCode($fam_medic_code)
-	{
-		$this->fam_medic_code = $fam_medic_code;
-		return $this;
-	}
+    /**
+     * Set fam_medic_id
+     *
+     * @param integer $fam_medic_id
+     *
+     * @return Famille_medicament
+     */
+    public function setFamMedicId($fam_medic_id)
+    {
+        $this->fam_medic_id = $fam_medic_id;
 
-	public function setFamMedicLibelle($fam_medic_libelle)
-	{
-		$this->fam_medic_libelle = $fam_medic_libelle;
-		return $this;
-	}
+        return $this;
+    }
 
-	public function setFamMedicDateEnreg($fam_medic_date_enreg)
-	{
-		$this->fam_medic_date_enreg = $fam_medic_date_enreg;
-		return $this;
-	}
+    /**
+     * Get fam_medic_id
+     *
+     * @return int
+     */
+    public function getFamMedicId()
+    {
+        return $this->fam_medic_id;
+    }
 
-	public function setFamMedicDateModif($fam_medic_date_modif)
-	{
-		$this->fam_medic_date_modif = $fam_medic_date_modif;
-		return $this;
-	}
+    /**
+     * Set fam_medic_code
+     *
+     * @param string $fam_medic_code
+     *
+     * @return Famille_medicament
+     */
+    public function setFamMedicCode($fam_medic_code)
+    {
+        $this->fam_medic_code = $fam_medic_code;
+
+        return $this;
+    }
+
+    /**
+     * Get fam_medic_code
+     *
+     * @return string
+     */
+    public function getFamMedicCode()
+    {
+        return $this->fam_medic_code;
+    }
+
+    /**
+     * Set fam_medic_libelle
+     *
+     * @param string $fam_medic_libelle
+     *
+     * @return Famille_medicament
+     */
+    public function setFamMedicLibelle($fam_medic_libelle)
+    {
+        $this->fam_medic_libelle = $fam_medic_libelle;
+
+        return $this;
+    }
+
+    /**
+     * Get fam_medic_libelle
+     *
+     * @return string
+     */
+    public function getFamMedicLibelle()
+    {
+        return $this->fam_medic_libelle;
+    }
+
+    /**
+     * Set fam_medic_date_enreg
+     *
+     * @param \DateTime $fam_medic_date_enreg
+     *
+     * @return Famille_medicament
+     */
+    public function setFamMedicDateEnreg($fam_medic_date_enreg)
+    {
+        $this->fam_medic_date_enreg = $fam_medic_date_enreg;
+
+        return $this;
+    }
+
+    /**
+     * Get fam_medic_date_enreg
+     *
+     * @return \DateTime
+     */
+    public function getFamMedicDateEnreg()
+    {
+        return $this->fam_medic_date_enreg;
+    }
+
+    /**
+     * Set fam_medic_date_modif
+     *
+     * @param \DateTime $fam_medic_date_modif
+     *
+     * @return Famille_medicament
+     */
+    public function setFamMedicDateModif($fam_medic_date_modif)
+    {
+        $this->fam_medic_date_modif = $fam_medic_date_modif;
+
+        return $this;
+    }
+
+    /**
+     * Get fam_medic_date_modif
+     *
+     * @return \DateTime
+     */
+    public function getFamMedicDateModif()
+    {
+        return $this->fam_medic_date_modif;
+    }
 }

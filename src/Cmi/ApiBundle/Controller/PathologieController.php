@@ -1,169 +1,151 @@
-<?php
-#src/Cmi\ApiBundle\/Controller/PathologieController.php
+<?php 
+// src/Cmi/ApiBundle/Controller/PathologieController.php
 
 namespace Cmi\ApiBundle\Controller;
 
+
 use FOS\RestBundle\Controller\FOSRestController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use FOS\RestBundle\Controller\Annotations\Route;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use FOS\RestBundle\Controller\Annotations as Rest; 
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Cmi\ApiBundle\Form\Type\PathologieType;
 use Cmi\ApiBundle\Entity\Pathologie;
 
 class PathologieController extends FOSRestController
 {
-	/*
-	*@Rest\View()
-	*@Rest\Get("/pathologie/afficher")
-	*/
-	public function afficherPathologieAction(Request $request)
-	{
-		$pathos = $this->get("doctrine.orm.entity_manager")
-			->getRepository('Cmi\ApiBundle\:Pathologie')
-			->findAll();
-
-			/* @var $pathos Pathologie[] */
-
-			$formatted = [];
-			foreach ($pathos as $patho) {
-				# code...
-				$formatted[] = [
-					'patho_id' => $patho->getPathoId(),
-					'patho_code' => $patho->getPathoCode(),
-					'patho_libelle' => $patho->getPathoLibelle(),
-					'patho_famille_id' => $patho->getPathoFamilleId(),
-					'patho_date_enreg' => $patho->getPathoDateEnreg(),
-					'patho_date_modif' => $patho->getPathoDateModif()
-				];
-			}
-
-		return new JsonResponse($formatted);
-	}
-
-	
-	/*
-	*@Rest\View()
-	*@Rest\Get("/pathologie/rechercher/{patho_id}")
-	*/
-
-	public function rechercherPathologieAction(Request $request)
-	{
-		$patho = $this->get('doctrine.orm.entity_manager')
-				->getRepository('Cmi\ApiBundle\:Pathologie')
-				->find($request->get('id'));
-
-		/* @var $patho Pathologie */
-		if (empty($patho)) {
-			# code...
-			return new JsonResponse(['message'=>'Pathologie inexistante'], Response::HTTP_NOT_FOUND);
-		}
-
-		$formatted = [
-			'patho_id' => $patho->getPathoId(),
-			'patho_code' => $patho->getPathoCode(),
-			'patho_libelle' => $patho->getPathoLibelle(),
-			'patho_famille_id' => $patho->getPathoFamilleId(),
-			'patho_date_enreg' => $patho->getPathoDateEnreg(),
-			'patho_date_modif' => $patho->getPathoDateModif(),
-		];
-
-		return new JsonResponse($formatted);
-		
-	}
-
 
 	/**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @Rest\Post("/pathologie/creer")
+     * @Rest\View()
+     * @Rest\Get("/pathologies/afficher")
      */
-	public function creerPathologieAction(Request $request)
-	{
-		$patho = new Pathologie();
-
-		$patho->setPathoDateEnreg(new \DateTime("now"));
-		$patho->setPathoDateModif(new \DateTime("now"));
-
-		$form = $this->createForm(PathologieType::class, $famille);
-
-		$form ->submit($request->request->all()); // Validation des données
-
-		if($form->isValid()) {
-
-			$em = $this->get('doctrine.orm.entity_manager');
-			$em->persist($patho);
-			$em->flush();
-			return $patho;	
-		} else {
-
-			return $form;
-		}
-	}
-
-
-	/**
-     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
-     * @Rest\Delete("/pathologie/supprimer/{patho_id}")
-     */
-    public function supprimerPathologieAction(Request $request)
+    public function getPathologiesAction()
     {
-        $em = $this->get('doctrine.orm.entity_manager');
-        $patho = $em->getRepository('Cmi\ApiBundle\:Pathologie')
-                    ->find($request->get('patho_id'));
-        /* @var $patho Pathologie */
+    	$pathologies = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Pathologie')
+                ->findAll();
+        /* @var $pathologies Pathologie[] */
 
-       if($patho){
-	       	$em->remove($patho);
-	        $em->flush();
-       }
-    }
+         if (empty($pathologies)) {
+            return new JsonResponse(['message' => 'Pathologies not found'], Response::HTTP_NOT_FOUND);
+        }
 
-
-    /*
-    * @Rest\View()
-    * @Rest\Put("/pathologie/modifier/{patho_id}")
-    */
-
-    public function modifierPathologieAction(Request $request)
-    {
-        return $this->modifierPathologie($request, true);
+        return $pathologies;
     }
 
     /**
      * @Rest\View()
-     * @Rest\Patch("/pathologie/modifier/{patho_id}")
+     * @Rest\Get("/pathologies/rechercher/{id}")
      */
-    public function patchPathologieAction(Request $request)
+    public function getPathologieAction( Request $request)
     {
-        return $this->modifierPathologie($request, false);
+    	$pathologie = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Pathologie')
+                ->find($request->get('id'));
+        /* @var $pathologie Pathologie[] */
+
+        if (empty($pathologie)) {
+            return new JsonResponse(['message' => 'Pathologie not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $pathologie;
     }
 
-    public function modifierPathologie(Request $request, $clearMissing)
+    /**
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\Post("/pathologies/creer")
+     */
+    public function postPathologieAction(Request $request)
     {
-    	$patho = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('Cmi\ApiBundle\:Pathologie')
-                ->find($request->get('patho_id'));
-       
 
-        if (empty($patho)) {
-            return new JsonResponse(['message' => 'Pathologie inexistante'], Response::HTTP_NOT_FOUND);
-        }
+    	$pathologie = new Pathologie();
 
-        $form = $this->createForm(PathologieType::class, $patho);
+        
+        $pathologie->setPathoDateEnreg(new \DateTime("now"));
+        $pathologie->setPathoDateModif(new \DateTime("now"));
 
-        $form->submit($request->request->all());
+        $form = $this->createForm(PathologieType::class, $pathologie);
 
-        if ($form->isValid()) {
+        $form->submit($request->query->all()); // Validation des données
+
+        if ($form->isValid()){
             $em = $this->get('doctrine.orm.entity_manager');
-            $em->persist($patho);
+            $em->persist($pathologie);
             $em->flush();
-            return $patho;
-        } else {
+            return $pathologie;
+        }else{
             return $form;
         }
-	    
+    	
+
+    }
+
+    /**
+    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\Delete("/pathologies/supprimer/{id}")
+    */
+    public function removePathologieAction(Request $request)
+    {
+    	$em = $this->get('doctrine.orm.entity_manager');
+    	$pathologie = $em->getRepository('CmiApiBundle:Pathologie')
+    				->find($request->get('id'));
+    
+    	 /* @var $pathologie Pathologie */
+
+        if ($pathologie) {
+    		$em->remove($pathologie);
+    		$em->flush();
+    	}
+    }
+
+
+    public function updatePathologie(Request $request, $clearMissing)
+    {
+
+    	$pathologie = $this->get("doctrine.orm.entity_manager")
+                        ->getRepository("CmiApiBundle:Pathologie")
+                        ->find($request->get('id'));
+
+        
+        $pathologie->setPathoDateModif(new \DateTime("now"));
+
+        if (empty($pathologie)) {
+            # code...
+            return new JsonResponse(['message'=>'Pathologie not found'],Response::HTTP_NOT_FOUND);
+        }
+
+        $form = $this->createForm(PathologieType::class, $pathologie);
+
+
+        $form->submit($request->query->all(),$clearMissing); // Validation des données
+
+        if ($form->isValid()){
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->merge($pathologie);
+            $em->flush();
+            return $pathologie;
+        }else{
+            return $form;
+        }
+    }
+
+
+    /**
+    * @Rest\View()
+    * @Rest\Put("/pathologies/modifier/{id}")
+    */
+    public function updatePathologieAction(Request $request)
+    {
+    	return $this->updatePathologie($request, false);
+    }
+
+    /**
+    * @Rest\View()
+    * @Rest\Patch("/pathologies/modifier/{id}")
+    */
+    public function patchPathologieAction(Request $request)
+    {
+    	return $this->updatePathologie($request, false);
     }
 }

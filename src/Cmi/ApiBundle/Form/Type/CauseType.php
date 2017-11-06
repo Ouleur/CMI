@@ -1,4 +1,6 @@
 <?php
+# src/CmiApiBundle/Form/Type/CauseType.php
+
 namespace Cmi\ApiBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -9,6 +11,7 @@ class CauseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('cause_id');
         $builder->add('cause_code');
         $builder->add('cause_libelle');
     }

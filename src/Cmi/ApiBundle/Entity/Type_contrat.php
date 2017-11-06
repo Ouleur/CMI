@@ -156,4 +156,3 @@ class Type_contrat
         return $this->tContratDateModif;
     }
 }
-

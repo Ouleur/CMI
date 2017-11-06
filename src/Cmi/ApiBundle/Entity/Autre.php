@@ -171,4 +171,3 @@ class Autre
         return $this->autreDateModif;
     }
 }
-

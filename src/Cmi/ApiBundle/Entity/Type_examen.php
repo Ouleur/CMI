@@ -22,13 +22,6 @@ class Type_examen
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="t_exam_id", type="integer")
-     */
-    private $tExamId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="t_exam_code", type="string", length=10)
@@ -165,4 +158,3 @@ class Type_examen
         return $this->tExamDateModif;
     }
 }
-

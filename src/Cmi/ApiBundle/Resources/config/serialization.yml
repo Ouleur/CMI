@@ -1,0 +1,41 @@
+# src/Cmi/ApiBundle/Resources/config/serialization.yml
+
+ApiBundle\Entity\Assurance:
+  attributes:
+    id:
+      groups: ["assurance"]
+
+    assureCode:
+      groups: ['assurance','carte']
+
+    assureLibelle:
+      groups: ['assurance','carte']
+
+    assureDateEnreg:
+      groups: ['assurance']
+
+    assureDateModif:
+      groups: ['assurance']
+
+    cartes:
+      groups: ['assurance']
+
+ApiBundle\Entity\Carte:
+  attributes:
+    id:
+      groups: ['carte']
+
+    carteNumero:
+      groups: ['assurance','carte']
+
+    carteDateDelivrance:
+      groups: ['assurance','carte']
+
+    carteCode:
+      groups: ['assurance','carte']
+
+    carteDateEnreg:
+      groups: ['carte']
+
+    carteDateModif:
+      groups: ['carte']

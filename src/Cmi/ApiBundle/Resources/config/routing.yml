@@ -50,34 +50,99 @@ type_contrat:
     type:     rest
     resource: Cmi\ApiBundle\Controller\Type_contratController
     
-famille_pathologies:
+
+patient:
     type:   rest
-    resource: Cmi\ApiBundle\Controller\FamillePathologieController
-    
-famille_medicaments:
-    type:   rest
-    resource: Cmi\ApiBundle\Controller\FamilleMedicamentController
-    
-pathologies:
-    type:   rest
-    resource: Cmi\ApiBundle\Controller\PathologieController
-    
-medicaments:
-    type:   rest
-    resource: Cmi\ApiBundle\Controller\MedicamentController
-    
-causes:
+    resource: Cmi\ApiBundle\Controller\PatientController
+
+cause:
     type:   rest
     resource: Cmi\ApiBundle\Controller\CauseController
-    
-forme_medicaments:
+
+diagnostique:
     type:   rest
-    resource: Cmi\ApiBundle\Controller\FormeMedicamentController
+    resource: Cmi\ApiBundle\Controller\DiagnostiqueController
     
-etapes:
+etape:
     type:   rest
     resource: Cmi\ApiBundle\Controller\EtapeController
     
-diagnostiques:
+famille_medicament:
     type:   rest
-    resource: Cmi\ApiBundle\Controller\DiagnostiqueController
+    resource: Cmi\ApiBundle\Controller\Famille_medicamentController
+    
+famille_pathologie:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Famille_pathologieController
+    
+forme_medicament:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Forme_medicamentController
+    
+medicament:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\MedicamentController
+    
+pathologie:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\PathologieController
+    
+ordonnance:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\OrdonnanceController
+    
+consultation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\ConsultationController
+    
+type_praticien:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Type_praticienController
+    
+societe:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\SocieteController
+    
+motif:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\MotifController
+    
+acte:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\ActeController
+    
+specialite:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\SpecialiteController
+    
+soins:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\SoinsController
+
+resultat_examen:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Resultat_examenController
+
+type_examen:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Type_examenController
+
+type_patient:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Type_patientController
+
+
+#Relation
+
+carte_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\CarteRelationController
+
+type_patient_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\Type_patientRelationController
+
+proffession_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\ProffessionRelationController
+

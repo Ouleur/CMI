@@ -9,6 +9,7 @@ class EtapeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('etp_id');
         $builder->add('etp_code');
         $builder->add('etp_libelle');
     }

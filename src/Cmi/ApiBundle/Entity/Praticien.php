@@ -249,4 +249,3 @@ class Praticien
         return $this->pratDateModif;
     }
 }
-

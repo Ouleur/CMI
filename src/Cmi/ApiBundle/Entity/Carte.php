@@ -43,6 +43,19 @@ class Carte
      */
     private $carteCode;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Assurance", inversedBy="cartes")
+     * @var Assurance
+     */
+    protected $assurance;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Patient", inversedBy="cartes")
+     * @var Patient
+     */
+    protected $patient;
+
     /**
      * @var \DateTime
      *
@@ -187,5 +200,52 @@ class Carte
     {
         return $this->carteDateModif;
     }
-}
 
+    /**
+     * Set assurance
+     *
+     * @param \Cmi\ApiBundle\Entity\Assurance $assurance
+     *
+     * @return Carte
+     */
+    public function setAssurance(\Cmi\ApiBundle\Entity\Assurance $assurance = null)
+    {
+        $this->assurance = $assurance;
+
+        return $this;
+    }
+
+    /**
+     * Get assurance
+     *
+     * @return \Cmi\ApiBundle\Entity\Assurance
+     */
+    public function getAssurance()
+    {
+        return $this->assurance;
+    }
+
+    /**
+     * Set patient
+     *
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
+     *
+     * @return Carte
+     */
+    public function setPatient(\Cmi\ApiBundle\Entity\Patient $patient = null)
+    {
+        $this->patient = $patient;
+
+        return $this;
+    }
+
+    /**
+     * Get patient
+     *
+     * @return \Cmi\ApiBundle\Entity\Patient
+     */
+    public function getPatient()
+    {
+        return $this->patient;
+    }
+}

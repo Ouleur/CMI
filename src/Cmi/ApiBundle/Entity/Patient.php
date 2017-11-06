@@ -22,13 +22,6 @@ class Patient
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="pat_id", type="integer")
-     */
-    private $patId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="pat_matricule", type="string", length=20, unique=true)
@@ -57,9 +50,9 @@ class Patient
     private $patPrenoms;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
-     * @ORM\Column(name="pat_date_naiss", type="datetime")
+     * @ORM\Column(name="pat_date_naiss", type="date")
      */
     private $patDateNaiss;
 
@@ -115,9 +108,9 @@ class Patient
     /**
      * @var string
      *
-     * @ORM\Column(name="pat_loclite", type="string", length=100)
+     * @ORM\Column(name="pat_localite", type="string", length=100)
      */
-    private $patLoclite;
+    private $patLocalite;
 
     /**
      * @var string
@@ -147,6 +140,25 @@ class Patient
      */
     private $patDateModif;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Carte", mappedBy="patient")
+     * @var Carte[]
+     */
+    private $cartes;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Type_patient", inversedBy="patient")
+     * @var Type_patient
+     */
+    protected $type_patient;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Proffession", inversedBy="patient")
+     * @var Proffession
+     */
+    protected $proffession;
 
     /**
      * Get id
@@ -448,27 +460,27 @@ class Patient
     }
 
     /**
-     * Set patLoclite
+     * Set patLocalite
      *
-     * @param string $patLoclite
+     * @param string $patLocalite
      *
      * @return Patient
      */
-    public function setPatLoclite($patLoclite)
+    public function setPatLocalite($patLocalite)
     {
-        $this->patLoclite = $patLoclite;
+        $this->patLocalite = $patLocalite;
 
         return $this;
     }
 
     /**
-     * Get patLoclite
+     * Get patLocalite
      *
      * @return string
      */
-    public function getPatLoclite()
+    public function getPatLocalite()
     {
-        return $this->patLoclite;
+        return $this->patLocalite;
     }
 
     /**
@@ -566,5 +578,94 @@ class Patient
     {
         return $this->patDateModif;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->cartes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add carte
+     *
+     * @param \Cmi\ApiBundle\Entity\Carte $carte
+     *
+     * @return Patient
+     */
+    public function addCarte(\Cmi\ApiBundle\Entity\Carte $carte)
+    {
+        $this->cartes[] = $carte;
+
+        return $this;
+    }
+
+    /**
+     * Remove carte
+     *
+     * @param \Cmi\ApiBundle\Entity\Carte $carte
+     */
+    public function removeCarte(\Cmi\ApiBundle\Entity\Carte $carte)
+    {
+        $this->cartes->removeElement($carte);
+    }
+
+    /**
+     * Get cartes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCartes()
+    {
+        return $this->cartes;
+    }
+
+
+    /**
+     * Get typePatient
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTypePatient()
+    {
+        return $this->type_patient;
+    }
+
+    /**
+     * Set typePatient
+     *
+     * @param \Cmi\ApiBundle\Entity\Type_patient $typePatient
+     *
+     * @return Patient
+     */
+    public function setTypePatient(\Cmi\ApiBundle\Entity\Type_patient $typePatient = null)
+    {
+        $this->type_patient = $typePatient;
+
+        return $this;
+    }
+
+    /**
+     * Set proffession
+     *
+     * @param \Cmi\ApiBundle\Entity\Profferssion $proffession
+     *
+     * @return Patient
+     */
+    public function setProffession(\Cmi\ApiBundle\Entity\Proffession $proffession = null)
+    {
+        $this->proffession = $proffession;
+
+        return $this;
+    }
+
+    /**
+     * Get proffession
+     *
+     * @return \Cmi\ApiBundle\Entity\Proffession
+     */
+    public function getProffession()
+    {
+        return $this->proffession;
+    }
+}

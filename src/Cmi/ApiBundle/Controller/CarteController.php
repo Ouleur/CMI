@@ -17,7 +17,7 @@ class CarteController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={})
      * @Rest\Get("/cartes")
      */
     public function getCartesAction()
@@ -34,6 +34,30 @@ class CarteController extends FOSRestController
 
         return $cartes;
     }
+
+
+    // /**
+    //  * @Rest\View()
+    //  * @Rest\Get("/assurance/{id}/cartes")
+    //  */
+    // public function getCartesAction(Request $request)
+    // {
+
+    //     $assurance = $this->get('doctrine.orm.entity_manager')
+    //             ->getRepository('CmiApiBundle:Assurance')
+    //             ->find($request->get("id"));
+
+        
+    //      // @var $places Place[] 
+
+    //      if (empty($assurance)) {
+    //         return new JsonResponse(['message' => 'Carte not found'], Response::HTTP_NOT_FOUND);
+    //     }
+
+    //     return $assurance->getCartes();
+    // }
+
+
 
     /**
      * @Rest\View()
@@ -56,20 +80,56 @@ class CarteController extends FOSRestController
     }
 
 
+    // /**
+    //  * @Rest\View(statusCode=Response::HTTP_CREATED)
+    //  * @Rest\Post("/cartes")
+    //  */
+    // public function postCartesAction(Request $request)
+    // {
+    // 	$carte = new Carte();
+
+    //     // $carte->setCarteNumero($request->get("numero"));
+    //     // $carte->setCarteCode($request->get("code"));
+    //     $carte->setCarteDateEnreg(new \DateTime("now"));
+    //     $carte->setCarteDateModif(new \DateTime("now"));
+    //     $carte->setCarteDateDelivrance(new \DateTime(date('Y-m-d')));
+
+    //     $form = $this->createForm(CarteType::class, $carte);
+
+
+    //     $form->submit($request->query->all()); // Validation des données
+
+    //     if ($form->isValid()){
+    //         $em = $this->get('doctrine.orm.entity_manager');
+    //         $em->persist($carte);
+    //         $em->flush();
+    //         return $carte;
+    //     }else{
+    //         return $form;
+    //     }   	
+    // }
+
+
     /**
      * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @Rest\Post("/cartes")
+     * @Rest\Post("/assurance/{id}/cartes")
      */
     public function postCartesAction(Request $request)
     {
 
-    	$carte = new Carte();
+        $assurance = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Assurance')
+                ->find($request->get("id"));
+
+
+        $carte = new Carte();
 
         // $carte->setCarteNumero($request->get("numero"));
         // $carte->setCarteCode($request->get("code"));
         $carte->setCarteDateEnreg(new \DateTime("now"));
         $carte->setCarteDateModif(new \DateTime("now"));
         $carte->setCarteDateDelivrance(new \DateTime(date('Y-m-d')));
+        $carte->setAssurance($assurance);
 
         $form = $this->createForm(CarteType::class, $carte);
 
@@ -83,13 +143,7 @@ class CarteController extends FOSRestController
             return $carte;
         }else{
             return $form;
-        }
-    	
-
-    	
-
-
-    	
+        }       
     }
 
 

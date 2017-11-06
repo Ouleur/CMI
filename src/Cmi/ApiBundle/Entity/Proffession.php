@@ -49,6 +49,11 @@ class Proffession
      */
     private $proffDateModif;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Patient", mappedBy="proffession")
+     * @var Patient[]
+     */
+    private $patient;
 
     /**
      * Get id
@@ -156,5 +161,45 @@ class Proffession
     {
         return $this->proffDateModif;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->patient = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add patient
+     *
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
+     *
+     * @return Proffession
+     */
+    public function addPatient(\Cmi\ApiBundle\Entity\Patient $patient)
+    {
+        $this->patient[] = $patient;
+
+        return $this;
+    }
+
+    /**
+     * Remove patient
+     *
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
+     */
+    public function removePatient(\Cmi\ApiBundle\Entity\Patient $patient)
+    {
+        $this->patient->removeElement($patient);
+    }
+
+    /**
+     * Get patient
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPatient()
+    {
+        return $this->patient;
+    }
+}

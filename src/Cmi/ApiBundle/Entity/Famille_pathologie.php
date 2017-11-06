@@ -4,98 +4,186 @@ namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
-* @ORM\Entity()
-* @ORM\Table(name="famille_pathologie")
-*/
+ * Famille_pathologie
+ *
+ * @ORM\Table(name="famille_pathologie")
+ * @ORM\Entity(repositoryClass="Cmi\ApiBundle\Repository\FamillePathologieRepository")
+ */
 class Famille_pathologie
 {
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
-	/**
-	* @ORM\Id
-	- @ORM\Column(type="integer")
-	* @ORM\GeneratedValue
-	*/
-	protected $fam_patho_id;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="fam_patho_id", type="integer")
+     */
+    private $fam_patho_id;
 
-	/**
-	* @ORM\Column(type="string")
-	*/
-	protected $fam_patho_code;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fam_patho_code", type="string")
+     */
+    private $fam_patho_code;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fam_patho_libelle", type="string", length=100)
+     */
+    private $fam_patho_libelle;
 
-	/**
-	* @ORM\Column(type="string")
-	*/
-	protected $fam_patho_libelle;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fam_patho_date_enreg", type="datetime")
+     */
+    private $fam_patho_date_enreg;
 
-
-	/**
-	* @ORM\Column(type="date")
-	*/
-	protected $fam_patho_date_enreg;
-
-
-	/**
-	* @ORM\Column(type="date")
-	*/
-	protected $fam_patho_date_modif;
-
-
-	public function getFamPathoId()
-	{
-		return $this->fam_patho_id;
-	}
-
-	public function getFamPathoCode()
-	{
-		return $this->fam_patho_code;
-	}
-
-	public function getFamPathoLibelle()
-	{
-		return $this->fam_patho_libelle;
-	}
-
-	public function getFamPathoDateEnreg()
-	{
-		return $this->fam_patho_date_enreg;
-	}
-
-	public function getFamPathoDateModif()
-	{
-		return $this->fam_patho_date_modif;
-	}
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fam_patho_date_modif", type="datetime")
+     */
+    private $fam_patho_date_modif;
 
 
-	public function setFamPathoId($fam_patho_id)
-	{
-		$this->fam_patho_id = $fam_patho_id;
-		return $this;
-	}
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function setFamPathoCode($fam_patho_code)
-	{
-		$this->fam_patho_code = $fam_patho_code;
-		return $this;
-	}
+    /**
+     * Set fam_patho_id
+     *
+     * @param integer $fam_patho_id
+     *
+     * @return Famille_pathologie
+     */
+    public function setFamPathoId($fam_patho_id)
+    {
+        $this->fam_patho_id = $fam_patho_id;
 
-	public function setFamPathoLibelle($fam_patho_libelle)
-	{
-		$this->fam_patho_libelle = $fam_patho_libelle;
-		return $this;
-	}
+        return $this;
+    }
 
-	public function setFamPathoDateEnreg($fam_patho_date_enreg)
-	{
-		$this->fam_patho_date_enreg = $fam_patho_date_enreg;
-		return $this;
-	}
+    /**
+     * Get fam_patho_id
+     *
+     * @return int
+     */
+    public function getFamPathoId()
+    {
+        return $this->fam_patho_id;
+    }
 
-	public function setFamPathoDateModif($fam_patho_date_modif)
-	{
-		$this->fam_patho_date_modif = $fam_patho_date_modif;
-		return $this;
-	}
+    /**
+     * Set fam_patho_code
+     *
+     * @param string $fam_patho_code
+     *
+     * @return Famille_pathologie
+     */
+    public function setFamPathoCode($fam_patho_code)
+    {
+        $this->fam_patho_code = $fam_patho_code;
+
+        return $this;
+    }
+
+    /**
+     * Get fam_patho_code
+     *
+     * @return string
+     */
+    public function getFamPathoCode()
+    {
+        return $this->fam_patho_code;
+    }
+
+    /**
+     * Set fam_patho_libelle
+     *
+     * @param string $fam_patho_libelle
+     *
+     * @return Famille_pathologie
+     */
+    public function setFamPathoLibelle($fam_patho_libelle)
+    {
+        $this->fam_patho_libelle = $fam_patho_libelle;
+
+        return $this;
+    }
+
+    /**
+     * Get fam_patho_libelle
+     *
+     * @return string
+     */
+    public function getFamPathoLibelle()
+    {
+        return $this->fam_patho_libelle;
+    }
+
+    /**
+     * Set fam_patho_date_enreg
+     *
+     * @param \DateTime $fam_patho_date_enreg
+     *
+     * @return Famille_pathologie
+     */
+    public function setFamPathoDateEnreg($fam_patho_date_enreg)
+    {
+        $this->fam_patho_date_enreg = $fam_patho_date_enreg;
+
+        return $this;
+    }
+
+    /**
+     * Get fam_patho_date_enreg
+     *
+     * @return \DateTime
+     */
+    public function getFamPathoDateEnreg()
+    {
+        return $this->fam_patho_date_enreg;
+    }
+
+    /**
+     * Set fam_patho_date_modif
+     *
+     * @param \DateTime $fam_patho_date_modif
+     *
+     * @return Famille_pathologie
+     */
+    public function setFamPathoDateModif($fam_patho_date_modif)
+    {
+        $this->fam_patho_date_modif = $fam_patho_date_modif;
+
+        return $this;
+    }
+
+    /**
+     * Get fam_patho_date_modif
+     *
+     * @return \DateTime
+     */
+    public function getFamPathoDateModif()
+    {
+        return $this->fam_patho_date_modif;
+    }
 }

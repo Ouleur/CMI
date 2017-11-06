@@ -156,4 +156,3 @@ class Categorie
         return $this->cateDateModif;
     }
 }
-
