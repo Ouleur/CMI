@@ -57,6 +57,14 @@ class Specialite
     private $sp_date_modif;
 
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="Consultation", mappedBy="specialite")
+     * @var Consultation[]
+     */
+    protected $consultations;
+
+
     /**
      * Get id
      *
@@ -305,5 +313,46 @@ class Specialite
     public function getSpDateModif()
     {
         return $this->sp_date_modif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->consultations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add consultation
+     *
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultation
+     *
+     * @return Specialite
+     */
+    public function addConsultation(\Cmi\ApiBundle\Entity\Consultation $consultation)
+    {
+        $this->consultations[] = $consultation;
+
+        return $this;
+    }
+
+    /**
+     * Remove consultation
+     *
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultation
+     */
+    public function removeConsultation(\Cmi\ApiBundle\Entity\Consultation $consultation)
+    {
+        $this->consultations->removeElement($consultation);
+    }
+
+    /**
+     * Get consultations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getConsultations()
+    {
+        return $this->consultations;
     }
 }

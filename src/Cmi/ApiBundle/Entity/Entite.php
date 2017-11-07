@@ -65,6 +65,25 @@ class Entite
 
 
     /**
+     * @ORM\OneToMany(targetEntity="Entite", mappedBy="parent")
+     * @var Entite[]
+     */
+    private $enfants;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Entite", inversedBy="endants")
+     * @var Entite
+     */
+    protected $parent;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Societe", inversedBy="entite")
+     * @var Societe
+     */
+    protected $societe;
+
+    /**
      * Get id
      *
      * @return int
@@ -216,5 +235,95 @@ class Entite
     public function getEntiDateModif()
     {
         return $this->entiDateModif;
+    }
+    
+
+    /**
+     * Set societe
+     *
+     * @param \Cmi\ApiBundle\Entity\Societe $societe
+     *
+     * @return Entite
+     */
+    public function setSociete(\Cmi\ApiBundle\Entity\Societe $societe = null)
+    {
+        $this->societe = $societe;
+
+        return $this;
+    }
+
+    /**
+     * Get societe
+     *
+     * @return \Cmi\ApiBundle\Entity\Societe
+     */
+    public function getSociete()
+    {
+        return $this->societe;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->enfants = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add enfant
+     *
+     * @param \Cmi\ApiBundle\Entity\Entite $enfant
+     *
+     * @return Entite
+     */
+    public function addEnfant(\Cmi\ApiBundle\Entity\Entite $enfant)
+    {
+        $this->enfants[] = $enfant;
+
+        return $this;
+    }
+
+    /**
+     * Remove enfant
+     *
+     * @param \Cmi\ApiBundle\Entity\Entite $enfant
+     */
+    public function removeEnfant(\Cmi\ApiBundle\Entity\Entite $enfant)
+    {
+        $this->enfants->removeElement($enfant);
+    }
+
+    /**
+     * Get enfants
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEnfants()
+    {
+        return $this->enfants;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Cmi\ApiBundle\Entity\Entite $parent
+     *
+     * @return Entite
+     */
+    public function setParent(\Cmi\ApiBundle\Entity\Entite $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Cmi\ApiBundle\Entity\Entite
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }

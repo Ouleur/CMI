@@ -58,6 +58,12 @@ class Societe
 
 
     /**
+     * @ORM\OneToMany(targetEntity="Entite", mappedBy="societe")
+     * @var Entite[]
+     */
+    private $entites;
+
+    /**
      * Get id
      *
      * @return int
@@ -305,5 +311,46 @@ class Societe
     public function getSocieDateModif()
     {
         return $this->socie_date_modif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->entites = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add entite
+     *
+     * @param \Cmi\ApiBundle\Entity\Entite $entite
+     *
+     * @return Societe
+     */
+    public function addEntite(\Cmi\ApiBundle\Entity\Entite $entite)
+    {
+        $this->entites[] = $entite;
+
+        return $this;
+    }
+
+    /**
+     * Remove entite
+     *
+     * @param \Cmi\ApiBundle\Entity\Entite $entite
+     */
+    public function removeEntite(\Cmi\ApiBundle\Entity\Entite $entite)
+    {
+        $this->entites->removeElement($entite);
+    }
+
+    /**
+     * Get entites
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEntites()
+    {
+        return $this->entites;
     }
 }

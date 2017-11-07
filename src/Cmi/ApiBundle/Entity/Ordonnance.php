@@ -65,6 +65,18 @@ class Ordonnance
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="Medicament", inversedBy="ordonnances")
+     * @var Medicament
+     */
+    protected $medicament;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Consultation", inversedBy="ordonnances")
+     * @var Consultation
+     */
+    protected $consultation;
+
+    /**
      * Get id
      *
      * @return int
@@ -216,5 +228,53 @@ class Ordonnance
     public function getOrdoDateModif()
     {
         return $this->ordo_date_modif;
+    }
+
+    /**
+     * Set medicament
+     *
+     * @param \Cmi\ApiBundle\Entity\Medicament $medicament
+     *
+     * @return Ordonnance
+     */
+    public function setMedicament(\Cmi\ApiBundle\Entity\Medicament $medicament = null)
+    {
+        $this->medicament = $medicament;
+
+        return $this;
+    }
+
+    /**
+     * Get medicament
+     *
+     * @return \Cmi\ApiBundle\Entity\Medicament
+     */
+    public function getMedicament()
+    {
+        return $this->medicament;
+    }
+
+    /**
+     * Set consultation
+     *
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultation
+     *
+     * @return Ordonnance
+     */
+    public function setConsultation(\Cmi\ApiBundle\Entity\Consultation $consultation = null)
+    {
+        $this->consultation = $consultation;
+
+        return $this;
+    }
+
+    /**
+     * Get consultation
+     *
+     * @return \Cmi\ApiBundle\Entity\Consultation
+     */
+    public function getConsultation()
+    {
+        return $this->consultation;
     }
 }

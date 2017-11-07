@@ -49,6 +49,11 @@ class Type_examen
      */
     private $tExamDateModif;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Examen", mappedBy="type_examen")
+     * @var Examens[]
+     */
+    private $examens;
 
     /**
      * Get id
@@ -156,5 +161,46 @@ class Type_examen
     public function getTExamDateModif()
     {
         return $this->tExamDateModif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->examens = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add examen
+     *
+     * @param \Cmi\ApiBundle\Entity\Examen $examen
+     *
+     * @return Type_examen
+     */
+    public function addExamen(\Cmi\ApiBundle\Entity\Examen $examen)
+    {
+        $this->examens[] = $examen;
+
+        return $this;
+    }
+
+    /**
+     * Remove examen
+     *
+     * @param \Cmi\ApiBundle\Entity\Examen $examen
+     */
+    public function removeExamen(\Cmi\ApiBundle\Entity\Examen $examen)
+    {
+        $this->examens->removeElement($examen);
+    }
+
+    /**
+     * Get examens
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExamens()
+    {
+        return $this->examens;
     }
 }

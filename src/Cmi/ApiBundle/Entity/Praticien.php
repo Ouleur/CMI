@@ -70,6 +70,25 @@ class Praticien
      */
     private $pratDateModif;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Consultation", mappedBy="consultation")
+     * @var Consultation[]
+     */
+    protected $consultationsPh;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Consultation", mappedBy="consultation")
+     * @var Consultation[]
+     */
+    protected $consultationsMed;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Consultation", mappedBy="consultation")
+     * @var Consultation[]
+     */
+    protected $consultationsInf;
+
 
     /**
      * Get id
@@ -247,5 +266,116 @@ class Praticien
     public function getPratDateModif()
     {
         return $this->pratDateModif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->consultationsPh = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->consultationsMed = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->consultationsInf = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add consultationsPh
+     *
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultationsPh
+     *
+     * @return Praticien
+     */
+    public function addConsultationsPh(\Cmi\ApiBundle\Entity\Consultation $consultationsPh)
+    {
+        $this->consultationsPh[] = $consultationsPh;
+
+        return $this;
+    }
+
+    /**
+     * Remove consultationsPh
+     *
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultationsPh
+     */
+    public function removeConsultationsPh(\Cmi\ApiBundle\Entity\Consultation $consultationsPh)
+    {
+        $this->consultationsPh->removeElement($consultationsPh);
+    }
+
+    /**
+     * Get consultationsPh
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getConsultationsPh()
+    {
+        return $this->consultationsPh;
+    }
+
+    /**
+     * Add consultationsMed
+     *
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultationsMed
+     *
+     * @return Praticien
+     */
+    public function addConsultationsMed(\Cmi\ApiBundle\Entity\Consultation $consultationsMed)
+    {
+        $this->consultationsMed[] = $consultationsMed;
+
+        return $this;
+    }
+
+    /**
+     * Remove consultationsMed
+     *
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultationsMed
+     */
+    public function removeConsultationsMed(\Cmi\ApiBundle\Entity\Consultation $consultationsMed)
+    {
+        $this->consultationsMed->removeElement($consultationsMed);
+    }
+
+    /**
+     * Get consultationsMed
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getConsultationsMed()
+    {
+        return $this->consultationsMed;
+    }
+
+    /**
+     * Add consultationsInf
+     *
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultationsInf
+     *
+     * @return Praticien
+     */
+    public function addConsultationsInf(\Cmi\ApiBundle\Entity\Consultation $consultationsInf)
+    {
+        $this->consultationsInf[] = $consultationsInf;
+
+        return $this;
+    }
+
+    /**
+     * Remove consultationsInf
+     *
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultationsInf
+     */
+    public function removeConsultationsInf(\Cmi\ApiBundle\Entity\Consultation $consultationsInf)
+    {
+        $this->consultationsInf->removeElement($consultationsInf);
+    }
+
+    /**
+     * Get consultationsInf
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getConsultationsInf()
+    {
+        return $this->consultationsInf;
     }
 }

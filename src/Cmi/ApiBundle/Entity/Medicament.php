@@ -70,7 +70,25 @@ class Medicament
      */
     private $medic_date_modif;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Ordonnance", mappedBy="consultation")
+     * @var Ordonnance[]
+     */
+    protected $ordonnances;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Forme_medicament", inversedBy="medicaments")
+     * @var Forme_medicament
+     */
+    protected $forme_medicament;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Famille_medicament", inversedBy="medicaments")
+     * @var Famille_medicament
+     */
+    protected $famille_medicament;
     /**
      * Get id
      *
@@ -247,5 +265,94 @@ class Medicament
     public function getMedicDateModif()
     {
         return $this->medic_date_modif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ordonnances = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add ordonnance
+     *
+     * @param \Cmi\ApiBundle\Entity\Ordonnance $ordonnance
+     *
+     * @return Medicament
+     */
+    public function addOrdonnance(\Cmi\ApiBundle\Entity\Ordonnance $ordonnance)
+    {
+        $this->ordonnances[] = $ordonnance;
+
+        return $this;
+    }
+
+    /**
+     * Remove ordonnance
+     *
+     * @param \Cmi\ApiBundle\Entity\Ordonnance $ordonnance
+     */
+    public function removeOrdonnance(\Cmi\ApiBundle\Entity\Ordonnance $ordonnance)
+    {
+        $this->ordonnances->removeElement($ordonnance);
+    }
+
+    /**
+     * Get ordonnances
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrdonnances()
+    {
+        return $this->ordonnances;
+    }
+
+    /**
+     * Set formeMedicament
+     *
+     * @param \Cmi\ApiBundle\Entity\Forme_medicament $formeMedicament
+     *
+     * @return Medicament
+     */
+    public function setFormeMedicament(\Cmi\ApiBundle\Entity\Forme_medicament $formeMedicament = null)
+    {
+        $this->forme_medicament = $formeMedicament;
+
+        return $this;
+    }
+
+    /**
+     * Get formeMedicament
+     *
+     * @return \Cmi\ApiBundle\Entity\Forme_medicament
+     */
+    public function getFormeMedicament()
+    {
+        return $this->forme_medicament;
+    }
+
+    /**
+     * Set familleMedicament
+     *
+     * @param \Cmi\ApiBundle\Entity\Famille_medicament $familleMedicament
+     *
+     * @return Medicament
+     */
+    public function setFamilleMedicament(\Cmi\ApiBundle\Entity\Famille_medicament $familleMedicament = null)
+    {
+        $this->famille_medicament = $familleMedicament;
+
+        return $this;
+    }
+
+    /**
+     * Get familleMedicament
+     *
+     * @return \Cmi\ApiBundle\Entity\Famille_medicament
+     */
+    public function getFamilleMedicament()
+    {
+        return $this->famille_medicament;
     }
 }

@@ -50,6 +50,12 @@ class Ayant_droit
      */
     private $ayDroitDateModif;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Agent", inversedBy="ayant_droits")
+     * @var Agent
+     */
+    protected $agent;
+
 
     /**
      * Get id
@@ -156,5 +162,29 @@ class Ayant_droit
     public function getAyDroitDateModif()
     {
         return $this->ayDroitDateModif;
+    }
+
+    /**
+     * Set agent
+     *
+     * @param \Cmi\ApiBundle\Entity\Agent $agent
+     *
+     * @return Ayant_droit
+     */
+    public function setAgent(\Cmi\ApiBundle\Entity\Agent $agent = null)
+    {
+        $this->agent = $agent;
+
+        return $this;
+    }
+
+    /**
+     * Get agent
+     *
+     * @return \Cmi\ApiBundle\Entity\Agent
+     */
+    public function getAgent()
+    {
+        return $this->agent;
     }
 }

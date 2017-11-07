@@ -70,6 +70,26 @@ class Agent
      */
     private $agentDateModif;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Lieu_travail", inversedBy="agents")
+     * @var Lieu_travail
+     */
+    protected $Lieu_travail;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="agents")
+     * @var Categorie
+     */
+    protected $Categorie;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Ayant_droit", mappedBy="agent")
+     * @var Ayant_droit[]
+     */
+    private $ayant_droits;
+
 
     /**
      * Get id
@@ -247,5 +267,119 @@ class Agent
     public function getAgentDateModif()
     {
         return $this->agentDateModif;
+    }
+
+    /**
+     * Set lieuTravail
+     *
+     * @param \Cmi\ApiBundle\Entity\Lieu_travail $lieuTravail
+     *
+     * @return Agent
+     */
+    public function setLieuTravail(\Cmi\ApiBundle\Entity\Lieu_travail $lieuTravail = null)
+    {
+        $this->Lieu_travail = $lieuTravail;
+
+        return $this;
+    }
+
+    /**
+     * Get lieuTravail
+     *
+     * @return \Cmi\ApiBundle\Entity\Lieu_travail
+     */
+    public function getLieuTravail()
+    {
+        return $this->Lieu_travail;
+    }
+
+    /**
+     * Set categorie
+     *
+     * @param \Cmi\ApiBundle\Entity\Categorie $categorie
+     *
+     * @return Agent
+     */
+    public function setCategorie(\Cmi\ApiBundle\Entity\Categorie $categorie = null)
+    {
+        $this->Categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \Cmi\ApiBundle\Entity\Categorie
+     */
+    public function getCategorie()
+    {
+        return $this->Categorie;
+    }
+
+    /**
+     * Set typeContrat
+     *
+     * @param \Cmi\ApiBundle\Entity\Type_contrat $typeContrat
+     *
+     * @return Agent
+     */
+    public function setTypeContrat(\Cmi\ApiBundle\Entity\Type_contrat $typeContrat = null)
+    {
+        $this->type_contrat = $typeContrat;
+
+        return $this;
+    }
+
+    /**
+     * Get typeContrat
+     *
+     * @return \Cmi\ApiBundle\Entity\Type_contrat
+     */
+    public function getTypeContrat()
+    {
+        return $this->type_contrat;
+    }
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ayant_droits = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add ayantDroit
+     *
+     * @param \Cmi\ApiBundle\Entity\Ayant_droit $ayantDroit
+     *
+     * @return Agent
+     */
+    public function addAyantDroit(\Cmi\ApiBundle\Entity\Ayant_droit $ayantDroit)
+    {
+        $this->ayant_droits[] = $ayantDroit;
+
+        return $this;
+    }
+
+    /**
+     * Remove ayantDroit
+     *
+     * @param \Cmi\ApiBundle\Entity\Ayant_droit $ayantDroit
+     */
+    public function removeAyantDroit(\Cmi\ApiBundle\Entity\Ayant_droit $ayantDroit)
+    {
+        $this->ayant_droits->removeElement($ayantDroit);
+    }
+
+    /**
+     * Get ayantDroits
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAyantDroits()
+    {
+        return $this->ayant_droits;
     }
 }

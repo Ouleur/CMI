@@ -63,6 +63,17 @@ class Soins
      */
     private $soins_date_modif;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Consultation", inversedBy="soins")
+     * @var Consultation
+     */
+    protected $consultation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Acte", inversedBy="soins")
+     * @var Acte
+     */
+    protected $acte;
 
     /**
      * Get id
@@ -216,5 +227,53 @@ class Soins
     public function getSoinsDateModif()
     {
         return $this->soins_date_modif;
+    }
+
+    /**
+     * Set consultation
+     *
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultation
+     *
+     * @return Soins
+     */
+    public function setConsultation(\Cmi\ApiBundle\Entity\Consultation $consultation = null)
+    {
+        $this->consultation = $consultation;
+
+        return $this;
+    }
+
+    /**
+     * Get consultation
+     *
+     * @return \Cmi\ApiBundle\Entity\Consultation
+     */
+    public function getConsultation()
+    {
+        return $this->consultation;
+    }
+
+    /**
+     * Set acte
+     *
+     * @param \Cmi\ApiBundle\Entity\Acte $acte
+     *
+     * @return Soins
+     */
+    public function setActe(\Cmi\ApiBundle\Entity\Acte $acte = null)
+    {
+        $this->acte = $acte;
+
+        return $this;
+    }
+
+    /**
+     * Get acte
+     *
+     * @return \Cmi\ApiBundle\Entity\Acte
+     */
+    public function getActe()
+    {
+        return $this->acte;
     }
 }

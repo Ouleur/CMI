@@ -56,6 +56,12 @@ class Famille_medicament
      */
     private $fam_medic_date_modif;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Medicament", mappedBy="famille_medicament")
+     * @var Medicament[]
+     */
+    protected $medicaments;
+
 
     /**
      * Get id
@@ -185,5 +191,46 @@ class Famille_medicament
     public function getFamMedicDateModif()
     {
         return $this->fam_medic_date_modif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->medicaments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add medicament
+     *
+     * @param \Cmi\ApiBundle\Entity\Medicament $medicament
+     *
+     * @return Famille_medicament
+     */
+    public function addMedicament(\Cmi\ApiBundle\Entity\Medicament $medicament)
+    {
+        $this->medicaments[] = $medicament;
+
+        return $this;
+    }
+
+    /**
+     * Remove medicament
+     *
+     * @param \Cmi\ApiBundle\Entity\Medicament $medicament
+     */
+    public function removeMedicament(\Cmi\ApiBundle\Entity\Medicament $medicament)
+    {
+        $this->medicaments->removeElement($medicament);
+    }
+
+    /**
+     * Get medicaments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMedicaments()
+    {
+        return $this->medicaments;
     }
 }

@@ -71,6 +71,17 @@ class Resultat_examen
      */
     private $resDateModif;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Examen", inversedBy="resultat_examens")
+     * @var Examen
+     */
+    protected $examen;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Consultation", inversedBy="resultat_examens")
+     * @var Consultation
+     */
+    protected $consultation;
 
     /**
      * Get id
@@ -272,5 +283,53 @@ class Resultat_examen
     public function getResDateModif()
     {
         return $this->resDateModif;
+    }
+
+    /**
+     * Set examen
+     *
+     * @param \Cmi\ApiBundle\Entity\Examen $examen
+     *
+     * @return Resultat_examen
+     */
+    public function setExamen(\Cmi\ApiBundle\Entity\Examen $examen = null)
+    {
+        $this->examen = $examen;
+
+        return $this;
+    }
+
+    /**
+     * Get examen
+     *
+     * @return \Cmi\ApiBundle\Entity\Examen
+     */
+    public function getExamen()
+    {
+        return $this->examen;
+    }
+
+    /**
+     * Set consultation
+     *
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultation
+     *
+     * @return Resultat_examen
+     */
+    public function setConsultation(\Cmi\ApiBundle\Entity\Consultation $consultation = null)
+    {
+        $this->consultation = $consultation;
+
+        return $this;
+    }
+
+    /**
+     * Get consultation
+     *
+     * @return \Cmi\ApiBundle\Entity\Consultation
+     */
+    public function getConsultation()
+    {
+        return $this->consultation;
     }
 }

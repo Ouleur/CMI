@@ -160,6 +160,14 @@ class Patient
      */
     protected $proffession;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="Consultation", mappedBy="patient")
+     * @var Consultation[]
+     */
+    private $consultations;
+
+
     /**
      * Get id
      *
@@ -667,5 +675,39 @@ class Patient
     public function getProffession()
     {
         return $this->proffession;
+    }
+
+    /**
+     * Add consultation
+     *
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultation
+     *
+     * @return Patient
+     */
+    public function addConsultation(\Cmi\ApiBundle\Entity\Consultation $consultation)
+    {
+        $this->consultations[] = $consultation;
+
+        return $this;
+    }
+
+    /**
+     * Remove consultation
+     *
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultation
+     */
+    public function removeConsultation(\Cmi\ApiBundle\Entity\Consultation $consultation)
+    {
+        $this->consultations->removeElement($consultation);
+    }
+
+    /**
+     * Get consultations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getConsultations()
+    {
+        return $this->consultations;
     }
 }

@@ -56,6 +56,12 @@ class Etape
      */
     private $etp_date_modif;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Consultation", mappedBy="etape")
+     * @var Consultation[]
+     */
+    protected $consultations;
+
 
     /**
      * Get id
@@ -185,5 +191,46 @@ class Etape
     public function getEtpDateModif()
     {
         return $this->etp_date_modif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->consultations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add consultation
+     *
+     * @param \Cmi\ApiBundle\Entity\Consltation $consultation
+     *
+     * @return Etape
+     */
+    public function addConsultation(\Cmi\ApiBundle\Entity\Consltation $consultation)
+    {
+        $this->consultations[] = $consultation;
+
+        return $this;
+    }
+
+    /**
+     * Remove consultation
+     *
+     * @param \Cmi\ApiBundle\Entity\Consltation $consultation
+     */
+    public function removeConsultation(\Cmi\ApiBundle\Entity\Consltation $consultation)
+    {
+        $this->consultations->removeElement($consultation);
+    }
+
+    /**
+     * Get consultations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getConsultations()
+    {
+        return $this->consultations;
     }
 }

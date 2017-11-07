@@ -51,6 +51,12 @@ class Type_contrat
 
 
     /**
+     * @ORM\OneToMany(targetEntity="Agent", mappedBy="type_contrat")
+     * @var Agent[]
+     */
+    private $agents;
+
+    /**
      * Get id
      *
      * @return int
@@ -154,5 +160,46 @@ class Type_contrat
     public function getTContratDateModif()
     {
         return $this->tContratDateModif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->agents = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add agent
+     *
+     * @param \Cmi\ApiBundle\Entity\Agent $agent
+     *
+     * @return Type_contrat
+     */
+    public function addAgent(\Cmi\ApiBundle\Entity\Agent $agent)
+    {
+        $this->agents[] = $agent;
+
+        return $this;
+    }
+
+    /**
+     * Remove agent
+     *
+     * @param \Cmi\ApiBundle\Entity\Agent $agent
+     */
+    public function removeAgent(\Cmi\ApiBundle\Entity\Agent $agent)
+    {
+        $this->agents->removeElement($agent);
+    }
+
+    /**
+     * Get agents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAgents()
+    {
+        return $this->agents;
     }
 }

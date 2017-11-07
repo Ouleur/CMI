@@ -58,6 +58,20 @@ class Examen
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="Type_examen", inversedBy="examens")
+     * @var Examen
+     */
+    protected $type_examen;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Resultat_examen", mappedBy="examen")
+     * @var Resultat_examen[]
+     */
+    protected $resultat_examens;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -186,5 +200,70 @@ class Examen
     public function getExamDateModif()
     {
         return $this->examDateModif;
+    }
+
+    /**
+     * Set typeExamen
+     *
+     * @param \Cmi\ApiBundle\Entity\Type_examen $typeExamen
+     *
+     * @return Examen
+     */
+    public function setTypeExamen(\Cmi\ApiBundle\Entity\Type_examen $typeExamen = null)
+    {
+        $this->type_examen = $typeExamen;
+
+        return $this;
+    }
+
+    /**
+     * Get typeExamen
+     *
+     * @return \Cmi\ApiBundle\Entity\Type_examen
+     */
+    public function getTypeExamen()
+    {
+        return $this->type_examen;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->resultat_examens = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add resultatExamen
+     *
+     * @param \Cmi\ApiBundle\Entity\Resultat_examen $resultatExamen
+     *
+     * @return Examen
+     */
+    public function addResultatExamen(\Cmi\ApiBundle\Entity\Resultat_examen $resultatExamen)
+    {
+        $this->resultat_examens[] = $resultatExamen;
+
+        return $this;
+    }
+
+    /**
+     * Remove resultatExamen
+     *
+     * @param \Cmi\ApiBundle\Entity\Resultat_examen $resultatExamen
+     */
+    public function removeResultatExamen(\Cmi\ApiBundle\Entity\Resultat_examen $resultatExamen)
+    {
+        $this->resultat_examens->removeElement($resultatExamen);
+    }
+
+    /**
+     * Get resultatExamens
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResultatExamens()
+    {
+        return $this->resultat_examens;
     }
 }

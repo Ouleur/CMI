@@ -146,3 +146,66 @@ proffession_relation:
     type:   rest
     resource: Cmi\ApiBundle\Controller\Relation\ProffessionRelationController
 
+lieu_travail_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\Lieu_travailRelationController
+
+
+categorie_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\CategorieRelationController
+
+
+type_contrat_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\Type_contratRelationController
+
+entite_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\EntiteRelationController
+
+ayant_droit_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\Ayant_droitRelationController
+
+type_examen_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\Type_examenRelationController
+
+resultat_examen_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\Resultat_examenRelationController
+
+patient_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\PatientRelationController
+
+
+soins_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\SoinsRelationController
+
+motif_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\MotifRelationController
+
+
+etape_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\EtapeRelationController
+
+specialite_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\SpecialiteRelationController
+
+praticien_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\PraticienRelationController
+
+ordonnance_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\OrdonnanceRelationController
+
+medicament_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\MedicamentRelationController

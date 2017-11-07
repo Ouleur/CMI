@@ -121,6 +121,71 @@ class Consultation
 
 
     /**
+     * @ORM\OneToMany(targetEntity="Resultat_examen", mappedBy="consultation")
+     * @var Resultat_examen[]
+     */
+    protected $resultat_examens;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Soins", mappedBy="consultation")
+     * @var Soins[]
+     */
+    protected $soins;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Patient", inversedBy="consultations")
+     * @var Patient
+     */
+    protected $patient;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Etape", inversedBy="consultations")
+     * @var Etape
+     */
+    protected $etape;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Specialite", inversedBy="consultations")
+     * @var Specialite
+     */
+    protected $specialite;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Motif", cascade={"persist"})
+     */
+
+    private $motifs;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Praticien", inversedBy="consultationsPh")
+     * @var Praticien
+     */
+    protected $pharmacien;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Praticien", inversedBy="consultationsMed")
+     * @var Praticien
+     */
+    protected $medecin;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Praticien", inversedBy="consultationsInf")
+     * @var Praticien
+     */
+    protected $infirmier;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Ordonnance", mappedBy="consultation")
+     * @var Ordonnance[]
+     */
+    protected $ordonnances;
+
+    /**
      * Get id
      *
      * @return int
@@ -464,5 +529,292 @@ class Consultation
     public function getConsDateModif()
     {
         return $this->cons_date_modif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->resultat_examens = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add resultatExamen
+     *
+     * @param \Cmi\ApiBundle\Entity\Resultat_examen $resultatExamen
+     *
+     * @return Consultation
+     */
+    public function addResultatExamen(\Cmi\ApiBundle\Entity\Resultat_examen $resultatExamen)
+    {
+        $this->resultat_examens[] = $resultatExamen;
+
+        return $this;
+    }
+
+    /**
+     * Remove resultatExamen
+     *
+     * @param \Cmi\ApiBundle\Entity\Resultat_examen $resultatExamen
+     */
+    public function removeResultatExamen(\Cmi\ApiBundle\Entity\Resultat_examen $resultatExamen)
+    {
+        $this->resultat_examens->removeElement($resultatExamen);
+    }
+
+    /**
+     * Get resultatExamens
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResultatExamens()
+    {
+        return $this->resultat_examens;
+    }
+
+    /**
+     * Set patient
+     *
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
+     *
+     * @return Consultation
+     */
+    public function setPatient(\Cmi\ApiBundle\Entity\Patient $patient = null)
+    {
+        $this->patient = $patient;
+
+        return $this;
+    }
+
+    /**
+     * Get patient
+     *
+     * @return \Cmi\ApiBundle\Entity\Patient
+     */
+    public function getPatient()
+    {
+        return $this->patient;
+    }
+
+    /**
+     * Add soin
+     *
+     * @param \Cmi\ApiBundle\Entity\Soins $soin
+     *
+     * @return Consultation
+     */
+    public function addSoin(\Cmi\ApiBundle\Entity\Soins $soin)
+    {
+        $this->soins[] = $soin;
+
+        return $this;
+    }
+
+    /**
+     * Remove soin
+     *
+     * @param \Cmi\ApiBundle\Entity\Soins $soin
+     */
+    public function removeSoin(\Cmi\ApiBundle\Entity\Soins $soin)
+    {
+        $this->soins->removeElement($soin);
+    }
+
+    /**
+     * Get soins
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSoins()
+    {
+        return $this->soins;
+    }
+
+    /**
+     * Add motif
+     *
+     * @param \Cmi\ApiBundle\Entity\Motif $motif
+     *
+     * @return Consultation
+     */
+    public function addMotif(\Cmi\ApiBundle\Entity\Motif $motif)
+    {
+        $this->motifs[] = $motif;
+
+        return $this;
+    }
+
+    /**
+     * Remove motif
+     *
+     * @param \Cmi\ApiBundle\Entity\Motif $motif
+     */
+    public function removeMotif(\Cmi\ApiBundle\Entity\Motif $motif)
+    {
+        $this->motifs->removeElement($motif);
+    }
+
+    /**
+     * Get motifs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMotifs()
+    {
+        return $this->motifs;
+    }
+
+    /**
+     * Set etape
+     *
+     * @param \Cmi\ApiBundle\Entity\Etape $etape
+     *
+     * @return Consultation
+     */
+    public function setEtape(\Cmi\ApiBundle\Entity\Etape $etape = null)
+    {
+        $this->etape = $etape;
+
+        return $this;
+    }
+
+    /**
+     * Get etape
+     *
+     * @return \Cmi\ApiBundle\Entity\Etape
+     */
+    public function getEtape()
+    {
+        return $this->etape;
+    }
+
+    /**
+     * Set specialite
+     *
+     * @param \Cmi\ApiBundle\Entity\Specialite $specialite
+     *
+     * @return Consultation
+     */
+    public function setSpecialite(\Cmi\ApiBundle\Entity\Specialite $specialite = null)
+    {
+        $this->specialite = $specialite;
+
+        return $this;
+    }
+
+    /**
+     * Get specialite
+     *
+     * @return \Cmi\ApiBundle\Entity\Specialite
+     */
+    public function getSpecialite()
+    {
+        return $this->specialite;
+    }
+
+    /**
+     * Set pharmacien
+     *
+     * @param \Cmi\ApiBundle\Entity\Praticien $pharmacien
+     *
+     * @return Consultation
+     */
+    public function setPharmacien(\Cmi\ApiBundle\Entity\Praticien $pharmacien = null)
+    {
+        $this->pharmacien = $pharmacien;
+
+        return $this;
+    }
+
+    /**
+     * Get pharmacien
+     *
+     * @return \Cmi\ApiBundle\Entity\Praticien
+     */
+    public function getPharmacien()
+    {
+        return $this->pharmacien;
+    }
+
+    /**
+     * Set medecin
+     *
+     * @param \Cmi\ApiBundle\Entity\Praticien $medecin
+     *
+     * @return Consultation
+     */
+    public function setMedecin(\Cmi\ApiBundle\Entity\Praticien $medecin = null)
+    {
+        $this->medecin = $medecin;
+
+        return $this;
+    }
+
+    /**
+     * Get medecin
+     *
+     * @return \Cmi\ApiBundle\Entity\Praticien
+     */
+    public function getMedecin()
+    {
+        return $this->medecin;
+    }
+
+    /**
+     * Set infirmier
+     *
+     * @param \Cmi\ApiBundle\Entity\Praticien $infirmier
+     *
+     * @return Consultation
+     */
+    public function setInfirmier(\Cmi\ApiBundle\Entity\Praticien $infirmier = null)
+    {
+        $this->infirmier = $infirmier;
+
+        return $this;
+    }
+
+    /**
+     * Get infirmier
+     *
+     * @return \Cmi\ApiBundle\Entity\Praticien
+     */
+    public function getInfirmier()
+    {
+        return $this->infirmier;
+    }
+
+    /**
+     * Add ordonnance
+     *
+     * @param \Cmi\ApiBundle\Entity\Ordonnance $ordonnance
+     *
+     * @return Consultation
+     */
+    public function addOrdonnance(\Cmi\ApiBundle\Entity\Ordonnance $ordonnance)
+    {
+        $this->ordonnances[] = $ordonnance;
+
+        return $this;
+    }
+
+    /**
+     * Remove ordonnance
+     *
+     * @param \Cmi\ApiBundle\Entity\Ordonnance $ordonnance
+     */
+    public function removeOrdonnance(\Cmi\ApiBundle\Entity\Ordonnance $ordonnance)
+    {
+        $this->ordonnances->removeElement($ordonnance);
+    }
+
+    /**
+     * Get ordonnances
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrdonnances()
+    {
+        return $this->ordonnances;
     }
 }

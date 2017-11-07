@@ -49,6 +49,11 @@ class Categorie
      */
     private $cateDateModif;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Agent", mappedBy="categorie")
+     * @var Agent[]
+     */
+    private $agents;
 
     /**
      * Get id
@@ -154,5 +159,46 @@ class Categorie
     public function getCateDateModif()
     {
         return $this->cateDateModif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->agents = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add agent
+     *
+     * @param \Cmi\ApiBundle\Entity\Agent $agent
+     *
+     * @return Categorie
+     */
+    public function addAgent(\Cmi\ApiBundle\Entity\Agent $agent)
+    {
+        $this->agents[] = $agent;
+
+        return $this;
+    }
+
+    /**
+     * Remove agent
+     *
+     * @param \Cmi\ApiBundle\Entity\Agent $agent
+     */
+    public function removeAgent(\Cmi\ApiBundle\Entity\Agent $agent)
+    {
+        $this->agents->removeElement($agent);
+    }
+
+    /**
+     * Get agents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAgents()
+    {
+        return $this->agents;
     }
 }

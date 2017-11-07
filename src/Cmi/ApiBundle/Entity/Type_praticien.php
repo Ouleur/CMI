@@ -58,6 +58,13 @@ class Type_praticien
 
 
     /**
+     * @ORM\OneToMany(targetEntity="Praticien", mappedBy="consultation")
+     * @var Praticien[]
+     */
+    protected $praticiens;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -305,5 +312,46 @@ class Type_praticien
     public function getTPrtDateModif()
     {
         return $this->t_prt_date_modif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->praticiens = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add praticien
+     *
+     * @param \Cmi\ApiBundle\Entity\Praticien $praticien
+     *
+     * @return Type_praticien
+     */
+    public function addPraticien(\Cmi\ApiBundle\Entity\Praticien $praticien)
+    {
+        $this->praticiens[] = $praticien;
+
+        return $this;
+    }
+
+    /**
+     * Remove praticien
+     *
+     * @param \Cmi\ApiBundle\Entity\Praticien $praticien
+     */
+    public function removePraticien(\Cmi\ApiBundle\Entity\Praticien $praticien)
+    {
+        $this->praticiens->removeElement($praticien);
+    }
+
+    /**
+     * Get praticiens
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPraticiens()
+    {
+        return $this->praticiens;
     }
 }
