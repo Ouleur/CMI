@@ -63,6 +63,19 @@ class Pathologie
      */
     private $patho_date_modif;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Diagnostique", mappedBy="pathologie")
+     * @var Diagnostique[]
+     */
+    private $diagnostiques;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Famille_pathologie", inversedBy="pathologie")
+     * @var Famille_pathologie
+     */
+    protected $famille_pathologie;
+
 
     /**
      * Get id
@@ -216,5 +229,70 @@ class Pathologie
     public function getPathoDateModif()
     {
         return $this->patho_date_modif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->diagnostiques = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add diagnostique
+     *
+     * @param \Cmi\ApiBundle\Entity\Diagnostique $diagnostique
+     *
+     * @return Pathologie
+     */
+    public function addDiagnostique(\Cmi\ApiBundle\Entity\Diagnostique $diagnostique)
+    {
+        $this->diagnostiques[] = $diagnostique;
+
+        return $this;
+    }
+
+    /**
+     * Remove diagnostique
+     *
+     * @param \Cmi\ApiBundle\Entity\Diagnostique $diagnostique
+     */
+    public function removeDiagnostique(\Cmi\ApiBundle\Entity\Diagnostique $diagnostique)
+    {
+        $this->diagnostiques->removeElement($diagnostique);
+    }
+
+    /**
+     * Get diagnostiques
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDiagnostiques()
+    {
+        return $this->diagnostiques;
+    }
+
+    /**
+     * Set famillePathologie
+     *
+     * @param \Cmi\ApiBundle\Entity\Famille_pathologie $famillePathologie
+     *
+     * @return Pathologie
+     */
+    public function setFamillePathologie(\Cmi\ApiBundle\Entity\Famille_pathologie $famillePathologie = null)
+    {
+        $this->famille_pathologie = $famillePathologie;
+
+        return $this;
+    }
+
+    /**
+     * Get famillePathologie
+     *
+     * @return \Cmi\ApiBundle\Entity\Famille_pathologie
+     */
+    public function getFamillePathologie()
+    {
+        return $this->famille_pathologie;
     }
 }

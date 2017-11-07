@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="autre")
  * @ORM\Entity(repositoryClass="Cmi\ApiBundle\Repository\AutreRepository")
  */
-class Autre
+class Autre extends Patient
 {
     /**
      * @var int

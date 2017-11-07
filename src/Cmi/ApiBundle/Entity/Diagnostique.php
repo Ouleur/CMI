@@ -63,6 +63,18 @@ class Diagnostique
      */
     private $diagn_date_modif;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Cause", inversedBy="diagnostiques")
+     * @var Cause
+     */
+    protected $cause;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Pathologie", inversedBy="diagnostiques")
+     * @var Pathologie
+     */
+    protected $pathologie;
+
 
     /**
      * Get id
@@ -216,5 +228,53 @@ class Diagnostique
     public function getDiagnDateModif()
     {
         return $this->diagn_date_modif;
+    }
+
+    /**
+     * Set cause
+     *
+     * @param \Cmi\ApiBundle\Entity\Cause $cause
+     *
+     * @return Diagnostique
+     */
+    public function setCause(\Cmi\ApiBundle\Entity\Cause $cause = null)
+    {
+        $this->cause = $cause;
+
+        return $this;
+    }
+
+    /**
+     * Get cause
+     *
+     * @return \Cmi\ApiBundle\Entity\Cause
+     */
+    public function getCause()
+    {
+        return $this->cause;
+    }
+
+    /**
+     * Set pathologie
+     *
+     * @param \Cmi\ApiBundle\Entity\Pathologie $pathologie
+     *
+     * @return Diagnostique
+     */
+    public function setPathologie(\Cmi\ApiBundle\Entity\Pathologie $pathologie = null)
+    {
+        $this->pathologie = $pathologie;
+
+        return $this;
+    }
+
+    /**
+     * Get pathologie
+     *
+     * @return \Cmi\ApiBundle\Entity\Pathologie
+     */
+    public function getPathologie()
+    {
+        return $this->pathologie;
     }
 }

@@ -56,6 +56,11 @@ class Famille_pathologie
      */
     private $fam_patho_date_modif;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Pathologie", mappedBy="famille_pathologie")
+     * @var Pathologie[]
+     */
+    private $pathologie;
 
     /**
      * Get id
@@ -185,5 +190,46 @@ class Famille_pathologie
     public function getFamPathoDateModif()
     {
         return $this->fam_patho_date_modif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pathologie = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add pathologie
+     *
+     * @param \Cmi\ApiBundle\Entity\Pathologie $pathologie
+     *
+     * @return Famille_pathologie
+     */
+    public function addPathologie(\Cmi\ApiBundle\Entity\Pathologie $pathologie)
+    {
+        $this->pathologie[] = $pathologie;
+
+        return $this;
+    }
+
+    /**
+     * Remove pathologie
+     *
+     * @param \Cmi\ApiBundle\Entity\Pathologie $pathologie
+     */
+    public function removePathologie(\Cmi\ApiBundle\Entity\Pathologie $pathologie)
+    {
+        $this->pathologie->removeElement($pathologie);
+    }
+
+    /**
+     * Get pathologie
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPathologie()
+    {
+        return $this->pathologie;
     }
 }

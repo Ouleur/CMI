@@ -209,3 +209,11 @@ ordonnance_relation:
 medicament_relation:
     type:   rest
     resource: Cmi\ApiBundle\Controller\Relation\MedicamentRelationController
+
+diagnostique_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\DiagnostiqueRelationController
+
+famille_pathologie_relation:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\Relation\Famille_pathologieRelationController

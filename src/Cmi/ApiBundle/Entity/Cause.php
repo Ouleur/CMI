@@ -58,6 +58,13 @@ class Cause
 
 
     /**
+     * @ORM\OneToMany(targetEntity="Diagnostique", mappedBy="cause")
+     * @var Diagnostique[]
+     */
+    private $diagnostiques;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -185,5 +192,46 @@ class Cause
     public function getCauseDateModif()
     {
         return $this->cause_date_modif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->diagnostiques = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add diagnostique
+     *
+     * @param \Cmi\ApiBundle\Entity\Diagnostique $diagnostique
+     *
+     * @return Cause
+     */
+    public function addDiagnostique(\Cmi\ApiBundle\Entity\Diagnostique $diagnostique)
+    {
+        $this->diagnostiques[] = $diagnostique;
+
+        return $this;
+    }
+
+    /**
+     * Remove diagnostique
+     *
+     * @param \Cmi\ApiBundle\Entity\Diagnostique $diagnostique
+     */
+    public function removeDiagnostique(\Cmi\ApiBundle\Entity\Diagnostique $diagnostique)
+    {
+        $this->diagnostiques->removeElement($diagnostique);
+    }
+
+    /**
+     * Get diagnostiques
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDiagnostiques()
+    {
+        return $this->diagnostiques;
     }
 }
