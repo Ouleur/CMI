@@ -131,6 +131,39 @@ type_patient:
     type:   rest
     resource: Cmi\ApiBundle\Controller\Type_patientController
 
+#Accident
+equipe:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\EquipeController
+
+nature_lesion:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\NatureLesionController
+
+agent_materiel:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\SecteurController
+
+secteur:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\AgentMaterielController
+
+siegelesion:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\SiegeLesionController
+
+cartificat_medical:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\CertificatMedicalController
+
+nature_accident:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\NatureAccidentController
+
+
+activite:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\ActiviteController
 
 #Relation
 

@@ -103,3 +103,11 @@ fos_oauth_server:
     auth_code_class:     Cmi\ApiBundle\Entity\AuthCode
     service:
         user_provider: fos_user.user_provider             # This property will be used when valid credentials are given to load the user upon access token creation
+
+nelmio_cors:
+    paths:
+        '^/api/':
+            allow_origin: ['*']
+            allow_headers: ['*']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE','PACTH']
+            max_age: 3600

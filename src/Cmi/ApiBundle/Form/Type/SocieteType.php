@@ -11,7 +11,6 @@ class SocieteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('socie_id');
         $builder->add('socie_code');
         $builder->add('socie_libelle');
     }

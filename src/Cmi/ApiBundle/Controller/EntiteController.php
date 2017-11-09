@@ -24,7 +24,7 @@ class EntiteController extends FOSRestController
                 ->findAll();
         /* @var $places Place[] */
          if (empty($entites)) {
-            return new JsonResponse(['message' => 'Entite not found'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'Entite not found']);
         }
         return $entites;
     }
@@ -39,7 +39,7 @@ class EntiteController extends FOSRestController
                 ->find($request->get('id'));
         /* @var $places Place[] */
         if (empty($entites)) {
-            return new JsonResponse(['message' => 'Entite not found'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'Entite not found']);
         }
         return $entites;
     

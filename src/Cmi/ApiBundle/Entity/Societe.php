@@ -20,14 +20,6 @@ class Societe
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="socie_id", type="integer")
-     */
-    private $socie_id;
-
     /**
      * @var string
      *
@@ -73,30 +65,7 @@ class Societe
         return $this->id;
     }
 
-    /**
-     * Set socie_id
-     *
-     * @param integer $socie_id
-     *
-     * @return Societe
-     */
-    public function setSocieteId($socie_id)
-    {
-        $this->socie_id = $socie_id;
-
-        return $this;
-    }
-
-    /**
-     * Get socie_id
-     *
-     * @return int
-     */
-    public function getSocieteId()
-    {
-        return $this->socie_id;
-    }
-
+    
     /**
      * Set socie_code
      *
