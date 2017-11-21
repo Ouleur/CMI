@@ -22,13 +22,6 @@ class Etape
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="etp_id", type="integer")
-     */
-    private $etp_id;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="etp_code", type="string")
@@ -60,7 +53,7 @@ class Etape
      * @ORM\OneToMany(targetEntity="Consultation", mappedBy="etape")
      * @var Consultation[]
      */
-    protected $consultations;
+    private $consultations;
 
 
     /**
@@ -71,30 +64,6 @@ class Etape
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set etp_id
-     *
-     * @param integer $etp_id
-     *
-     * @return Etape
-     */
-    public function setEtpId($etp_id)
-    {
-        $this->etp_id = $etp_id;
-
-        return $this;
-    }
-
-    /**
-     * Get etp_id
-     *
-     * @return int
-     */
-    public function getEtpId()
-    {
-        return $this->etp_id;
     }
 
     /**
@@ -192,6 +161,7 @@ class Etape
     {
         return $this->etp_date_modif;
     }
+   
     /**
      * Constructor
      */
@@ -203,11 +173,11 @@ class Etape
     /**
      * Add consultation
      *
-     * @param \Cmi\ApiBundle\Entity\Consltation $consultation
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultation
      *
      * @return Etape
      */
-    public function addConsultation(\Cmi\ApiBundle\Entity\Consltation $consultation)
+    public function addConsultation(\Cmi\ApiBundle\Entity\Consultation $consultation)
     {
         $this->consultations[] = $consultation;
 
@@ -217,9 +187,9 @@ class Etape
     /**
      * Remove consultation
      *
-     * @param \Cmi\ApiBundle\Entity\Consltation $consultation
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultation
      */
-    public function removeConsultation(\Cmi\ApiBundle\Entity\Consltation $consultation)
+    public function removeConsultation(\Cmi\ApiBundle\Entity\Consultation $consultation)
     {
         $this->consultations->removeElement($consultation);
     }

@@ -54,14 +54,25 @@ class OrdonnanceController extends FOSRestController
 
     /**
      * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @Rest\Post("/ordonnances/creer")
+     * @Rest\Post("/consultation/{c_id}/medicament/{m_id}/ordonnances/creer")
      */
     public function postOrdonnanceAction(Request $request)
     {
 
+        $consultation = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Consultation')
+                ->find($request->get('id'));
+
+        $medicament = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Medicament')
+                ->find($request->get('id'));
+
+
     	$ordonnance = new Ordonnance();
 
         
+        $ordonnance->setConsultation($consultation);
+        $ordonnance->setMedicament($medicament);
         $ordonnance->setOrdoDateEnreg(new \DateTime("now"));
         $ordonnance->setOrdoDateModif(new \DateTime("now"));
 
@@ -103,9 +114,21 @@ class OrdonnanceController extends FOSRestController
     public function updateOrdonnance(Request $request, $clearMissing)
     {
 
+        $consultation = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Consultation')
+                ->find($request->get('id'));
+
+        $medicament = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Medicament')
+                ->find($request->get('id'));
+
+
     	$ordonnance = $this->get("doctrine.orm.entity_manager")
                         ->getRepository("CmiApiBundle:Ordonnance")
                         ->find($request->get('id'));
+
+        $ordonnance->setConsultation($consultation);
+        $ordonnance->setMedicament($medicament);
 
         
         $ordonnance->setOrdoDateModif(new \DateTime("now"));
@@ -133,7 +156,7 @@ class OrdonnanceController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Put("/ordonnances/modifier/{id}")
+    * @Rest\Put("/consultation/{c_id}/medicament/{m_id}/ordonnances/modifier/{id}")
     */
     public function updateOrdonnanceAction(Request $request)
     {
@@ -142,7 +165,7 @@ class OrdonnanceController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Patch("/ordonnances/modifier/{id}")
+    * @Rest\Patch("/consultation/{c_id}/medicament/{m_id}/ordonnances/modifier/{id}")
     */
     public function patchOrdonnanceAction(Request $request)
     {

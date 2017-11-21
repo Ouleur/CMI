@@ -75,13 +75,13 @@ class Resultat_examen
      * @ORM\ManyToOne(targetEntity="Examen", inversedBy="resultat_examens")
      * @var Examen
      */
-    protected $examen;
+    private $examen;
 
     /**
      * @ORM\ManyToOne(targetEntity="Consultation", inversedBy="resultat_examens")
      * @var Consultation
      */
-    protected $consultation;
+    private $consultation;
 
     /**
      * Get id

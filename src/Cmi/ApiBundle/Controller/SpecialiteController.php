@@ -17,7 +17,7 @@ class SpecialiteController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"specialite"})
      * @Rest\Get("/specialites/afficher")
      */
     public function getSpecialitesAction()
@@ -62,8 +62,8 @@ class SpecialiteController extends FOSRestController
         $specialite = new Specialite();
 
 
-        $specialite->setSpecialiteDateEnreg(new \DateTime("now"));
-        $specialite->setSpecialiteDateModif(new \DateTime("now"));
+        $specialite->setSpDateEnreg(new \DateTime("now"));
+        $specialite->setSpDateModif(new \DateTime("now"));
 
         $form = $this->createForm(SpecialiteType::class, $specialite);
 
@@ -108,7 +108,7 @@ class SpecialiteController extends FOSRestController
                         ->find($request->get('id'));
 
         
-        $specialite->setSpecialiteDateModif(new \DateTime("now"));
+        $specialite->setSpDateModif(new \DateTime("now"));
 
         if (empty($specialite)) {
             # code...

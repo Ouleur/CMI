@@ -1,41 +1,157 @@
 # src/Cmi/ApiBundle/Resources/config/serialization.yml
 
-ApiBundle\Entity\Assurance:
+Cmi\ApiBundle\Entity\Consultation:
   attributes:
     id:
-      groups: ["assurance"]
+      groups: [consultatio,patient]
 
-    assureCode:
-      groups: ['assurance','carte']
+    cons_temsion_alt:
+      groups: [consultation,patient]
 
-    assureLibelle:
-      groups: ['assurance','carte']
+    cons_temperature:
+      groups: [consultation,patient]
 
-    assureDateEnreg:
-      groups: ['assurance']
+    cons_poids:
+      groups: [consultation,patient]
+    cons_date_enreg:
+      groups: [consultation,patient]
+    cons_date_modif:
+      groups: [consultation,patient]
+    resultat_examens:
+      groups: [consultation,patient]
+    soins:
+      groups: [consultation,patient]
+    patient:
+      groups: [consultation]
+    etape:
+      groups: [consultation,patient]
+    specialite:
+      groups: [consultation,patient]
+    motifs:
+      groups: [consultation,patient]
+    pharmacien:
+      groups: [consultation,patient]
+    medecin:
+      groups: [consultation,patient]
+    infirmier:
+      groups: [consultation,patient]
+    ordonnances:
+      groups: [consultation,patient]
+    diagnostiques:
+      groups: [consultation,patient]
 
-    assureDateModif:
-      groups: ['assurance']
 
+Cmi\ApiBundle\Entity\Patient:
+  attributes:
+    id:
+      groups: [patient,consultation]
+    patMatricule:
+      groups: [patient,consultation]
+    patPhoto:
+      groups: [patient,consultation]
+    patNom:
+      groups: [patient,consultation]
+    patPrenoms:
+      groups: [patient,consultation]
+    patDateNaiss:
+      groups: [patient,consultation]
+    patCivilite:
+      groups: [patient,consultation]
+    patGrpSanguin:
+      groups: [patient,consultation]
+    patNbreEnfant:
+      groups: [patient,consultation]
+    patContact:
+      groups: [patient,consultation]
+    patSitMat:
+      groups: [patient,consultation]
+    patEmail:
+      groups: [patient,consultation]
+    patLieuNaiss:
+      groups: [patient,consultation]
+    patLocalite:
+      groups: [patient,consultation]
+    patSexe:
+      groups: [patient,consultation]
+    patDateEnreg:
+      groups: [patient,consultation]
+    patDateModif:
+      groups: [patient,consultation]
     cartes:
-      groups: ['assurance']
+      groups: [patient,consultation]
+    entite:
+      groups: [patient,consultation]
+    type_patient:
+      groups: [patient,consultation]
+    lieu_travail:
+      groups: [patient,consultation]
+    type_contrat:
+      groups: [patient,consultation]
+    categorie:
+      groups: [patient,consultation]
+    profession:
+      groups: [patient,consultation]
+    ayDroitQualite:
+      groups: [patient,consultation]
+    consultations:
+      groups: [patient]
 
-ApiBundle\Entity\Carte:
+
+Cmi\ApiBundle\Entity\Lieu_travail:
   attributes:
     id:
-      groups: ['carte']
+      groups: [lieu_travail,patient]
+    lTravCode:
+      groups: [lieu_travail,patient]
+    lTravLibelle:
+      groups: [lieu_travail,patient]
+    lTravDateEnreg:
+      groups: [lieu_travail,patient]
+    lTravDateModif:
+      groups: [lieu_travail,patient]
+    patients:
+      groups: [lieu_travail]
 
-    carteNumero:
-      groups: ['assurance','carte']
+Cmi\ApiBundle\Entity\Type_contrat:
+  attributes:
+    id:
+      groups: [type_contrat,patient]
+    tContratCode:
+      groups: [type_contrat,patient]
+    tContratLibelle:
+      groups: [type_contrat,patient]
+    tContratDateEnreg:
+      groups: [type_contrat,patient]
+    tContratDateModif:
+      groups: [type_contrat,patient]
+    patient:
+      groups: [type_contrat]
 
-    carteDateDelivrance:
-      groups: ['assurance','carte']
+Cmi\ApiBundle\Entity\Categorie:
+  attributes:
+    id:
+      groups: [categorie,patient]
+    cateCode:
+      groups: [categorie,patient]
+    cateLibelle:
+      groups: [categorie,patient]
+    cateDateEnreg:
+      groups: [categorie,patient]
+    cateDateModif:
+      groups: [categorie,patient]
+    patients:
+      groups: [categorie]
 
-    carteCode:
-      groups: ['assurance','carte']
-
-    carteDateEnreg:
-      groups: ['carte']
-
-    carteDateModif:
-      groups: ['carte']
+Cmi\ApiBundle\Entity\Profession:
+    id:
+      groups: [categorie,patient]
+    proffLibelle:
+      groups: [categorie,patient]
+    proffCode:
+      groups: [categorie,patient]
+    proffDateEnreg:
+      groups: [categorie,patient]
+    proffDateModif:
+      groups: [categorie,patient]
+    patients:
+      groups: [categorie]

@@ -3,6 +3,8 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+
 
 /**
  * Soins
@@ -18,34 +20,15 @@ class Soins
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"consultation","soins"})
      */
     private $id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="soins_id", type="integer")
-     */
-    private $soins_id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="soins_consult_ids", type="integer")
-     */
-    private $soins_consult_ids;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="soins_acte_id", type="integer")
-     */
-    private $soins_acte_id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="soins_commentaire", type="string", length=100)
+     * @Serializer\Groups({"consultation","soins"})
      */
     private $soins_commentaire;
 
@@ -53,6 +36,7 @@ class Soins
      * @var \DateTime
      *
      * @ORM\Column(name="soins_date_enreg", type="datetime")
+     * @Serializer\Groups({"soins"})
      */
     private $soins_date_enreg;
 
@@ -60,20 +44,23 @@ class Soins
      * @var \DateTime
      *
      * @ORM\Column(name="soins_date_modif", type="datetime")
+     * @Serializer\Groups({"soins"})
      */
     private $soins_date_modif;
 
     /**
      * @ORM\ManyToOne(targetEntity="Consultation", inversedBy="soins")
      * @var Consultation
+     * @Serializer\Groups({"soins","acte"})
      */
-    protected $consultation;
+    private $consultation;
 
     /**
      * @ORM\ManyToOne(targetEntity="Acte", inversedBy="soins")
      * @var Acte
+     * @Serializer\Groups({"consultation","soins"})
      */
-    protected $acte;
+    private $acte;
 
     /**
      * Get id
@@ -83,78 +70,6 @@ class Soins
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set soins_id
-     *
-     * @param integer $soins_id
-     *
-     * @return Soins
-     */
-    public function setSoinsId($soins_id)
-    {
-        $this->soins_id = $soins_id;
-
-        return $this;
-    }
-
-    /**
-     * Get soins_id
-     *
-     * @return int
-     */
-    public function getSoinsId()
-    {
-        return $this->soins_id;
-    }
-
-    /**
-     * Set soins_consult_ids
-     *
-     * @param integer $soins_consult_ids
-     *
-     * @return Soins
-     */
-    public function setSoinsConsultIds($soins_consult_ids)
-    {
-        $this->soins_consult_ids = $soins_consult_ids;
-
-        return $this;
-    }
-
-    /**
-     * Get soins_consult_ids
-     *
-     * @return int
-     */
-    public function getSoinsConsultIds()
-    {
-        return $this->soins_consult_ids;
-    }
-
-    /**
-     * Set soins_acte_id
-     *
-     * @param integer $soins_acte_id
-     *
-     * @return Soins
-     */
-    public function setSoinsActeId($soins_acte_id)
-    {
-        $this->soins_acte_id = $soins_acte_id;
-
-        return $this;
-    }
-
-    /**
-     * Get soins_acte_id
-     *
-     * @return int
-     */
-    public function getSoinsActeId()
-    {
-        return $this->soins_acte_id;
     }
 
     /**

@@ -21,12 +21,6 @@ class Famille_medicament
      */
     private $id;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="fam_medic_id", type="integer")
-     */
-    private $fam_medic_id;
 
     /**
      * @var string
@@ -60,7 +54,7 @@ class Famille_medicament
      * @ORM\OneToMany(targetEntity="Medicament", mappedBy="famille_medicament")
      * @var Medicament[]
      */
-    protected $medicaments;
+    private $medicaments;
 
 
     /**
@@ -73,29 +67,6 @@ class Famille_medicament
         return $this->id;
     }
 
-    /**
-     * Set fam_medic_id
-     *
-     * @param integer $fam_medic_id
-     *
-     * @return Famille_medicament
-     */
-    public function setFamMedicId($fam_medic_id)
-    {
-        $this->fam_medic_id = $fam_medic_id;
-
-        return $this;
-    }
-
-    /**
-     * Get fam_medic_id
-     *
-     * @return int
-     */
-    public function getFamMedicId()
-    {
-        return $this->fam_medic_id;
-    }
 
     /**
      * Set fam_medic_code

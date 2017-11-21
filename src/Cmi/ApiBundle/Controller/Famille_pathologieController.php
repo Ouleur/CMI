@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Cmi\ApiBundle\Form\Type\FamillePathologieType;
+use Cmi\ApiBundle\Form\Type\Famille_pathologieType;
 use Cmi\ApiBundle\Entity\Famille_pathologie;
 
 class Famille_pathologieController extends FOSRestController
@@ -65,7 +65,7 @@ class Famille_pathologieController extends FOSRestController
         $famille_pathologie->setFamPathoDateEnreg(new \DateTime("now"));
         $famille_pathologie->setFamPathoDateModif(new \DateTime("now"));
 
-        $form = $this->createForm(FamillePathologieType::class, $famille_pathologie);
+        $form = $this->createForm(Famille_pathologieType::class, $famille_pathologie);
 
         $form->submit($request->query->all()); // Validation des données
 

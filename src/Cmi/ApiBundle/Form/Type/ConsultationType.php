@@ -11,18 +11,10 @@ class ConsultationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('cons_motif_ids');
-        $builder->add('cons_infirmier_id');
-        $builder->add('cons_specialite_id');
-        $builder->add('cons_medecin_id');
-        $builder->add('cons_date');
-        $builder->add('cons_patient_id');
-        $builder->add('cons_etape_id');
-        $builder->add('cons_pharmacien_id');
-        $builder->add('cons_ordonnance_ids');
-        $builder->add('cons_diagnost_ids');
-        $builder->add('cons_soins_ids');
-        $builder->add('cons_exam_res_ids');
+        $builder->add('cons_temsion_alt');
+        $builder->add('cons_temperature');
+        $builder->add('cons_poids');
+        
     }
 
     public function configureOptions(OptionsResolver $resolver)

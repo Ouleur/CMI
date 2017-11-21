@@ -22,13 +22,6 @@ class Famille_pathologie
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="fam_patho_id", type="integer")
-     */
-    private $fam_patho_id;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="fam_patho_code", type="string")
@@ -70,30 +63,6 @@ class Famille_pathologie
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set fam_patho_id
-     *
-     * @param integer $fam_patho_id
-     *
-     * @return Famille_pathologie
-     */
-    public function setFamPathoId($fam_patho_id)
-    {
-        $this->fam_patho_id = $fam_patho_id;
-
-        return $this;
-    }
-
-    /**
-     * Get fam_patho_id
-     *
-     * @return int
-     */
-    public function getFamPathoId()
-    {
-        return $this->fam_patho_id;
     }
 
     /**

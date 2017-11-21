@@ -50,10 +50,10 @@ class Lieu_travail
     private $lTravDateModif;
 
     /**
-     * @ORM\OneToMany(targetEntity="Agent", mappedBy="lieu_travail")
-     * @var Agent[]
+     * @ORM\OneToMany(targetEntity="Patient", mappedBy="lieu_travail")
+     * @var Patient[]
      */
-    private $agents;
+    private $patients;
 
 
     /**
@@ -162,45 +162,46 @@ class Lieu_travail
     {
         return $this->lTravDateModif;
     }
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->agents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->patients = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Add agent
+     * Add patient
      *
-     * @param \Cmi\ApiBundle\Entity\Agent $agent
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
      *
      * @return Lieu_travail
      */
-    public function addAgent(\Cmi\ApiBundle\Entity\Agent $agent)
+    public function addPatient(\Cmi\ApiBundle\Entity\Patient $patient)
     {
-        $this->agents[] = $agent;
+        $this->patients[] = $patient;
 
         return $this;
     }
 
     /**
-     * Remove agent
+     * Remove patient
      *
-     * @param \Cmi\ApiBundle\Entity\Agent $agent
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
      */
-    public function removeAgent(\Cmi\ApiBundle\Entity\Agent $agent)
+    public function removePatient(\Cmi\ApiBundle\Entity\Patient $patient)
     {
-        $this->agents->removeElement($agent);
+        $this->patients->removeElement($patient);
     }
 
     /**
-     * Get agents
+     * Get patients
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAgents()
+    public function getPatients()
     {
-        return $this->agents;
+        return $this->patients;
     }
 }

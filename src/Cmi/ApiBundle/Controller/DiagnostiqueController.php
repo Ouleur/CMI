@@ -54,14 +54,29 @@ class DiagnostiqueController extends FOSRestController
 
     /**
      * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @Rest\Post("/diagnostiques/creer")
+     * @Rest\Post("/consultation/{c_id}/cause/{ca_id}/pathologie/{pa_id}/diagnostiques/creer")
      */
     public function postDiagnostiqueAction(Request $request)
     {
 
+        $consultation = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Consultation')
+                ->find($request->get('c_id'));
+
+        $cause = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Cause')
+                ->find($request->get('ca_id'));
+
+        $pathologie = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Pathologie')
+                ->find($request->get('pa_id'));
+
     	$diagnostique = new Diagnostique();
 
         
+        $diagnostique->setPathologie($pathologie);
+        $diagnostique->setCause($cause);
+        $diagnostique->setConsultation($consultation);
         $diagnostique->setDiagnDateEnreg(new \DateTime("now"));
         $diagnostique->setDiagnDateModif(new \DateTime("now"));
 
@@ -103,10 +118,25 @@ class DiagnostiqueController extends FOSRestController
     public function updateDiagnostique(Request $request, $clearMissing)
     {
 
+        $consultation = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Consultation')
+                ->find($request->get('c_id'));
+
+        $cause = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Cause')
+                ->find($request->get('ca_id'));
+
+        $pathologie = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Pathologie')
+                ->find($request->get('pa_id'));
+
     	$diagnostique = $this->get("doctrine.orm.entity_manager")
                         ->getRepository("CmiApiBundle:Diagnostique")
                         ->find($request->get('id'));
-
+        
+        $diagnostique->setPathologie($pathologie);
+        $diagnostique->setCause($cause);
+        $diagnostique->setConsultation($consultation);
         
         $diagnostique->setDiagnDateModif(new \DateTime("now"));
 
@@ -133,7 +163,7 @@ class DiagnostiqueController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Put("/diagnostiques/modifier/{id}")
+    * @Rest\Put("/consultation/{c_id}/cause/{ca_id}/pathologie/{pa_id}/diagnostiques/modifier/{id}")
     */
     public function updateDiagnostiqueAction(Request $request)
     {
@@ -142,7 +172,7 @@ class DiagnostiqueController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Patch("/diagnostiques/modifier/{id}")
+    * @Rest\Patch("/consultation/{c_id}/cause/{ca_id}/pathologie/{pa_id}/diagnostiques/modifier/{id}")
     */
     public function patchDiagnostiqueAction(Request $request)
     {

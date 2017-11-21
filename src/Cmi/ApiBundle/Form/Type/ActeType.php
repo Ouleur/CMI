@@ -11,7 +11,7 @@ class ActeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('acte_id');
+        // $builder->add('acte_id');
         $builder->add('acte_code');
         $builder->add('acte_libelle');
     }

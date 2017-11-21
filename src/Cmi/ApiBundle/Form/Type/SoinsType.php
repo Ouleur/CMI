@@ -11,8 +11,6 @@ class SoinsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('soins_id');
-        $builder->add('soins_consult_ids');
         $builder->add('soins_commentaire');
     }
 

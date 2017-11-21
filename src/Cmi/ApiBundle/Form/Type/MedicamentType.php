@@ -9,11 +9,8 @@ class MedicamentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('medic_id');
         $builder->add('medic_code');
         $builder->add('medic_libelle');
-        $builder->add('medic_famille_id');
-        $builder->add('medic_forme_id');
     }
 
     public function configureOptions(OptionsResolver $resolver)

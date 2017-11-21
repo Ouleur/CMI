@@ -11,7 +11,6 @@ class SpecialiteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('sp_id');
         $builder->add('sp_code');
         $builder->add('sp_libelle');
     }

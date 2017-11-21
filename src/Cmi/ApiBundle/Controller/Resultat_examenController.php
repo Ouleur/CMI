@@ -58,15 +58,25 @@ class Resultat_examenController extends FOSRestController
 
     /**
      * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @Rest\Post("/resultat_examens")
+     * @Rest\Post("/consultation/{c_id}/examen/{e_id}/resultat_examens/creer")
      */
     public function postResultat_examensAction(Request $request)
     {
+
+        $consultation = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Consultation')
+                ->find($request->get('c_id'));
+
+        $examen = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Examen')
+                ->find($request->get('e_id'));
 
     	$resultat_examen = new Resultat_examen();
 
         // $resultat_examen->setResultat_examenNumero($request->get("numero"));
         // $resultat_examen->setResultat_examenCode($request->get("code"));
+        $resultat_examen->setConsultation($consultation);
+        $resultat_examen->setExamen($examen);
         $resultat_examen->setResDateEnreg(new \DateTime("now"));
         $resultat_examen->setResDateModif(new \DateTime("now"));
 
@@ -116,11 +126,23 @@ class Resultat_examenController extends FOSRestController
     
     public function updateResultat_examen(Request $request, $clearMissing)
     {
+
+        $consultation = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Consultation')
+                ->find($request->get('c_id'));
+
+        $examen = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Examen')
+                ->find($request->get('e_id'));
+
+
         $resultat_examen = $this->get("doctrine.orm.entity_manager")
                         ->getRepository("CmiApiBundle:Resultat_examen")
                         ->find($request->get('id'));
 
-        
+        $resultat_examen->setConsultation($consultation);
+        $resultat_examen->setExamen($examen);
+
         $resultat_examen->setResDateModif(new \DateTime("now"));
 
         if (empty($resultat_examen)) {
@@ -145,7 +167,7 @@ class Resultat_examenController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Put("/resultat_examens/{id}")
+    * @Rest\Put("/consultation/{c_id}/examen/{e_id}/resultat_examens/{id}")
     */
     public function updateResultat_examenAction(Request $request)
     {
@@ -155,7 +177,7 @@ class Resultat_examenController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Patch("/resultat_examens/{id}")
+    * @Rest\Patch("/consultation/{c_id}/examen/{e_id}/resultat_examens/{id}")
     */
     public function patchResultat_examenAction(Request $request)
     {

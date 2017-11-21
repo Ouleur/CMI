@@ -49,12 +49,12 @@ class Type_patient
      */
     private $tPatDateModif;
 
+
     /**
      * @ORM\OneToMany(targetEntity="Patient", mappedBy="type_patient")
      * @var Patient[]
      */
     private $patient;
-
     /**
      * Get id
      *

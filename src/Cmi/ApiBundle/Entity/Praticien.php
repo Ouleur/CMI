@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Praticien
@@ -18,6 +19,7 @@ class Praticien
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"consultation","praticien"})
      */
     private $id;
 
@@ -25,13 +27,22 @@ class Praticien
      * @var string
      *
      * @ORM\Column(name="prat_nom", type="string", length=100)
+     * @Serializer\Groups({"consultation","praticien"})
      */
     private $pratNom;
 
     /**
      * @var string
      *
+     * @ORM\Column(name="prat_sexe", type="string", length=15)
+     */
+    private $pratSexe;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="prat_prenoms", type="string", length=150)
+     * @Serializer\Groups({"consultation","praticien"})
      */
     private $pratPrenoms;
 
@@ -39,6 +50,7 @@ class Praticien
      * @var string
      *
      * @ORM\Column(name="prat_contact", type="string", length=50)
+     * @Serializer\Groups({"praticien"})
      */
     private $pratContact;
 
@@ -46,20 +58,16 @@ class Praticien
      * @var string
      *
      * @ORM\Column(name="prat_email", type="string", length=100)
+     * @Serializer\Groups({"consultation","praticien"})
      */
     private $pratEmail;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="prat_type_id", type="integer")
-     */
-    private $pratTypeId;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="prat_date_enreg", type="datetime")
+     * @Serializer\Groups({"praticien"})
      */
     private $pratDateEnreg;
 
@@ -67,27 +75,39 @@ class Praticien
      * @var \DateTime
      *
      * @ORM\Column(name="prat_date_modif", type="datetime")
+     * @Serializer\Groups({"praticien"})
      */
     private $pratDateModif;
 
     /**
-     * @ORM\OneToMany(targetEntity="Consultation", mappedBy="consultation")
+     * @ORM\OneToMany(targetEntity="Consultation", mappedBy="pharmacien")
      * @var Consultation[]
+     * @Serializer\Groups({"praticien"})
      */
-    protected $consultationsPh;
+    private $consultationsPh;
 
     /**
-     * @ORM\OneToMany(targetEntity="Consultation", mappedBy="consultation")
+     * @ORM\OneToMany(targetEntity="Consultation", mappedBy="medecin")
      * @var Consultation[]
+     * @Serializer\Groups({"praticien"})
      */
-    protected $consultationsMed;
+    private $consultationsMed;
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Consultation", mappedBy="consultation")
+     * @ORM\OneToMany(targetEntity="Consultation", mappedBy="infirmier")
      * @var Consultation[]
+     * @Serializer\Groups({"praticien"})
      */
-    protected $consultationsInf;
+    private $consultationsInf;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Type_praticien", inversedBy="praticiens")
+     * @var Type_praticien
+     * @Serializer\Groups({"praticien"})
+     */
+    private $type_praticien;
+
 
 
     /**
@@ -194,30 +214,6 @@ class Praticien
     public function getPratEmail()
     {
         return $this->pratEmail;
-    }
-
-    /**
-     * Set pratTypeId
-     *
-     * @param integer $pratTypeId
-     *
-     * @return Praticien
-     */
-    public function setPratTypeId($pratTypeId)
-    {
-        $this->pratTypeId = $pratTypeId;
-
-        return $this;
-    }
-
-    /**
-     * Get pratTypeId
-     *
-     * @return int
-     */
-    public function getPratTypeId()
-    {
-        return $this->pratTypeId;
     }
 
     /**
@@ -377,5 +373,53 @@ class Praticien
     public function getConsultationsInf()
     {
         return $this->consultationsInf;
+    }
+
+    /**
+     * Set typePraticien
+     *
+     * @param \Cmi\ApiBundle\Entity\Type_praticien $typePraticien
+     *
+     * @return Praticien
+     */
+    public function setTypePraticien(\Cmi\ApiBundle\Entity\Type_praticien $typePraticien = null)
+    {
+        $this->type_praticien = $typePraticien;
+
+        return $this;
+    }
+
+    /**
+     * Get typePraticien
+     *
+     * @return \Cmi\ApiBundle\Entity\Type_praticien
+     */
+    public function getTypePraticien()
+    {
+        return $this->type_praticien;
+    }
+
+    /**
+     * Set pratSexe
+     *
+     * @param string $pratSexe
+     *
+     * @return Praticien
+     */
+    public function setPratSexe($pratSexe)
+    {
+        $this->pratSexe = $pratSexe;
+
+        return $this;
+    }
+
+    /**
+     * Get pratSexe
+     *
+     * @return string
+     */
+    public function getPratSexe()
+    {
+        return $this->pratSexe;
     }
 }

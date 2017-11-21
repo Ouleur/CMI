@@ -13,8 +13,6 @@ class EntiteType extends AbstractType
 	{
 		$builder->add('entiCode');
 		$builder->add('entiLibelle');
-		$builder->add('entiSocieteId');
-		$builder->add('entiParentId');
 	}
 
 	public function configureOptions(OptionsResolver $resolver)

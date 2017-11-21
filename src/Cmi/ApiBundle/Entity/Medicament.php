@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Medicament
@@ -18,20 +19,15 @@ class Medicament
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"consultation","medicament"})
      */
     private $id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="medic_id", type="integer")
-     */
-    private $medic_id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="medic_code", type="string")
+     * @Serializer\Groups({"consultation","medicament"})
      */
     private $medic_code;
 
@@ -39,27 +35,15 @@ class Medicament
      * @var string
      *
      * @ORM\Column(name="medic_libelle", type="string", length=100)
+     * @Serializer\Groups({"consultation","medicament"})
      */
     private $medic_libelle;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="medic_famille_id", type="integer")
-     */
-    private $medic_famille_id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="medic_forme_id", type="integer")
-     */
-    private $medic_forme_id;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="medic_date_enreg", type="datetime")
+     * @Serializer\Groups({"medicament"})
      */
     private $medic_date_enreg;
 
@@ -67,6 +51,7 @@ class Medicament
      * @var \DateTime
      *
      * @ORM\Column(name="medic_date_modif", type="datetime")
+     * @Serializer\Groups({"medicament"})
      */
     private $medic_date_modif;
 
@@ -74,21 +59,21 @@ class Medicament
      * @ORM\OneToMany(targetEntity="Ordonnance", mappedBy="consultation")
      * @var Ordonnance[]
      */
-    protected $ordonnances;
+    private $ordonnances;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="Forme_medicament", inversedBy="medicaments")
      * @var Forme_medicament
      */
-    protected $forme_medicament;
+    private $forme_medicament;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="Famille_medicament", inversedBy="medicaments")
      * @var Famille_medicament
      */
-    protected $famille_medicament;
+    private $famille_medicament;
     /**
      * Get id
      *
@@ -97,30 +82,6 @@ class Medicament
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set medic_id
-     *
-     * @param integer $medic_id
-     *
-     * @return Medicament
-     */
-    public function setMedicId($medic_id)
-    {
-        $this->medic_id = $medic_id;
-
-        return $this;
-    }
-
-    /**
-     * Get medic_id
-     *
-     * @return int
-     */
-    public function getMedicId()
-    {
-        return $this->medic_id;
     }
 
     /**
@@ -169,54 +130,6 @@ class Medicament
     public function getMedicLibelle()
     {
         return $this->medic_libelle;
-    }
-
-    /**
-     * Set medic_famille_id
-     *
-     * @param integer $medic_famille_id
-     *
-     * @return Medicament
-     */
-    public function setMedicFamilleId($medic_famille_id)
-    {
-        $this->medic_famille_id = $medic_famille_id;
-
-        return $this;
-    }
-
-    /**
-     * Get medic_famille_id
-     *
-     * @return int
-     */
-    public function getMedicFamilleId()
-    {
-        return $this->medic_famille_id;
-    }
-
-    /**
-     * Set medic_forme_id
-     *
-     * @param integer $medic_forme_id
-     *
-     * @return Medicament
-     */
-    public function setMedicFormeId($medic_forme_id)
-    {
-        $this->medic_forme_id = $medic_forme_id;
-
-        return $this;
-    }
-
-    /**
-     * Get medic_forme_id
-     *
-     * @return int
-     */
-    public function getMedicFormeId()
-    {
-        return $this->medic_forme_id;
     }
 
     /**

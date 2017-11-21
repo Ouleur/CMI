@@ -15,7 +15,7 @@ class EntiteController extends FOSRestController
 {
     /**
      * @Rest\View()
-     * @Rest\Get("/entites")
+     * @Rest\Get("/entites/afficher")
      */
     public function getEntitesAction()
     {
@@ -46,11 +46,27 @@ class EntiteController extends FOSRestController
     }
     /**
      * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @Rest\Post("/entites")
+     * @Rest\Post("/societe/{s_id}/parent/{p_id}/entites/creer")
      */
     public function postEntitesAction(Request $request)
     {
+
+        $societe = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Societe')
+                ->find($request->get('s_id'));
+        /* @var $places Place[] */
+
+        $parent = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Entite')
+                ->find($request->get('p_id'));
+
+
+
+
     	$entite = new Entite();
+
+        $entite->setSociete($societe);
+        $entite->setParent($parent);
         // $entite->setEntiteNumero($request->get("numero"));
         // $entite->setEntiteCode($request->get("code"));
         $entite->setEntiDateEnreg(new \DateTime("now"));
@@ -71,7 +87,7 @@ class EntiteController extends FOSRestController
     }
     /**
     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
-    * @Rest\Delete("/entites/{id}")
+    * @Rest\Delete("/entites/supprimer/{id}")
     */
     public function removeEntitesAction(Request $request)
     {
@@ -88,9 +104,27 @@ class EntiteController extends FOSRestController
     
     public function updateEntite(Request $request, $clearMissing)
     {
+
+         $societe = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Societe')
+                ->find($request->get('s_id'));
+        /* @var $places Place[] */
+
+        $parent = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Entite')
+                ->find($request->get('p_id'));
+
+
+        
+        $entite->setEntiDateModif(new \DateTime("now"));
+
+
         $entite = $this->get("doctrine.orm.entity_manager")
                         ->getRepository("CmiApiBundle:Entite")
                         ->find($request->get('id'));
+
+        $entite->setSociete($societe);
+        $entite->setParent($parent);
         
         $entite->setEntiDateModif(new \DateTime("now"));
         if (empty($entite)) {
@@ -110,7 +144,7 @@ class EntiteController extends FOSRestController
     }
     /**
     * @Rest\View()
-    * @Rest\Put("/entites/{id}")
+    * @Rest\Put("/societe/{s_id}/parent/{p_id}/entites/{id}")
     */
     public function updateEntiteAction(Request $request)
     {
@@ -118,7 +152,7 @@ class EntiteController extends FOSRestController
     }
     /**
     * @Rest\View()
-    * @Rest\Patch("/entites/{id}")
+    * @Rest\Patch("/societe/{s_id}/parent/{p_id}/entites/{id}")
     */
     public function patchEntiteAction(Request $request)
     {

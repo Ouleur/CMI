@@ -17,7 +17,7 @@ class ConsultationController extends FOSRestController
 {
 
 	/**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"consultation"})
      * @Rest\Get("/consultations/afficher")
      */
     public function getConsultationsAction()
@@ -35,7 +35,8 @@ class ConsultationController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"consultation"})
+
      * @Rest\Get("/consultations/rechercher/{id}")
      */
     public function getConsultationAction( Request $request)
@@ -52,16 +53,82 @@ class ConsultationController extends FOSRestController
         return $consultation;
     }
 
+
+    /**
+     * @Rest\View(serializerGroups={"consultation"})
+     * @Rest\Get("/consultations/etape/{n_id}/rechercher")
+     */
+    public function getConsultationEtapeAction( Request $request)
+    {
+        $consultation = $this->get('doctrine.orm.entity_manager')->getRepository('CmiApiBundle:Consultation')
+        ->createQueryBuilder('c')
+        ->where("c.etape=:niveau_id")
+        ->setParameters(array("niveau_id"=>$request->get('n_id')))
+        // // ->sort('price', 'ASC')
+        // ->limit(10)
+        ->getQuery()
+        ->execute();
+
+        /* @var $consultation Consultation[] */
+
+        if (empty($consultation)) {
+            return new JsonResponse(['message' => 'Consultation not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $consultation;
+    }
+
     /**
      * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @Rest\Post("/consultations/creer")
+     * @Rest\Post("/patient/{p_id}/infirmier/{inf_id}/mofitifs/{mot_id}/specialite/{spe_id}/medecin/{med_id}/etape/{etp_id}/consultations/creer")
      */
     public function postConsultationAction(Request $request)
     {
 
-    	$consultation = new Consultation();
 
+        $patient = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Patient')
+                ->find($request->get('p_id'));
 
+        $etape = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Etape')
+                ->find($request->get('etp_id'));
+
+        $consultation = new Consultation(); 
+
+        //infirmier
+        $infirmier = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Praticien')
+                ->find($request->get('inf_id'));
+
+        $mot_id = explode(",",$request->get('mot_id'));
+        for ($i=0; $i < count($mot_id); $i++) { 
+            # code...
+            //motifs
+            $motif = $this->get('doctrine.orm.entity_manager')
+                    ->getRepository('CmiApiBundle:Motif')
+                    ->find($mot_id[$i]);
+            $consultation->addMotif($motif);
+
+        }
+        
+        //speci
+        $specialite = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Specialite')
+                ->find($request->get('spe_id'));
+        //medecin
+        $medecin = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Praticien')
+                ->find($request->get('med_id'));
+	
+
+        $consultation->setPatient($patient);
+        $consultation->setEtape($etape);
+        $consultation->setInfirmier($infirmier);
+        $consultation->setSpecialite($specialite);
+        $consultation->setMedecin($medecin);
+
+        $consultation->setConsDate(new \DateTime("now"));
         $consultation->setConsDateEnreg(new \DateTime("now"));
         $consultation->setConsDateModif(new \DateTime("now"));
 
@@ -82,7 +149,7 @@ class ConsultationController extends FOSRestController
     }
 
     /**
-    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT,serializerGroups={"consultation"})
     * @Rest\Delete("/consultations/supprimer/{id}")
     */
     public function removeConsultationAction(Request $request)
@@ -103,11 +170,53 @@ class ConsultationController extends FOSRestController
     public function updateConsultation(Request $request, $clearMissing)
     {
 
-    	$consultation = $this->get("doctrine.orm.entity_manager")
+        $patient = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Patient')
+                ->find($request->get('p_id'));
+
+        $etape = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Etape')
+                ->find($request->get('etp_id'));
+
+        $consultation = new Consultation(); 
+
+        //infirmier
+        $infirmier = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Praticien')
+                ->find($request->get('inf_id'));
+
+        // $mot_id = explode(",",$request->get('mot_id'));
+        // for ($i=0; $i < count($mot_id); $i++) { 
+        //     # code...
+        //     //motifs
+        //     $motif = $this->get('doctrine.orm.entity_manager')
+        //             ->getRepository('CmiApiBundle:Motif')
+        //             ->find($mot_id[$i]);
+        //     $consultation->addMotif($motif);
+
+        // }
+        
+        //speci
+        $specialite = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Specialite')
+                ->find($request->get('spe_id'));
+        //medecin
+        $medecin = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Praticien')
+                ->find($request->get('med_id'));
+
+
+        
+        $consultation = $this->get("doctrine.orm.entity_manager")
                         ->getRepository("CmiApiBundle:Consultation")
                         ->find($request->get('id'));
 
-        
+        $consultation->setPatient($patient);
+        $consultation->setEtape($etape);
+        $consultation->setInfirmier($infirmier);
+        $consultation->setSpecialite($specialite);
+        $consultation->setMedecin($medecin);
+    	
         $consultation->setConsDateModif(new \DateTime("now"));
 
         if (empty($consultation)) {
@@ -132,8 +241,8 @@ class ConsultationController extends FOSRestController
 
 
     /**
-    * @Rest\View()
-    * @Rest\Put("/consultations/modifier/{id}")
+     * @Rest\View(serializerGroups={"consultation"})
+    * @Rest\Put("/patient/{p_id}/infirmier/{inf_id}/mofitifs/{mot_id}/specialite/{spe_id}/medecin/{med_id}/etape/{etp_id}/consultations/modifier/{id}")
     */
     public function updateConsultationAction(Request $request)
     {
@@ -141,8 +250,8 @@ class ConsultationController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
-    * @Rest\Patch("/consultations/modifier/{id}")
+     * @Rest\View(serializerGroups={"consultation"})
+    * @Rest\Patch("/patient/{p_id}/infirmier/{inf_id}/specialite/{spe_id}/medecin/{med_id}/etape/{etp_id}/consultations/modifier/{id}")
     */
     public function patchConsultationAction(Request $request)
     {

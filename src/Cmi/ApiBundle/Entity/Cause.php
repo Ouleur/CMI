@@ -22,13 +22,6 @@ class Cause
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="cause_id", type="integer")
-     */
-    private $cause_id;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="cause_code", type="string")
@@ -74,29 +67,6 @@ class Cause
         return $this->id;
     }
 
-    /**
-     * Set cause_id
-     *
-     * @param integer $cause_id
-     *
-     * @return Cause
-     */
-    public function setCauseId($cause_id)
-    {
-        $this->cause_id = $cause_id;
-
-        return $this;
-    }
-
-    /**
-     * Get cause_id
-     *
-     * @return int
-     */
-    public function getCauseId()
-    {
-        return $this->cause_id;
-    }
 
     /**
      * Set cause_code

@@ -3,6 +3,8 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+
 
 /**
  * Acte
@@ -18,20 +20,17 @@ class Acte
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"consultation","soins","acte"})
      */
     private $id;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="acte_id", type="integer")
-     */
-    private $acte_id;
+ 
 
     /**
      * @var string
      *
      * @ORM\Column(name="acte_code", type="string")
+     * @Serializer\Groups({"consultation","soins","acte"})
      */
     private $acte_code;
 
@@ -39,6 +38,7 @@ class Acte
      * @var string
      *
      * @ORM\Column(name="acte_libelle", type="string", length=100)
+     * @Serializer\Groups({"consultation","soins","acte"})
      */
     private $acte_libelle;
 
@@ -46,6 +46,7 @@ class Acte
      * @var \DateTime
      *
      * @ORM\Column(name="acte_date_enreg", type="datetime")
+     * @Serializer\Groups({"soins","acte"})
      */
     private $acte_date_enreg;
 
@@ -53,6 +54,7 @@ class Acte
      * @var \DateTime
      *
      * @ORM\Column(name="acte_date_modif", type="datetime")
+     * @Serializer\Groups({"soins","acte"})
      */
     private $acte_date_modif;
 
@@ -60,8 +62,9 @@ class Acte
     /**
      * @ORM\OneToMany(targetEntity="Soins", mappedBy="acte")
      * @var Soins[]
+     * @Serializer\Groups({"acte"})
      */
-    protected $soins;
+    private $soins;
 
 
     /**
@@ -74,29 +77,7 @@ class Acte
         return $this->id;
     }
 
-    /**
-     * Set acte_id
-     *
-     * @param integer $acte_id
-     *
-     * @return Acte
-     */
-    public function setActeId($acte_id)
-    {
-        $this->acte_id = $acte_id;
 
-        return $this;
-    }
-
-    /**
-     * Get acte_id
-     *
-     * @return int
-     */
-    public function getActeId()
-    {
-        return $this->acte_id;
-    }
 
     /**
      * Set acte_code

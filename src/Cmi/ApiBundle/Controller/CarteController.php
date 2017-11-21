@@ -112,14 +112,18 @@ class CarteController extends FOSRestController
 
     /**
      * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @Rest\Post("/assurance/{id}/cartes")
+     * @Rest\Post("/assurance/{as_id}/patient/{p_id}/cartes")
      */
     public function postCartesAction(Request $request)
     {
 
         $assurance = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('CmiApiBundle:Assurance')
-                ->find($request->get("id"));
+                ->find($request->get("as_id"));
+
+        $patient = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Patient')
+                ->find($request->get("p_id"));
 
 
         $carte = new Carte();
@@ -130,6 +134,7 @@ class CarteController extends FOSRestController
         $carte->setCarteDateModif(new \DateTime("now"));
         $carte->setCarteDateDelivrance(new \DateTime(date('Y-m-d')));
         $carte->setAssurance($assurance);
+        $carte->setPatient($patient);
 
         $form = $this->createForm(CarteType::class, $carte);
 
@@ -174,6 +179,15 @@ class CarteController extends FOSRestController
         $carte = $this->get("doctrine.orm.entity_manager")
                         ->getRepository("CmiApiBundle:Carte")
                         ->find($request->get('id'));
+        
+        $patient = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Patient')
+                ->find($request->get("p_id"));
+
+        $assurance = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Assurance')
+                ->find($request->get("as_id"));
+
 
         
         $carte->setCarteDateModif(new \DateTime("now"));
@@ -182,6 +196,11 @@ class CarteController extends FOSRestController
             # code...
             return new JsonResponse(['message'=>'Carte not found'],Response::HTTP_NOT_FOUND);
         }
+        
+        
+        $carte->setPatient($patient);
+        $carte->setAssurance($assurance);
+
 
         $form = $this->createForm(CarteType::class, $carte);
 

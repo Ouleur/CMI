@@ -12,13 +12,14 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Cmi\ApiBundle\Form\Type\ExamenType;
 use Cmi\ApiBundle\Entity\Examen;
+use Cmi\ApiBundle\Entity\Type_examen;
 
 class ExamenController extends FOSRestController
 {
 
     /**
      * @Rest\View()
-     * @Rest\Get("/examens")
+     * @Rest\Get("/examens/afficher")
      */
     public function getExamensAction()
     {
@@ -37,7 +38,7 @@ class ExamenController extends FOSRestController
 
     /**
      * @Rest\View()
-     * @Rest\Get("/examens/{id}")
+     * @Rest\Get("/examens/rechercher/{id}")
      */
     public function getExamenAction( Request $request)
     {
@@ -58,13 +59,23 @@ class ExamenController extends FOSRestController
 
     /**
      * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @Rest\Post("/examens")
+     * @Rest\Post("/type_examen/{te_id}/examens/creer")
      */
     public function postExamensAction(Request $request)
     {
 
-    	$examen = new Examen();
+    	
+        $type_examens = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Type_examen')
+                ->find($request->get('te_id'));
 
+        if (empty($type_examens)) {
+            return new JsonResponse(['message'=>$type_examens],Response::HTTP_NOT_FOUND);
+           
+        }
+
+        $examen = new Examen();
+        $examen->setTypeExamen($type_examens);
         // $examen->setExamenNumero($request->get("numero"));
         // $examen->setExamenCode($request->get("code"));
         $examen->setExamDateEnreg(new \DateTime("now"));
@@ -94,7 +105,7 @@ class ExamenController extends FOSRestController
 
     /**
     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
-    * @Rest\Delete("/examens/{id}")
+    * @Rest\Delete("/examens/supprimer/{id}")
     */
     public function removeExamensAction(Request $request)
     {
@@ -116,28 +127,37 @@ class ExamenController extends FOSRestController
     
     public function updateExamen(Request $request, $clearMissing)
     {
-        $examen = $this->get("doctrine.orm.entity_manager")
-                        ->getRepository("CmiApiBundle:Examen")
-                        ->find($request->get('id'));
+        $type_examens = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Type_examen')
+                ->find($request->get('te_id'));
 
-        
-        $examen->setExamDateModif(new \DateTime("now"));
-
-        if (empty($examen)) {
-            # code...
-            return new JsonResponse(['message'=>'Examen not found'],Response::HTTP_NOT_FOUND);
+        if (empty($type_examens)) {
+            return new JsonResponse(['message'=>$type_examens],Response::HTTP_NOT_FOUND);
+           
         }
 
-        $form = $this->createForm(ExamenType::class, $examen);
+        $examens = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Examen')
+                ->find($request->get('id'));
 
+        if (empty($type_examens)) {
+            return new JsonResponse(['message'=>$examens],Response::HTTP_NOT_FOUND);
+           
+        }
 
+        $examens->setTypeExamen($type_examens);
+        // $examens->setExamenNumero($request->get("numero"));
+        // $examens->setExamenCode($request->get("code"));
+        $examens->setExamDateModif(new \DateTime("now"));
+
+        $form = $this->createForm(ExamenType::class, $examens);
         $form->submit($request->query->all(),$clearMissing); // Validation des données
 
         if ($form->isValid()){
             $em = $this->get('doctrine.orm.entity_manager');
-            $em->merge($examen);
+            $em->merge($examens);
             $em->flush();
-            return $examen;
+            return $examens;
         }else{
             return $form;
         }
@@ -145,7 +165,7 @@ class ExamenController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Put("/examens/{id}")
+    * @Rest\Put("/type_examen/{te_id}/examens/modifier/{id}")
     */
     public function updateExamenAction(Request $request)
     {
@@ -155,7 +175,7 @@ class ExamenController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Patch("/examens/{id}")
+    * @Rest\Patch("/type_examen/{te_id}/examens/modifier/{id}")
     */
     public function patchExamenAction(Request $request)
     {

@@ -20,7 +20,7 @@ class MedicamentRelationController extends FOSRestController
 	// Pharmacien
     /**
      * @Rest\View()
-     * @Rest\Get("/famille_medicament/{id}/forme_medicament/{fmid}/medicament")
+     * @Rest\Get("/famille_medicaments/{id}/forme_medicament/{fmid}/medicament")
      */
     public function getMedicamentRelationAction(Request $request)
     {

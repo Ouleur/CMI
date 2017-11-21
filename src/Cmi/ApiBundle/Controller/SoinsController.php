@@ -17,7 +17,7 @@ class SoinsController extends FOSRestController
 {
 
 	/**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"soins"})
      * @Rest\Get("/soins/afficher")
      */
     public function getSoinsAction()
@@ -54,12 +54,25 @@ class SoinsController extends FOSRestController
 
     /**
      * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @Rest\Post("/soins/creer")
+     * @Rest\Post("consultation/{c_id}/acte/{a_id}/soins/creer")
      */
     public function postSoinsAction(Request $request)
     {
 
+        $consultation = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Consultation')
+                ->find($request->get('c_id'));
+
+
+        $acte = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Acte')
+                ->find($request->get('a_id'));
+
+
     	$soin = new Soins();
+
+        $soin->setActe($acte);
+        $soin->setConsultation($consultation);
 
 
         $soin->setSoinsDateEnreg(new \DateTime("now"));
@@ -102,10 +115,23 @@ class SoinsController extends FOSRestController
 
     public function updateSoins(Request $request, $clearMissing)
     {
+        $consultation = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Conultation')
+                ->find($request->get('c_id'));
+
+
+        $acte = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Acte')
+                ->find($request->get('a_id'));
+
+
 
     	$soin = $this->get("doctrine.orm.entity_manager")
                         ->getRepository("CmiApiBundle:Soins")
                         ->find($request->get('id'));
+
+        $soin->setActe($acte);
+        $soin->setConsultation($consultation);
 
         
         $soin->setSoinsDateModif(new \DateTime("now"));
@@ -133,7 +159,7 @@ class SoinsController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Put("/soins/modifier/{id}")
+    * @Rest\Put("/consultation/{c_id}/acte/{a_id}/soins/modifier/{id}")
     */
     public function updateSoinsAction(Request $request)
     {
@@ -142,7 +168,7 @@ class SoinsController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Patch("/soins/modifier/{id}")
+    * @Rest\Patch("/consultation/{c_id}/acte/{a_id}/soins/modifier/{id}")
     */
     public function patchSoinsAction(Request $request)
     {

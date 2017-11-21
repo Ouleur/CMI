@@ -34,6 +34,32 @@ class MotifController extends FOSRestController
         return $motifs;
     }
 
+
+
+    /**
+     * @Rest\View()
+     * @Rest\Get("/motifs/selection")
+     */
+    public function getMotifsSelectAction()
+    {
+        $motifs = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Motif')
+                ->findAll();
+        /* @var $motifs Motif[] */
+
+         if (empty($motifs)) {
+            return new JsonResponse(['message' => 'Motifs not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        for ($i=0; $i < count($motifs); $i++) { 
+            # code...
+            $json[] = ['id'=>$motifs[$i]->getId(), 'text'=>$motifs[$i]->getMotifLibelle()];
+
+        }
+
+        return new JsonResponse($json);
+    }
+
     /**
      * @Rest\View()
      * @Rest\Get("/motifs/rechercher/{id}")

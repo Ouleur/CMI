@@ -20,21 +20,59 @@ class Type_examenRelationController extends FOSRestController
 	// Pour recuperer les cartes des assurances
     /**
      * @Rest\View()
-     * @Rest\Get("/examen/{id}/type_examen")
+     * @Rest\Get("/examen/afficher")
      */
-    public function getType_examenRelationAction(Request $request)
-    {
-
-        $examen = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('CmiApiBundle:Examen')
-                ->find($request->get("id"));
+    public function getExamenRelationAction(Request $request)
+    {   
+         $examen = $this->get("doctrine.orm.entity_manager")
+                        ->getRepository("CmiApiBundle:Examen")
+                        ->findAll();
 
         if (empty($examen)) {
             return new JsonResponse(['message' => 'Examen not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $examen->getType_examen();
+        return $examen;
     }
+
+
+    // Pour recuperer les cartes des assurances
+    /**
+     * @Rest\View()
+     * @Rest\POST("/type_examen/{t_id}/examen/creer")
+     */
+    public function postExamenRelationAction(Request $request)
+    {
+        $type_examen = $this->get("doctrine.orm.entity_manager")
+                        ->getRepository("CmiApiBundle:Type_examen")
+                        ->find($request->get('t_id'));
+    
+
+        $examen = new Examen()
+        $examen->setTypeExamen($type_examen);
+
+        $examen->setExamDateEnreg(new \DateTime("now"));
+        $examen->setExamDateModif(new \DateTime("now"));
+
+        if (empty($examen)) {
+            return new JsonResponse(['message' => 'Examen not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $form = $this->createForm(ExamenType::class, $examen);
+
+
+        $form->submit($request->query->all()); // Validation des données
+
+        if ($form->isValid()){
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($examen);
+            $em->flush();
+            return $examen;
+        }else{
+            return $form;
+        }
+    }
+
 
 
 

@@ -3,6 +3,8 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+
 
 /**
  * Consultation
@@ -14,108 +16,61 @@ class Consultation
 {
     /**
      * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"consultation","soins"})
      */
     private $id;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="cons_motif_ids", type="integer")
-     */
-    private $cons_motif_ids;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="cons_infirmier_id", type="integer")
-     */
-    private $cons_infirmier_id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="cons_specialite_id", type="integer")
-     */
-    private $cons_specialite_id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="cons_medecin_id", type="integer")
-     */
-    private $cons_medecin_id;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="cons_date", type="datetime")
+     * @ORM\Column(name="cons_date", type="datetime",nullable=true)
+     * @Serializer\Groups({"consultation","soins"})
      */
     private $cons_date;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="cons_patient_id", type="integer")
-     */
-    private $cons_patient_id;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="cons_etape_id", type="integer")
+     * @ORM\Column(name="cons_temsion_alt", type="string",nullable=true)
+     * @Serializer\Groups({"consultation","soins"})
      */
-    private $cons_etape_id;
+    private $cons_temsion_alt;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="cons_pharmacien_id", type="integer")
+     * @ORM\Column(name="cons_temperature", type="string",nullable=true)
+     * @Serializer\Groups({"consultation"})
      */
-    private $cons_pharmacien_id;
+    private $cons_temperature;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="cons_ordonnance_ids", type="integer")
+     * @ORM\Column(name="cons_poids", type="string",nullable=true)
+     * @Serializer\Groups({"consultation"})
      */
-    private $cons_ordonnance_ids;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="cons_diagnost_ids", type="integer")
-     */
-    private $cons_diagnost_ids;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="cons_soins_ids", type="integer")
-     */
-    private $cons_soins_ids;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="cons_exam_res_ids", type="integer")
-     */
-    private $cons_exam_res_ids;
+    private $cons_poids;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="cons_date_enreg", type="datetime")
+     * @ORM\Column(name="cons_date_enreg", type="datetime",nullable=true)
+     * @Serializer\Groups({"consultation"})
      */
     private $cons_date_enreg;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="cons_date_modif", type="datetime")
+     * @ORM\Column(name="cons_date_modif", type="datetime",nullable=true)
+     * @Serializer\Groups({"consultation"})
      */
     private $cons_date_modif;
 
@@ -123,36 +78,42 @@ class Consultation
     /**
      * @ORM\OneToMany(targetEntity="Resultat_examen", mappedBy="consultation")
      * @var Resultat_examen[]
+     * @Serializer\Groups({"consultation"})
      */
-    protected $resultat_examens;
+    private $resultat_examens;
 
     /**
      * @ORM\OneToMany(targetEntity="Soins", mappedBy="consultation")
      * @var Soins[]
+     * @Serializer\Groups({"consultation"})
      */
-    protected $soins;
+    private $soins;
 
     /**
      * @ORM\ManyToOne(targetEntity="Patient", inversedBy="consultations")
      * @var Patient
+     * @Serializer\Groups({"consultation"})
      */
-    protected $patient;
+    private $patient;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="Etape", inversedBy="consultations")
      * @var Etape
+     * @Serializer\Groups({"consultation"})
      */
-    protected $etape;
+    private $etape;
 
     /**
      * @ORM\ManyToOne(targetEntity="Specialite", inversedBy="consultations")
      * @var Specialite
+     * @Serializer\Groups({"consultation"})
      */
-    protected $specialite;
+    private $specialite;
 
     /**
      * @ORM\ManyToMany(targetEntity="Motif", cascade={"persist"})
+     * @Serializer\Groups({"consultation"})
      */
 
     private $motifs;
@@ -161,326 +122,50 @@ class Consultation
     /**
      * @ORM\ManyToOne(targetEntity="Praticien", inversedBy="consultationsPh")
      * @var Praticien
+     * @Serializer\Groups({"consultation"})
      */
-    protected $pharmacien;
+    private $pharmacien;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="Praticien", inversedBy="consultationsMed")
      * @var Praticien
+     * @Serializer\Groups({"consultation"})
      */
-    protected $medecin;
+    private $medecin;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="Praticien", inversedBy="consultationsInf")
      * @var Praticien
+     * @Serializer\Groups({"consultation"})
      */
-    protected $infirmier;
+    private $infirmier;
 
 
     /**
      * @ORM\OneToMany(targetEntity="Ordonnance", mappedBy="consultation")
      * @var Ordonnance[]
+     * @Serializer\Groups({"consultation"})
      */
-    protected $ordonnances;
+    private $ordonnances;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Diagnostique", mappedBy="consultation")
+     * @var Diagnostique[]
+     * @Serializer\Groups({"consultation"})
+     */
+    private $diagnostiques;
 
     /**
      * Get id
      *
      * @return int
+     * @Serializer\Groups({"consultation"})
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set cons_motif_ids
-     *
-     * @param integer $cons_motif_ids
-     *
-     * @return Cons
-     */
-    public function setConsMotifIds($cons_motif_ids)
-    {
-        $this->cons_motif_ids = $cons_motif_ids;
-
-        return $this;
-    }
-
-    /**
-     * Get cons_motif_ids
-     *
-     * @return int
-     */
-    public function getConsMotifIds()
-    {
-        return $this->cons_motif_ids;
-    }
-
-    /**
-     * Set cons_infirmier_id
-     *
-     * @param integer $cons_infirmier_id
-     *
-     * @return Consultation
-     */
-    public function setConsInfirmierId($cons_infirmier_id)
-    {
-        $this->cons_infirmier_id = $cons_infirmier_id;
-
-        return $this;
-    }
-
-    /**
-     * Get cons_infirmier_id
-     *
-     * @return int
-     */
-    public function getConsInfirmierId()
-    {
-        return $this->cons_infirmier_id;
-    }
-
-    /**
-     * Set cons_specialite_id
-     *
-     * @param integer $cons_specialite_id
-     *
-     * @return Consultation
-     */
-    public function setConsSpecialiteId($cons_specialite_id)
-    {
-        $this->cons_specialite_id = $cons_specialite_id;
-
-        return $this;
-    }
-
-    /**
-     * Get cons_specialite_id
-     *
-     * @return int
-     */
-    public function getConsSpecialiteId()
-    {
-        return $this->cons_specialite_id;
-    }
-
-    /**
-     * Set cons_medecin_id
-     *
-     * @param integer $cons_medecin_id
-     *
-     * @return Consultation
-     */
-    public function setConsMedecinId($cons_medecin_id)
-    {
-        $this->cons_medecin_id = $cons_medecin_id;
-
-        return $this;
-    }
-
-    /**
-     * Get cons_medecin_id
-     *
-     * @return int
-     */
-    public function getConsMedecinId()
-    {
-        return $this->cons_medecin_id;
-    }
-
-    /**
-     * Set cons_date
-     *
-     * @param \DateTime $cons_date
-     *
-     * @return Cons
-     */
-    public function setConsDate($cons_date)
-    {
-        $this->cons_date = $cons_date;
-
-        return $this;
-    }
-
-    /**
-     * Get cons_date
-     *
-     * @return \DateTime
-     */
-    public function getConsDate()
-    {
-        return $this->cons_date;
-    }
-
-    /**
-     * Set cons_patient_id
-     *
-     * @param integer $cons_patient_id
-     *
-     * @return Consultation
-     */
-    public function setConsPatientId($cons_patient_id)
-    {
-        $this->cons_patient_id = $cons_patient_id;
-
-        return $this;
-    }
-
-    /**
-     * Get cons_patient_id
-     *
-     * @return int
-     */
-    public function getConsPatientId()
-    {
-        return $this->cons_patient_id;
-    }
-
-    /**
-     * Set cons_etape_id
-     *
-     * @param integer $cons_etape_id
-     *
-     * @return Consultation
-     */
-    public function setConsEtapeId($cons_etape_id)
-    {
-        $this->cons_etape_id = $cons_etape_id;
-
-        return $this;
-    }
-
-    /**
-     * Get cons_etape_id
-     *
-     * @return int
-     */
-    public function getConsEtapeId()
-    {
-        return $this->cons_etape_id;
-    }
-
-    /**
-     * Set cons_pharmacien_id
-     *
-     * @param integer $cons_pharmacien_id
-     *
-     * @return Consultation
-     */
-    public function setConsPharmacienId($cons_pharmacien_id)
-    {
-        $this->cons_pharmacien_id = $cons_pharmacien_id;
-
-        return $this;
-    }
-
-    /**
-     * Get cons_pharmacien_id
-     *
-     * @return int
-     */
-    public function getConsPharmacienId()
-    {
-        return $this->cons_pharmacien_id;
-    }
-
-    /**
-     * Set cons_ordonnance_ids
-     *
-     * @param integer $cons_ordonnance_ids
-     *
-     * @return Consultation
-     */
-    public function setConsOrdonnanceIds($cons_ordonnance_ids)
-    {
-        $this->cons_ordonnance_ids = $cons_ordonnance_ids;
-
-        return $this;
-    }
-
-    /**
-     * Get cons_ordonnance_ids
-     *
-     * @return int
-     */
-    public function getConsOrdonnanceIds()
-    {
-        return $this->cons_ordonnance_ids;
-    }
-
-    /**
-     * Set cons_diagnost_ids
-     *
-     * @param integer $cons_diagnost_ids
-     *
-     * @return Consultation
-     */
-    public function setConsDiagnostIds($cons_diagnost_ids)
-    {
-        $this->cons_diagnost_ids = $cons_diagnost_ids;
-
-        return $this;
-    }
-
-    /**
-     * Get cons_diagnost_ids
-     *
-     * @return int
-     */
-    public function getConsDiagnostIds()
-    {
-        return $this->cons_diagnost_ids;
-    }
-
-    /**
-     * Set cons_soins_ids
-     *
-     * @param integer $cons_soins_ids
-     *
-     * @return Consultation
-     */
-    public function setConsSoinsIds($cons_soins_ids)
-    {
-        $this->cons_soins_ids = $cons_soins_ids;
-
-        return $this;
-    }
-
-    /**
-     * Get cons_soins_ids
-     *
-     * @return int
-     */
-    public function getConsSoinsIds()
-    {
-        return $this->cons_soins_ids;
-    }
-
-    /**
-     * Set cons_exam_res_ids
-     *
-     * @param integer $cons_exam_res_ids
-     *
-     * @return Consultation
-     */
-    public function setConsExamResIds($cons_exam_res_ids)
-    {
-        $this->cons_exam_res_ids = $cons_exam_res_ids;
-
-        return $this;
-    }
-
-    /**
-     * Get cons_exam_res_ids
-     *
-     * @return int
-     */
-    public function getConsExamResIds()
-    {
-        return $this->cons_exam_res_ids;
     }
 
     /**
@@ -816,5 +501,135 @@ class Consultation
     public function getOrdonnances()
     {
         return $this->ordonnances;
+    }
+
+    /**
+     * Add diagnostique
+     *
+     * @param \Cmi\ApiBundle\Entity\Diagnostique $diagnostique
+     *
+     * @return Consultation
+     */
+    public function addDiagnostique(\Cmi\ApiBundle\Entity\Diagnostique $diagnostique)
+    {
+        $this->diagnostiques[] = $diagnostique;
+
+        return $this;
+    }
+
+    /**
+     * Remove diagnostique
+     *
+     * @param \Cmi\ApiBundle\Entity\Diagnostique $diagnostique
+     */
+    public function removeDiagnostique(\Cmi\ApiBundle\Entity\Diagnostique $diagnostique)
+    {
+        $this->diagnostiques->removeElement($diagnostique);
+    }
+
+    /**
+     * Get diagnostiques
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDiagnostiques()
+    {
+        return $this->diagnostiques;
+    }
+
+    /**
+     * Set consDate
+     *
+     * @param \DateTime $consDate
+     *
+     * @return Consultation
+     */
+    public function setConsDate($consDate)
+    {
+        $this->cons_date = $consDate;
+
+        return $this;
+    }
+
+    /**
+     * Get consDate
+     *
+     * @return \DateTime
+     */
+    public function getConsDate()
+    {
+        return $this->cons_date;
+    }
+
+    /**
+     * Set consTemsionAlt
+     *
+     * @param string $consTemsionAlt
+     *
+     * @return Consultation
+     */
+    public function setConsTemsionAlt($consTemsionAlt)
+    {
+        $this->cons_temsion_alt = $consTemsionAlt;
+
+        return $this;
+    }
+
+    /**
+     * Get consTemsionAlt
+     *
+     * @return string
+     */
+    public function getConsTemsionAlt()
+    {
+        return $this->cons_temsion_alt;
+    }
+
+    /**
+     * Set consTemperature
+     *
+     * @param string $consTemperature
+     *
+     * @return Consultation
+     */
+    public function setConsTemperature($consTemperature)
+    {
+        $this->cons_temperature = $consTemperature;
+
+        return $this;
+    }
+
+    /**
+     * Get consTemperature
+     *
+     * @return string
+     */
+    public function getConsTemperature()
+    {
+        return $this->cons_temperature;
+    }
+
+    /**
+     * Set consPoids
+     *
+     * @param string $consPoids
+     *
+     * @return Consultation
+     */
+    public function setConsPoids($consPoids)
+    {
+        $this->cons_poids = $consPoids;
+
+        return $this;
+    }
+
+    /**
+     * Get consPoids
+     *
+     * @return string
+     */
+    public function getConsPoids()
+    {
+        return $this->cons_poids;
     }
 }

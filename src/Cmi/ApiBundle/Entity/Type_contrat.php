@@ -51,10 +51,10 @@ class Type_contrat
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Agent", mappedBy="type_contrat")
-     * @var Agent[]
+     * @ORM\OneToMany(targetEntity="Patient", mappedBy="type_contrat")
+     * @var Patient[]
      */
-    private $agents;
+    private $patient;
 
     /**
      * Get id
@@ -161,45 +161,46 @@ class Type_contrat
     {
         return $this->tContratDateModif;
     }
+   
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->agents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->patient = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Add agent
+     * Add patient
      *
-     * @param \Cmi\ApiBundle\Entity\Agent $agent
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
      *
      * @return Type_contrat
      */
-    public function addAgent(\Cmi\ApiBundle\Entity\Agent $agent)
+    public function addPatient(\Cmi\ApiBundle\Entity\Patient $patient)
     {
-        $this->agents[] = $agent;
+        $this->patient[] = $patient;
 
         return $this;
     }
 
     /**
-     * Remove agent
+     * Remove patient
      *
-     * @param \Cmi\ApiBundle\Entity\Agent $agent
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
      */
-    public function removeAgent(\Cmi\ApiBundle\Entity\Agent $agent)
+    public function removePatient(\Cmi\ApiBundle\Entity\Patient $patient)
     {
-        $this->agents->removeElement($agent);
+        $this->patient->removeElement($patient);
     }
 
     /**
-     * Get agents
+     * Get patient
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAgents()
+    public function getPatient()
     {
-        return $this->agents;
+        return $this->patient;
     }
 }

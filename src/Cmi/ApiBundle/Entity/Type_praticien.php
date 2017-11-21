@@ -22,13 +22,6 @@ class Type_praticien
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="t_prt_id", type="integer")
-     */
-    private $t_prt_id;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="t_prt_code", type="string")
@@ -58,10 +51,11 @@ class Type_praticien
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Praticien", mappedBy="consultation")
+     * @ORM\OneToMany(targetEntity="Praticien", mappedBy="type_praticien")
      * @var Praticien[]
      */
-    protected $praticiens;
+    private $praticiens;
+
 
 
     /**
@@ -74,29 +68,7 @@ class Type_praticien
         return $this->id;
     }
 
-    /**
-     * Set t_prt_id
-     *
-     * @param integer $t_prt_id
-     *
-     * @return TypePraticien
-     */
-    public function setTypePraticienId($t_prt_id)
-    {
-        $this->t_prt_id = $t_prt_id;
 
-        return $this;
-    }
-
-    /**
-     * Get t_prt_id
-     *
-     * @return int
-     */
-    public function getTypePraticienId()
-    {
-        return $this->t_prt_id;
-    }
 
     /**
      * Set t_prt_code

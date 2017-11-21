@@ -5,12 +5,12 @@ namespace Cmi\ApiBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Proffession
+ * Profession
  *
- * @ORM\Table(name="proffession")
- * @ORM\Entity(repositoryClass="Cmi\ApiBundle\Repository\ProffessionRepository")
+ * @ORM\Table(name="profession")
+ * @ORM\Entity(repositoryClass="Cmi\ApiBundle\Repository\ProfessionRepository")
  */
-class Proffession
+class Profession
 {
     /**
      * @var int
@@ -24,36 +24,36 @@ class Proffession
     /**
      * @var string
      *
-     * @ORM\Column(name="proff_code", type="string", length=10)
-     */
-    private $proffCode;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="proff_libelle", type="string", length=100)
+     * @ORM\Column(name="proff_libelle", type="string", length=255, nullable=true)
      */
     private $proffLibelle;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="proff_code", type="string", length=255, nullable=true)
+     */
+    private $proffCode;
+
+    /**
      * @var \DateTime
      *
-     * @ORM\Column(name="proff_date_enreg", type="datetime")
+     * @ORM\Column(name="proff_date_enreg", type="datetime", nullable=true)
      */
     private $proffDateEnreg;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="proff_date_modif", type="datetime")
+     * @ORM\Column(name="proff_date_modif", type="datetime", nullable=true)
      */
     private $proffDateModif;
 
     /**
-     * @ORM\OneToMany(targetEntity="Patient", mappedBy="proffession")
+     * @ORM\OneToMany(targetEntity="Patient", mappedBy="profession")
      * @var Patient[]
      */
-    private $patient;
+    private $patients;
 
     /**
      * Get id
@@ -65,37 +65,12 @@ class Proffession
         return $this->id;
     }
 
-    
-    /**
-     * Set proffCode
-     *
-     * @param string $proffCode
-     *
-     * @return Proffession
-     */
-    public function setProffCode($proffCode)
-    {
-        $this->proffCode = $proffCode;
-
-        return $this;
-    }
-
-    /**
-     * Get proffCode
-     *
-     * @return string
-     */
-    public function getProffCode()
-    {
-        return $this->proffCode;
-    }
-
     /**
      * Set proffLibelle
      *
      * @param string $proffLibelle
      *
-     * @return Proffession
+     * @return Profession
      */
     public function setProffLibelle($proffLibelle)
     {
@@ -115,11 +90,35 @@ class Proffession
     }
 
     /**
+     * Set proffCode
+     *
+     * @param string $proffCode
+     *
+     * @return Profession
+     */
+    public function setProffCode($proffCode)
+    {
+        $this->proffCode = $proffCode;
+
+        return $this;
+    }
+
+    /**
+     * Get proffCode
+     *
+     * @return string
+     */
+    public function getProffCode()
+    {
+        return $this->proffCode;
+    }
+
+    /**
      * Set proffDateEnreg
      *
      * @param \DateTime $proffDateEnreg
      *
-     * @return Proffession
+     * @return Profession
      */
     public function setProffDateEnreg($proffDateEnreg)
     {
@@ -143,7 +142,7 @@ class Proffession
      *
      * @param \DateTime $proffDateModif
      *
-     * @return Proffession
+     * @return Profession
      */
     public function setProffDateModif($proffDateModif)
     {
@@ -166,7 +165,7 @@ class Proffession
      */
     public function __construct()
     {
-        $this->patient = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->patients = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -174,11 +173,11 @@ class Proffession
      *
      * @param \Cmi\ApiBundle\Entity\Patient $patient
      *
-     * @return Proffession
+     * @return Profession
      */
     public function addPatient(\Cmi\ApiBundle\Entity\Patient $patient)
     {
-        $this->patient[] = $patient;
+        $this->patients[] = $patient;
 
         return $this;
     }
@@ -190,16 +189,16 @@ class Proffession
      */
     public function removePatient(\Cmi\ApiBundle\Entity\Patient $patient)
     {
-        $this->patient->removeElement($patient);
+        $this->patients->removeElement($patient);
     }
 
     /**
-     * Get patient
+     * Get patients
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPatient()
+    public function getPatients()
     {
-        return $this->patient;
+        return $this->patients;
     }
 }

@@ -48,13 +48,13 @@ class Carte
      * @ORM\ManyToOne(targetEntity="Assurance", inversedBy="cartes")
      * @var Assurance
      */
-    protected $assurance;
+    private $assurance;
 
     /**
      * @ORM\ManyToOne(targetEntity="Patient", inversedBy="cartes")
      * @var Patient
      */
-    protected $patient;
+    private $patient;
 
     /**
      * @var \DateTime

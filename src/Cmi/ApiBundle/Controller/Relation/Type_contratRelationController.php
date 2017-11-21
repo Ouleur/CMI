@@ -40,16 +40,16 @@ class Type_contratRelationController extends FOSRestController
 
     public function UpdateAgentTypeContrat(Request $request, $clearMissing)
     {
-        $agent = $this->get("doctrine.orm.entity_manager")
-                        ->getRepository("CmiApiBundle:Agent")
+        $patient = $this->get("doctrine.orm.entity_manager")
+                        ->getRepository("CmiApiBundle:Patient")
                         ->find($request->get('id'));
 
         
-        $agent->setAgentDateModif(new \DateTime("now"));
+        $patient->setAgentDateModif(new \DateTime("now"));
 
-        if (empty($agent)) {
+        if (empty($patient)) {
             # code...
-            return new JsonResponse(['message'=>'Agent not found'],Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message'=>'Patient not found'],Response::HTTP_NOT_FOUND);
         }
 
 
@@ -58,18 +58,18 @@ class Type_contratRelationController extends FOSRestController
                         ->find($request->get('tc_id'));
 
                 
-        $agent->setTypeContrat($type_contrat);
+        $patient->setTypeContrat($type_contrat);
 
-        $form = $this->createForm(AgentType::class, $agent);
+        $form = $this->createForm(AgentType::class, $patient);
 
 
         $form->submit($request->query->all(),$clearMissing); // Validation des données
 
         if ($form->isValid()){
             $em = $this->get('doctrine.orm.entity_manager');
-            $em->merge($agent);
+            $em->merge($patient);
             $em->flush();
-            return $agent;
+            return $patient;
         }else{
             return $form;
         }

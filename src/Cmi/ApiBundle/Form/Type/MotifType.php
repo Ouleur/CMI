@@ -11,7 +11,6 @@ class MotifType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('motif_id');
         $builder->add('motif_code');
         $builder->add('motif_libelle');
     }

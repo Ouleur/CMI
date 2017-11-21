@@ -36,13 +36,6 @@ class Examen
     private $examLibelle;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="exam_type_id", type="integer")
-     */
-    private $examTypeId;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="exam_date_enreg", type="datetime")
@@ -59,16 +52,16 @@ class Examen
 
     /**
      * @ORM\ManyToOne(targetEntity="Type_examen", inversedBy="examens")
-     * @var Examen
+     * @var Type_examen
      */
-    protected $type_examen;
+    public $type_examen;
 
 
     /**
      * @ORM\OneToMany(targetEntity="Resultat_examen", mappedBy="examen")
      * @var Resultat_examen[]
      */
-    protected $resultat_examens;
+    private $resultat_examens;
 
 
     /**
@@ -131,30 +124,6 @@ class Examen
     }
 
     /**
-     * Set examTypeId
-     *
-     * @param integer $examTypeId
-     *
-     * @return Examen
-     */
-    public function setExamTypeId($examTypeId)
-    {
-        $this->examTypeId = $examTypeId;
-
-        return $this;
-    }
-
-    /**
-     * Get examTypeId
-     *
-     * @return int
-     */
-    public function getExamTypeId()
-    {
-        return $this->examTypeId;
-    }
-
-    /**
      * Set examDateEnreg
      *
      * @param \DateTime $examDateEnreg
@@ -202,29 +171,7 @@ class Examen
         return $this->examDateModif;
     }
 
-    /**
-     * Set typeExamen
-     *
-     * @param \Cmi\ApiBundle\Entity\Type_examen $typeExamen
-     *
-     * @return Examen
-     */
-    public function setTypeExamen(\Cmi\ApiBundle\Entity\Type_examen $typeExamen = null)
-    {
-        $this->type_examen = $typeExamen;
 
-        return $this;
-    }
-
-    /**
-     * Get typeExamen
-     *
-     * @return \Cmi\ApiBundle\Entity\Type_examen
-     */
-    public function getTypeExamen()
-    {
-        return $this->type_examen;
-    }
     /**
      * Constructor
      */
@@ -265,5 +212,30 @@ class Examen
     public function getResultatExamens()
     {
         return $this->resultat_examens;
+    }
+
+
+    /**
+     * Set typeExamen
+     *
+     * @param \Cmi\ApiBundle\Entity\Type_examen $typeExamen
+     *
+     * @return Examen
+     */
+    public function setTypeExamen(\Cmi\ApiBundle\Entity\Type_examen $typeExamen)
+    {
+        $this->type_examen = $typeExamen;
+
+        return $typeExamen;
+    }
+
+    /**
+     * Get typeExamen
+     *
+     * @return \Cmi\ApiBundle\Entity\Type_examen
+     */
+    public function getTypeExamen()
+    {
+        return $this->type_examen;
     }
 }

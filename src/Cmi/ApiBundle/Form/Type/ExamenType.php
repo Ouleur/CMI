@@ -13,7 +13,6 @@ class ExamenType extends AbstractType
 	{
 		$builder->add('examCode');
 		$builder->add('examLibelle');
-		$builder->add('examTypeId');
 	}
 
 	public function configureOptions(OptionsResolver $resolver)

@@ -67,13 +67,19 @@ class Diagnostique
      * @ORM\ManyToOne(targetEntity="Cause", inversedBy="diagnostiques")
      * @var Cause
      */
-    protected $cause;
+    private $cause;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Consultation", inversedBy="diagnostiques")
+     * @var Consultation
+     */
+    private $consultation;
 
     /**
      * @ORM\ManyToOne(targetEntity="Pathologie", inversedBy="diagnostiques")
      * @var Pathologie
      */
-    protected $pathologie;
+    private $pathologie;
 
 
     /**
@@ -276,5 +282,29 @@ class Diagnostique
     public function getPathologie()
     {
         return $this->pathologie;
+    }
+
+    /**
+     * Set consultation
+     *
+     * @param \Cmi\ApiBundle\Entity\Consultation $consultation
+     *
+     * @return Diagnostique
+     */
+    public function setConsultation(\Cmi\ApiBundle\Entity\Consultation $consultation = null)
+    {
+        $this->consultation = $consultation;
+
+        return $this;
+    }
+
+    /**
+     * Get consultation
+     *
+     * @return \Cmi\ApiBundle\Entity\Consultation
+     */
+    public function getConsultation()
+    {
+        return $this->consultation;
     }
 }

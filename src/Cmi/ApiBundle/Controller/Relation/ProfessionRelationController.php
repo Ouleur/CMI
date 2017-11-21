@@ -13,7 +13,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Cmi\ApiBundle\Form\Type\PatientType;
 use Cmi\ApiBundle\Entity\Proffession;
 
-class ProffessionRelationController extends FOSRestController
+class ProfessionRelationController extends FOSRestController
 {
 
 

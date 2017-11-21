@@ -50,10 +50,10 @@ class Categorie
     private $cateDateModif;
 
     /**
-     * @ORM\OneToMany(targetEntity="Agent", mappedBy="categorie")
-     * @var Agent[]
+     * @ORM\OneToMany(targetEntity="Patient", mappedBy="categorie")
+     * @var Patient[]
      */
-    private $agents;
+    private $patients;
 
     /**
      * Get id
@@ -168,37 +168,38 @@ class Categorie
         $this->agents = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+
     /**
-     * Add agent
+     * Add patient
      *
-     * @param \Cmi\ApiBundle\Entity\Agent $agent
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
      *
      * @return Categorie
      */
-    public function addAgent(\Cmi\ApiBundle\Entity\Agent $agent)
+    public function addPatient(\Cmi\ApiBundle\Entity\Patient $patient)
     {
-        $this->agents[] = $agent;
+        $this->patients[] = $patient;
 
         return $this;
     }
 
     /**
-     * Remove agent
+     * Remove patient
      *
-     * @param \Cmi\ApiBundle\Entity\Agent $agent
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
      */
-    public function removeAgent(\Cmi\ApiBundle\Entity\Agent $agent)
+    public function removePatient(\Cmi\ApiBundle\Entity\Patient $patient)
     {
-        $this->agents->removeElement($agent);
+        $this->patients->removeElement($patient);
     }
 
     /**
-     * Get agents
+     * Get patients
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAgents()
+    public function getPatients()
     {
-        return $this->agents;
+        return $this->patients;
     }
 }

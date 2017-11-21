@@ -3,6 +3,8 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+
 
 /**
  * Patient
@@ -18,13 +20,15 @@ class Patient
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pat_matricule", type="string", length=20, unique=true)
+     * @ORM\Column(name="pat_matricule", type="string", length=255, unique=true)
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $patMatricule;
 
@@ -32,6 +36,7 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_photo", type="string", length=255)
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $patPhoto;
 
@@ -39,6 +44,7 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_nom", type="string", length=50)
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $patNom;
 
@@ -46,13 +52,15 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_prenoms", type="string", length=255)
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $patPrenoms;
 
     /**
      * @var \Date
      *
-     * @ORM\Column(name="pat_date_naiss", type="date")
+     * @ORM\Column(name="pat_date_naiss", type="string")
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $patDateNaiss;
 
@@ -60,6 +68,7 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_civilite", type="string", length=30)
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $patCivilite;
 
@@ -67,6 +76,7 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_grp_sanguin", type="string", length=5)
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $patGrpSanguin;
 
@@ -74,6 +84,7 @@ class Patient
      * @var int
      *
      * @ORM\Column(name="pat_nbre_enfant", type="integer")
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $patNbreEnfant;
 
@@ -81,6 +92,7 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_contact", type="string", length=255)
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $patContact;
 
@@ -88,6 +100,7 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_sit_mat", type="string", length=20)
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $patSitMat;
 
@@ -95,6 +108,7 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_email", type="string", length=255, nullable=true)
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $patEmail;
 
@@ -102,6 +116,7 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_lieu_naiss", type="string", length=100)
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $patLieuNaiss;
 
@@ -109,6 +124,7 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_localite", type="string", length=100)
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $patLocalite;
 
@@ -116,20 +132,16 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_sexe", type="string", length=2)
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $patSexe;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="pat_cart_id", type="integer", nullable=true)
-     */
-    private $patCartId;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="pat_date_enreg", type="datetime")
+     * @Serializer\Groups({"patient"})
      */
     private $patDateEnreg;
 
@@ -137,33 +149,83 @@ class Patient
      * @var \DateTime
      *
      * @ORM\Column(name="pat_date_modif", type="datetime")
+     * @Serializer\Groups({"patient"})
      */
     private $patDateModif;
 
     /**
      * @ORM\OneToMany(targetEntity="Carte", mappedBy="patient")
      * @var Carte[]
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $cartes;
 
-
+/**
     /**
+     * @ORM\ManyToOne(targetEntity="Profession", inversedBy="patient")
+     * @var Profession
+     *
+    private $profession;
+*/
+
+ /**
+     * @ORM\ManyToOne(targetEntity="Entite", inversedBy="patient")
+     * @var Entite
+     * @Serializer\Groups({"patient","consultation"})
+     */
+    private $entite;
+
+
+     /**
      * @ORM\ManyToOne(targetEntity="Type_patient", inversedBy="patient")
      * @var Type_patient
+     * @Serializer\Groups({"patient"})
      */
-    protected $type_patient;
+    private $type_patient;
+
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Proffession", inversedBy="patient")
-     * @var Proffession
+     * @ORM\ManyToOne(targetEntity="Lieu_travail", inversedBy="patients")
+     * @var Lieu_travail
+     * @Serializer\Groups({"patient"})
      */
-    protected $proffession;
+    private $lieu_travail;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Type_contrat", inversedBy="patient")
+     * @var Type_contrat
+     * @Serializer\Groups({"patient"})
+     */
+    private $type_contrat;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="patient")
+     * @var Categorie
+     * @Serializer\Groups({"patient"})
+     */
+    private $categorie;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Profession", inversedBy="patient")
+     * @var Categorie
+     * @Serializer\Groups({"patient","consultation"})
+     */
+    private $profession;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ay_droit_qualite", type="string", length=255,nullable=true)
+     * @Serializer\Groups({"patient"})
+     */
+    private $ayDroitQualite;
 
 
     /**
      * @ORM\OneToMany(targetEntity="Consultation", mappedBy="patient")
      * @var Consultation[]
+     * @Serializer\Groups({"patient"})
      */
     private $consultations;
 
@@ -177,7 +239,14 @@ class Patient
     {
         return $this->id;
     }
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->cartes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->consultations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set patMatricule
@@ -364,7 +433,7 @@ class Patient
     /**
      * Get patNbreEnfant
      *
-     * @return int
+     * @return integer
      */
     public function getPatNbreEnfant()
     {
@@ -516,30 +585,6 @@ class Patient
     }
 
     /**
-     * Set patCartId
-     *
-     * @param integer $patCartId
-     *
-     * @return Patient
-     */
-    public function setPatCartId($patCartId)
-    {
-        $this->patCartId = $patCartId;
-
-        return $this;
-    }
-
-    /**
-     * Get patCartId
-     *
-     * @return int
-     */
-    public function getPatCartId()
-    {
-        return $this->patCartId;
-    }
-
-    /**
      * Set patDateEnreg
      *
      * @param \DateTime $patDateEnreg
@@ -586,12 +631,29 @@ class Patient
     {
         return $this->patDateModif;
     }
+
     /**
-     * Constructor
+     * Set ayDroitQualite
+     *
+     * @param string $ayDroitQualite
+     *
+     * @return Patient
      */
-    public function __construct()
+    public function setAyDroitQualite($ayDroitQualite)
     {
-        $this->cartes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ayDroitQualite = $ayDroitQualite;
+
+        return $this;
+    }
+
+    /**
+     * Get ayDroitQualite
+     *
+     * @return string
+     */
+    public function getAyDroitQualite()
+    {
+        return $this->ayDroitQualite;
     }
 
     /**
@@ -630,51 +692,76 @@ class Patient
 
 
     /**
-     * Get typePatient
+     * Set entite
      *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTypePatient()
-    {
-        return $this->type_patient;
-    }
-
-    /**
-     * Set typePatient
-     *
-     * @param \Cmi\ApiBundle\Entity\Type_patient $typePatient
+     * @param \Cmi\ApiBundle\Entity\Entite $entite
      *
      * @return Patient
      */
-    public function setTypePatient(\Cmi\ApiBundle\Entity\Type_patient $typePatient = null)
+    public function setEntite(\Cmi\ApiBundle\Entity\Entite $entite = null)
     {
-        $this->type_patient = $typePatient;
+        $this->entite = $entite;
 
         return $this;
     }
 
     /**
-     * Set proffession
+     * Get entite
      *
-     * @param \Cmi\ApiBundle\Entity\Profferssion $proffession
+     * @return \Cmi\ApiBundle\Entity\Entite
+     */
+    public function getEntite()
+    {
+        return $this->entite;
+    }
+
+
+    /**
+     * Set typeContrat
+     *
+     * @param \Cmi\ApiBundle\Entity\Type_contrat $typeContrat
      *
      * @return Patient
      */
-    public function setProffession(\Cmi\ApiBundle\Entity\Proffession $proffession = null)
+    public function setTypeContrat(\Cmi\ApiBundle\Entity\Type_contrat $typeContrat = null)
     {
-        $this->proffession = $proffession;
+        $this->type_contrat = $typeContrat;
 
         return $this;
     }
 
     /**
-     * Get proffession
+     * Get typeContrat
      *
-     * @return \Cmi\ApiBundle\Entity\Proffession
+     * @return \Cmi\ApiBundle\Entity\Type_contrat
      */
-    public function getProffession()
+    public function getTypeContrat()
     {
-        return $this->proffession;
+        return $this->type_contrat;
+    }
+
+    /**
+     * Set categorie
+     *
+     * @param \Cmi\ApiBundle\Entity\Categorie $categorie
+     *
+     * @return Patient
+     */
+    public function setCategorie(\Cmi\ApiBundle\Entity\Categorie $categorie = null)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \Cmi\ApiBundle\Entity\Categorie
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
     }
 
     /**
@@ -709,5 +796,77 @@ class Patient
     public function getConsultations()
     {
         return $this->consultations;
+    }
+
+    /**
+     * Set typePatient
+     *
+     * @param \Cmi\ApiBundle\Entity\Type_patient $typePatient
+     *
+     * @return Patient
+     */
+    public function setTypePatient(\Cmi\ApiBundle\Entity\Type_patient $typePatient = null)
+    {
+        $this->type_patient = $typePatient;
+
+        return $this;
+    }
+
+    /**
+     * Get typePatient
+     *
+     * @return \Cmi\ApiBundle\Entity\Type_patient
+     */
+    public function getTypePatient()
+    {
+        return $this->type_patient;
+    }
+
+    /**
+     * Set lieuTravail
+     *
+     * @param \Cmi\ApiBundle\Entity\Lieu_travail $lieuTravail
+     *
+     * @return Patient
+     */
+    public function setLieuTravail(\Cmi\ApiBundle\Entity\Lieu_travail $lieuTravail = null)
+    {
+        $this->lieu_travail = $lieuTravail;
+
+        return $this;
+    }
+
+    /**
+     * Get lieuTravail
+     *
+     * @return \Cmi\ApiBundle\Entity\Lieu_travail
+     */
+    public function getLieuTravail()
+    {
+        return $this->lieu_travail;
+    }
+
+    /**
+     * Set profession
+     *
+     * @param \Cmi\ApiBundle\Entity\Profession $profession
+     *
+     * @return Patient
+     */
+    public function setProfession(\Cmi\ApiBundle\Entity\Profession $profession = null)
+    {
+        $this->profession = $profession;
+
+        return $this;
+    }
+
+    /**
+     * Get profession
+     *
+     * @return \Cmi\ApiBundle\Entity\Profession
+     */
+    public function getProfession()
+    {
+        return $this->profession;
     }
 }

@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Entite
@@ -18,6 +19,7 @@ class Entite
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Entite
      * @var string
      *
      * @ORM\Column(name="enti_code", type="string", length=10)
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $entiCode;
 
@@ -32,27 +35,16 @@ class Entite
      * @var string
      *
      * @ORM\Column(name="enti_libelle", type="string", length=100)
+     * @Serializer\Groups({"patient","consultation"})
      */
     private $entiLibelle;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="enti_societe_id", type="integer")
-     */
-    private $entiSocieteId;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="enti_parent_id", type="integer")
-     */
-    private $entiParentId;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="enti_date_enreg", type="datetime")
+     * @Serializer\Groups({"patient"})
      */
     private $entiDateEnreg;
 
@@ -60,6 +52,7 @@ class Entite
      * @var \DateTime
      *
      * @ORM\Column(name="enti_date_modif", type="datetime")
+     * @Serializer\Groups({"patient"})
      */
     private $entiDateModif;
 
@@ -67,21 +60,31 @@ class Entite
     /**
      * @ORM\OneToMany(targetEntity="Entite", mappedBy="parent")
      * @var Entite[]
+     * @Serializer\Groups({"patient"})
      */
     private $enfants;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Patient", mappedBy="entite")
+     * @var Patient[]
+     * @Serializer\Groups({"entite"})
+     */
+    private $patient;
+
 
     /**
-     * @ORM\ManyToOne(targetEntity="Entite", inversedBy="endants")
+     * @ORM\ManyToOne(targetEntity="Entite", inversedBy="enfants")
      * @var Entite
+     * @Serializer\Groups({"patient"})
      */
-    protected $parent;
+    private $parent;
 
     /**
      * @ORM\ManyToOne(targetEntity="Societe", inversedBy="entite")
      * @var Societe
+     * @Serializer\Groups({"patient"})
      */
-    protected $societe;
+    private $societe;
 
     /**
      * Get id
@@ -325,5 +328,77 @@ class Entite
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Add parent
+     *
+     * @param \Cmi\ApiBundle\Entity\Entite $parent
+     *
+     * @return Entite
+     */
+    public function addParent(\Cmi\ApiBundle\Entity\Entite $parent)
+    {
+        $this->parent[] = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Remove parent
+     *
+     * @param \Cmi\ApiBundle\Entity\Entite $parent
+     */
+    public function removeParent(\Cmi\ApiBundle\Entity\Entite $parent)
+    {
+        $this->parent->removeElement($parent);
+    }
+
+    /**
+     * Set enfants
+     *
+     * @param \Cmi\ApiBundle\Entity\Entite $enfants
+     *
+     * @return Entite
+     */
+    public function setEnfants(\Cmi\ApiBundle\Entity\Entite $enfants = null)
+    {
+        $this->enfants = $enfants;
+
+        return $this;
+    }
+
+    /**
+     * Add patient
+     *
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
+     *
+     * @return Entite
+     */
+    public function addPatient(\Cmi\ApiBundle\Entity\Patient $patient)
+    {
+        $this->patient[] = $patient;
+
+        return $this;
+    }
+
+    /**
+     * Remove patient
+     *
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
+     */
+    public function removePatient(\Cmi\ApiBundle\Entity\Patient $patient)
+    {
+        $this->patient->removeElement($patient);
+    }
+
+    /**
+     * Get patient
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPatient()
+    {
+        return $this->patient;
     }
 }

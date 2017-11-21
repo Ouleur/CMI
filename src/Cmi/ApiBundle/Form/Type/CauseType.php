@@ -11,7 +11,6 @@ class CauseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('cause_id');
         $builder->add('cause_code');
         $builder->add('cause_libelle');
     }

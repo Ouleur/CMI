@@ -68,13 +68,13 @@ class Ordonnance
      * @ORM\ManyToOne(targetEntity="Medicament", inversedBy="ordonnances")
      * @var Medicament
      */
-    protected $medicament;
+    private $medicament;
 
     /**
      * @ORM\ManyToOne(targetEntity="Consultation", inversedBy="ordonnances")
      * @var Consultation
      */
-    protected $consultation;
+    private $consultation;
 
     /**
      * Get id

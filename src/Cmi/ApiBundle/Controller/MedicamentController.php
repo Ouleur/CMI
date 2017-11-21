@@ -31,7 +31,7 @@ class MedicamentController extends FOSRestController
             return new JsonResponse(['message' => 'Medicaments not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $Medicaments;
+        return $medicaments;
     }
 
     /**
@@ -54,14 +54,32 @@ class MedicamentController extends FOSRestController
 
     /**
      * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @Rest\Post("/medicaments/creer")
+     * @Rest\Post("/famille_medicament/{f_id}/forme_medicament/{fo_id}/medicaments/creer")
      */
     public function postMedicamentAction(Request $request)
     {
 
+        $famille_medicament = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Famille_medicament')
+                ->find($request->get('f_id'));
+
+        if (empty($famille_medicament)) {
+            return new JsonResponse(['message' => 'Famille Medicament not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $forme_medicament = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Forme_medicament')
+                ->find($request->get('fo_id'));
+
+        if (empty($forme_medicament)) {
+            return new JsonResponse(['message' => 'Forme Medicament not found'], Response::HTTP_NOT_FOUND);
+        }
+
     	$medicament = new Medicament();
 
-        
+        $medicament->setFormeMedicament($forme_medicament);
+        $medicament->setFamilleMedicament($famille_medicament);
+
         $medicament->setMedicDateEnreg(new \DateTime("now")); 
         $medicament->setMedicDateModif(new \DateTime("now"));
 
@@ -103,11 +121,30 @@ class MedicamentController extends FOSRestController
     public function updateMedicament(Request $request, $clearMissing)
     {
 
+        $famille_medicament = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Famille_medicament')
+                ->find($request->get('f_id'));
+
+        if (empty($famille_medicament)) {
+            return new JsonResponse(['message' => 'Famille Medicament not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $forme_medicament = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Forme_medicament')
+                ->find($request->get('fo_id'));
+
+        if (empty($forme_medicament)) {
+            return new JsonResponse(['message' => 'Forme Medicament not found'], Response::HTTP_NOT_FOUND);
+        }
+
+
     	$medicament = $this->get("doctrine.orm.entity_manager")
                         ->getRepository("CmiApiBundle:Medicament")
                         ->find($request->get('id'));
 
-        
+        $medicament->setFormeMedicament($forme_medicament);
+        $medicament->setFamilleMedicament($famille_medicament);
+
         $medicament->setMedicDateModif(new \DateTime("now"));
 
         if (empty($medicament)) {
@@ -133,7 +170,7 @@ class MedicamentController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Put("/medicaments/modifier/{id}")
+    * @Rest\Put("/famille_medicament/{f_id}/forme_medicament/{fo_id}/medicaments/modifier/{id}")
     */
     public function updateMedicamentAction(Request $request)
     {
@@ -142,7 +179,7 @@ class MedicamentController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Patch("/medicaments/modifier/{id}")
+    * @Rest\Patch("/famille_medicament/{f_id}/forme_medicament/{fo_id}/medicaments/modifier/{id}")
     */
     public function patchMedicamentAction(Request $request)
     {

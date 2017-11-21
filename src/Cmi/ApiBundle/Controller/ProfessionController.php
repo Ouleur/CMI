@@ -1,5 +1,5 @@
 <?php 
-// src/Cmi/ApiBundle/Controller/ProffessionControler.php
+// src/Cmi/ApiBundle/Controller/ProfessionControler.php
 
 namespace Cmi\ApiBundle\Controller;
 
@@ -10,67 +10,67 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Cmi\ApiBundle\Form\Type\ProffessionType;
-use Cmi\ApiBundle\Entity\Proffession;
+use Cmi\ApiBundle\Form\Type\ProfessionType;
+use Cmi\ApiBundle\Entity\Profession;
 
-class ProffessionController extends FOSRestController
+class ProfessionController extends FOSRestController
 {
 
     /**
      * @Rest\View()
-     * @Rest\Get("/proffessions")
+     * @Rest\Get("/professions")
      */
-    public function getProffessionsAction()
+    public function getProfessionsAction()
     {
 
-    	$proffessions = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('CmiApiBundle:Proffession')
+    	$professions = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Profession')
                 ->findAll();
         /* @var $places Place[] */
 
-         if (empty($proffessions)) {
-            return new JsonResponse(['message' => 'Proffession not found'], Response::HTTP_NOT_FOUND);
+         if (empty($professions)) {
+            return new JsonResponse(['message' => 'Profession not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $proffessions;
+        return $professions;
     }
 
     /**
      * @Rest\View()
-     * @Rest\Get("/proffessions/{id}")
+     * @Rest\Get("/professions/{id}")
      */
-    public function getProffessionAction( Request $request)
+    public function getProfessionAction( Request $request)
     {
 
-    	$proffessions = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('CmiApiBundle:Proffession')
+    	$professions = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Profession')
                 ->find($request->get('id'));
         /* @var $places Place[] */
 
-        if (empty($proffessions)) {
-            return new JsonResponse(['message' => 'Proffession not found'], Response::HTTP_NOT_FOUND);
+        if (empty($professions)) {
+            return new JsonResponse(['message' => 'Profession not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $proffessions;
+        return $professions;
     
     }
 
 
     /**
      * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @Rest\Post("/proffessions")
+     * @Rest\Post("/professions")
      */
-    public function postProffessionsAction(Request $request)
+    public function postProfessionsAction(Request $request)
     {
 
-    	$proffession = new Proffession();
+    	$proffession = new Profession();
 
-        // $proffession->setProffessionNumero($request->get("numero"));
-        // $proffession->setProffessionCode($request->get("code"));
+        // $proffession->setProfessionNumero($request->get("numero"));
+        // $proffession->setProfessionCode($request->get("code"));
         $proffession->setProffDateEnreg(new \DateTime("now"));
         $proffession->setProffDateModif(new \DateTime("now"));
 
-        $form = $this->createForm(ProffessionType::class, $proffession);
+        $form = $this->createForm(ProfessionType::class, $proffession);
 
 
         $form->submit($request->query->all()); // Validation des données
@@ -94,12 +94,12 @@ class ProffessionController extends FOSRestController
 
     /**
     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
-    * @Rest\Delete("/proffessions/{id}")
+    * @Rest\Delete("/professions/{id}")
     */
-    public function removeProffessionsAction(Request $request)
+    public function removeProfessionsAction(Request $request)
     {
     	$em = $this->get('doctrine.orm.entity_manager');
-    	$proffession = $em->getRepository('CmiApiBundle:Proffession')
+    	$proffession = $em->getRepository('CmiApiBundle:Profession')
     				->find($request->get('id'));
     
     	 /* @var $place Place */
@@ -114,10 +114,10 @@ class ProffessionController extends FOSRestController
 
 
     
-    public function updateProffession(Request $request, $clearMissing)
+    public function updateProfession(Request $request, $clearMissing)
     {
         $proffession = $this->get("doctrine.orm.entity_manager")
-                        ->getRepository("CmiApiBundle:Proffession")
+                        ->getRepository("CmiApiBundle:Profession")
                         ->find($request->get('id'));
 
         
@@ -125,10 +125,10 @@ class ProffessionController extends FOSRestController
 
         if (empty($proffession)) {
             # code...
-            return new JsonResponse(['message'=>'Proffession not found'],Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message'=>'Profession not found'],Response::HTTP_NOT_FOUND);
         }
 
-        $form = $this->createForm(ProffessionType::class, $proffession);
+        $form = $this->createForm(ProfessionType::class, $proffession);
 
 
         $form->submit($request->query->all(),$clearMissing); // Validation des données
@@ -145,21 +145,21 @@ class ProffessionController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Put("/proffessions/{id}")
+    * @Rest\Put("/professions/{id}")
     */
-    public function updateProffessionAction(Request $request)
+    public function updateProfessionAction(Request $request)
     {
-        return $this->updateProffession($request, true);
+        return $this->updateProfession($request, true);
     }
 
 
     /**
     * @Rest\View()
-    * @Rest\Patch("/proffessions/{id}")
+    * @Rest\Patch("/professions/{id}")
     */
-    public function patchProffessionAction(Request $request)
+    public function patchProfessionAction(Request $request)
     {
-        return $this->updateProffession($request, false);
+        return $this->updateProfession($request, false);
     }
 
 }

@@ -17,7 +17,7 @@ class ActeController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"acte"})
      * @Rest\Get("/actes/afficher")
      */
     public function getActesAction()

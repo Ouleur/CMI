@@ -6,21 +6,21 @@ carte:
     type:     rest
     resource: Cmi\ApiBundle\Controller\CarteController
 
-agent:
-    type:     rest
-    resource: Cmi\ApiBundle\Controller\AgentController
+# agent:
+#     type:     rest
+#     resource: Cmi\ApiBundle\Controller\AgentController
 
 assurance:
     type:     rest
     resource: Cmi\ApiBundle\Controller\AssuranceController
 
-ayant_droit:
-    type:     rest
-    resource: Cmi\ApiBundle\Controller\Ayant_droitController
+# ayant_droit:
+#     type:     rest
+#     resource: Cmi\ApiBundle\Controller\Ayant_droitController
 
-autre:
-    type:     rest
-    resource: Cmi\ApiBundle\Controller\AutreController
+# autre:
+#     type:     rest
+#     resource: Cmi\ApiBundle\Controller\AutreController
 
 categorie:
     type:     rest
@@ -44,7 +44,7 @@ praticien:
 
 proffession:
     type:     rest
-    resource: Cmi\ApiBundle\Controller\ProffessionController
+    resource: Cmi\ApiBundle\Controller\ProfessionController
 
 type_contrat:
     type:     rest
@@ -177,7 +177,7 @@ type_patient_relation:
 
 proffession_relation:
     type:   rest
-    resource: Cmi\ApiBundle\Controller\Relation\ProffessionRelationController
+    resource: Cmi\ApiBundle\Controller\Relation\ProfessionRelationController
 
 lieu_travail_relation:
     type:   rest
@@ -197,13 +197,13 @@ entite_relation:
     type:   rest
     resource: Cmi\ApiBundle\Controller\Relation\EntiteRelationController
 
-ayant_droit_relation:
-    type:   rest
-    resource: Cmi\ApiBundle\Controller\Relation\Ayant_droitRelationController
+# ayant_droit_relation:
+#     type:   rest
+#     resource: Cmi\ApiBundle\Controller\Relation\Ayant_droitRelationController
 
-type_examen_relation:
-    type:   rest
-    resource: Cmi\ApiBundle\Controller\Relation\Type_examenRelationController
+# type_examen_relation:
+#     type:   rest
+#     resource: Cmi\ApiBundle\Controller\Relation\Type_examenRelationController
 
 resultat_examen_relation:
     type:   rest

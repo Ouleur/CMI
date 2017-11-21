@@ -18,7 +18,7 @@ class PraticienController extends FOSRestController
 
     /**
      * @Rest\View()
-     * @Rest\Get("/praticiens")
+     * @Rest\Get("/praticiens/afficher")
      */
     public function getPraticiensAction()
     {
@@ -58,17 +58,26 @@ class PraticienController extends FOSRestController
 
     /**
      * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @Rest\Post("/praticiens")
+     * @Rest\Post("type_praticien/{tp_id}/praticiens/creer")
      */
     public function postPraticiensAction(Request $request)
     {
 
+        $type_raticiens = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Type_praticien')
+                ->find($request->get('tp_id'));
+
     	$praticien = new Praticien();
+        $praticien->setTypePraticien($type_raticiens);
 
         // $praticien->setPraticienNumero($request->get("numero"));
         // $praticien->setPraticienCode($request->get("code"));
         $praticien->setPratDateEnreg(new \DateTime("now"));
         $praticien->setPratDateModif(new \DateTime("now"));
+
+        if (empty($type_raticiens)) {
+            return new JsonResponse(['message' => 'Type Praticien not found'], Response::HTTP_NOT_FOUND);
+        }
 
         $form = $this->createForm(PraticienType::class, $praticien);
 
@@ -116,17 +125,31 @@ class PraticienController extends FOSRestController
     
     public function updatePraticien(Request $request, $clearMissing)
     {
+
+        $type_raticiens = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Type_praticien')
+                ->find($request->get('tp_id'));
+
+        if (empty($type_raticiens)) {
+            # code...
+            return new JsonResponse(['message'=>'Type Praticien not found'],Response::HTTP_NOT_FOUND);
+        }
+
         $praticien = $this->get("doctrine.orm.entity_manager")
                         ->getRepository("CmiApiBundle:Praticien")
                         ->find($request->get('id'));
-
-        
-        $praticien->setPratDateModif(new \DateTime("now"));
 
         if (empty($praticien)) {
             # code...
             return new JsonResponse(['message'=>'Praticien not found'],Response::HTTP_NOT_FOUND);
         }
+
+        $praticien->setTypePraticien($type_raticiens);
+
+        
+        $praticien->setPratDateModif(new \DateTime("now"));
+
+        
 
         $form = $this->createForm(PraticienType::class, $praticien);
 
@@ -145,7 +168,7 @@ class PraticienController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Put("/praticiens/{id}")
+    * @Rest\Put("type_praticien/{tp_id}/praticiens/{id}")
     */
     public function updatePraticienAction(Request $request)
     {
@@ -155,7 +178,7 @@ class PraticienController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Patch("/praticiens/{id}")
+    * @Rest\Patch("type_praticien/{tp_id}/praticiens/{id}")
     */
     public function patchPraticienAction(Request $request)
     {

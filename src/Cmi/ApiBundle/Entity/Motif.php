@@ -22,13 +22,6 @@ class Motif
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="motif_id", type="integer")
-     */
-    private $motif_id;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="motif_code", type="string")
@@ -65,30 +58,6 @@ class Motif
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set motif_id
-     *
-     * @param integer $motif_id
-     *
-     * @return Motif
-     */
-    public function setMotifId($motif_id)
-    {
-        $this->motif_id = $motif_id;
-
-        return $this;
-    }
-
-    /**
-     * Get motif_id
-     *
-     * @return int
-     */
-    public function getMotifId()
-    {
-        return $this->motif_id;
     }
 
     /**

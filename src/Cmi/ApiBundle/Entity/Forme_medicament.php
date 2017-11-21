@@ -22,13 +22,6 @@ class Forme_medicament
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="form_medic_id", type="integer")
-     */
-    private $form_medic_id;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="form_medic_code", type="string")
@@ -60,7 +53,7 @@ class Forme_medicament
      * @ORM\OneToMany(targetEntity="Medicament", mappedBy="forme_medicament")
      * @var Medicament[]
      */
-    protected $medicaments;
+    private $medicaments;
 
 
     /**
@@ -73,29 +66,6 @@ class Forme_medicament
         return $this->id;
     }
 
-    /**
-     * Set form_medic_id
-     *
-     * @param integer $form_medic_id
-     *
-     * @return Forme_medicament
-     */
-    public function setFormMedicId($form_medic_id)
-    {
-        $this->form_medic_id = $form_medic_id;
-
-        return $this;
-    }
-
-    /**
-     * Get form_medic_id
-     *
-     * @return int
-     */
-    public function getFormMedicId()
-    {
-        return $this->form_medic_id;
-    }
 
     /**
      * Set form_medic_code

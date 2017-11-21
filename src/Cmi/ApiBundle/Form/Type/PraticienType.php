@@ -15,7 +15,7 @@ class PraticienType extends AbstractType
 		$builder->add('pratPrenoms');
 		$builder->add('pratContact');
 		$builder->add('pratEmail');
-		$builder->add('pratTypeId');
+		$builder->add('pratSexe');
 	}
 
 	public function configureOptions(OptionsResolver $resolver)

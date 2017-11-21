@@ -11,7 +11,7 @@ class Type_praticienType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('t_prt_id');
+        
         $builder->add('t_prt_code');
         $builder->add('t_prt_libelle');
     }
