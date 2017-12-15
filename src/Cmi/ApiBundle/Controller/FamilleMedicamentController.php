@@ -17,13 +17,13 @@ use Cmi\ApiBundle\Entity\Famille_medicament;
 class FamilleMedicamentController extends FOSRestController
 {
 	/*
-	*@Rest\View()
+	*@Rest\View(serializerGroups={"fam_medicament"})
 	*@Rest\Get("/famille_medicaments/afficher")
 	*/
 	public function afficherFamille_medicamentAction(Request $request)
 	{
 		$famille_medicaments = $this->get("doctrine.orm.entity_manager")
-			->getRepository('Cmi\ApiBundle\:Famille_medicament')
+			->getRepository('CmiApiBundle::Famille_medicament')
 			->findAll();
 
 			/* @var $famille_medicaments Famille_medicament[] */

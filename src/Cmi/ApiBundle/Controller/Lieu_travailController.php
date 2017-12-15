@@ -17,7 +17,7 @@ class Lieu_travailController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"lieu_travail"})
      * @Rest\Get("/lieu_travails")
      */
     public function getLieu_travailsAction()

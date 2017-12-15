@@ -19,7 +19,7 @@ class Medicament
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Serializer\Groups({"consultation","medicament"})
+     * @Serializer\Groups({"consultation","medicament","fam_medicament","ordonnance"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class Medicament
      * @var string
      *
      * @ORM\Column(name="medic_code", type="string")
-     * @Serializer\Groups({"consultation","medicament"})
+     * @Serializer\Groups({"consultation","medicament","fam_medicament","ordonnance"})
      */
     private $medic_code;
 
@@ -35,7 +35,7 @@ class Medicament
      * @var string
      *
      * @ORM\Column(name="medic_libelle", type="string", length=100)
-     * @Serializer\Groups({"consultation","medicament"})
+     * @Serializer\Groups({"consultation","medicament","fam_medicament","ordonnance"})
      */
     private $medic_libelle;
 
@@ -58,6 +58,7 @@ class Medicament
     /**
      * @ORM\OneToMany(targetEntity="Ordonnance", mappedBy="consultation")
      * @var Ordonnance[]
+     * @Serializer\Groups({"medicament"})
      */
     private $ordonnances;
 
@@ -65,6 +66,7 @@ class Medicament
     /**
      * @ORM\ManyToOne(targetEntity="Forme_medicament", inversedBy="medicaments")
      * @var Forme_medicament
+     * @Serializer\Groups({"medicament"})
      */
     private $forme_medicament;
 
@@ -72,6 +74,7 @@ class Medicament
     /**
      * @ORM\ManyToOne(targetEntity="Famille_medicament", inversedBy="medicaments")
      * @var Famille_medicament
+     * @Serializer\Groups({"medicament"})
      */
     private $famille_medicament;
     /**

@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Lieu_travail
@@ -18,6 +19,7 @@ class Lieu_travail
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"lieu_travail","patient"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Lieu_travail
      * @var string
      *
      * @ORM\Column(name="l_trav_code", type="string", length=10)
+     * @Serializer\Groups({"lieu_travail","patient"})
      */
     private $lTravCode;
 
@@ -32,6 +35,7 @@ class Lieu_travail
      * @var string
      *
      * @ORM\Column(name="l_trav_libelle", type="string", length=100)
+     * @Serializer\Groups({"lieu_travail","patient"})
      */
     private $lTravLibelle;
 
@@ -39,6 +43,7 @@ class Lieu_travail
      * @var \DateTime
      *
      * @ORM\Column(name="l_trav_date_enreg", type="datetime")
+     * @Serializer\Groups({"lieu_travail"})
      */
     private $lTravDateEnreg;
 
@@ -46,12 +51,14 @@ class Lieu_travail
      * @var \DateTime
      *
      * @ORM\Column(name="l_trav_date_modif", type="datetime")
+     * @Serializer\Groups({"lieu_travail"})
      */
     private $lTravDateModif;
 
     /**
      * @ORM\OneToMany(targetEntity="Patient", mappedBy="lieu_travail")
      * @var Patient[]
+     * @Serializer\Groups({"lieu_travail"})
      */
     private $patients;
 

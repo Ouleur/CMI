@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Cause
@@ -18,6 +19,7 @@ class Cause
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"consultation","diagnostique","cause"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Cause
      * @var string
      *
      * @ORM\Column(name="cause_code", type="string")
+     * @Serializer\Groups({"consultation","diagnostique","cause"})
      */
     private $cause_code;
 
@@ -32,6 +35,7 @@ class Cause
      * @var string
      *
      * @ORM\Column(name="cause_libelle", type="string", length=100)
+     * @Serializer\Groups({"consultation","diagnostique","cause"})
      */
     private $cause_libelle;
 
@@ -39,6 +43,7 @@ class Cause
      * @var \DateTime
      *
      * @ORM\Column(name="cause_date_enreg", type="datetime")
+     * @Serializer\Groups({"cause"})
      */
     private $cause_date_enreg;
 
@@ -46,6 +51,7 @@ class Cause
      * @var \DateTime
      *
      * @ORM\Column(name="cause_date_modif", type="datetime")
+     * @Serializer\Groups({"cause"})
      */
     private $cause_date_modif;
 
@@ -53,6 +59,7 @@ class Cause
     /**
      * @ORM\OneToMany(targetEntity="Diagnostique", mappedBy="cause")
      * @var Diagnostique[]
+     * @Serializer\Groups({"cause"})
      */
     private $diagnostiques;
 

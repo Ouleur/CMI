@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Ordonnance
@@ -18,34 +19,32 @@ class Ordonnance
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"consultation","ordonnance"})
      */
     private $id;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="ordo_id", type="integer")
+     * @ORM\Column(name="ordo_dure", type="string")
+     * @Serializer\Groups({"consultation","ordonnance"})
      */
-    private $ordo_id;
+    private $ordo_dure;
 
     /**
-    * @var int
-    *
-    * @ORM\Column(name="ordo_consul_id", type="integer")
-    */
-    private $ordo_consul_id;
+     * @var string
+     *
+     * @ORM\Column(name="ordo_quantite", type="string")
+     * @Serializer\Groups({"consultation","ordonnance"})
+     */
+    private $ordo_quantite;
 
-    /**
-    * @var int
-    *
-    * @ORM\Column(name="ordo_medic_id", type="integer")
-    */
-    private $ordo_medic_id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ordo_posologie", type="string")
+     * @Serializer\Groups({"consultation","ordonnance"})
      */
     private $ordo_posologie;
 
@@ -53,6 +52,7 @@ class Ordonnance
      * @var \DateTime
      *
      * @ORM\Column(name="ordo_date_enreg", type="datetime")
+     * @Serializer\Groups({"consultation","ordonnance"})
      */
     private $ordo_date_enreg;
 
@@ -60,6 +60,7 @@ class Ordonnance
      * @var \DateTime
      *
      * @ORM\Column(name="ordo_date_modif", type="datetime")
+     * @Serializer\Groups({"consultation","ordonnance"})
      */
     private $ordo_date_modif;
 
@@ -67,12 +68,14 @@ class Ordonnance
     /**
      * @ORM\ManyToOne(targetEntity="Medicament", inversedBy="ordonnances")
      * @var Medicament
+     * @Serializer\Groups({"consultation","ordonnance"})
      */
     private $medicament;
 
     /**
      * @ORM\ManyToOne(targetEntity="Consultation", inversedBy="ordonnances")
      * @var Consultation
+     * @Serializer\Groups({"ordonnance"})
      */
     private $consultation;
 
@@ -86,77 +89,6 @@ class Ordonnance
         return $this->id;
     }
 
-    /**
-     * Set ordo_id
-     *
-     * @param integer $ordo_id
-     *
-     * @return Ordonnance
-     */
-    public function setOrdoId($ordo_id)
-    {
-        $this->ordo_id = $ordo_id;
-
-        return $this;
-    }
-
-    /**
-     * Get ordo_id
-     *
-     * @return int
-     */
-    public function getOrdoId()
-    {
-        return $this->ordo_id;
-    }
-
-    /**
-     * Set ordo_consul_id
-     *
-     * @param integer $ordo_consul_id
-     *
-     * @return Ordonnance
-     */
-    public function setOrdoConsulId($ordo_consul_id)
-    {
-        $this->ordo_consul_id = $ordo_consul_id;
-
-        return $this;
-    }
-
-    /**
-     * Get ordo_consul_id
-     *
-     * @return int
-     */
-    public function getOrdoConsulId()
-    {
-        return $this->ordo_consul_id;
-    }
-
-    /**
-     * Set ordo_medic_id
-     *
-     * @param integer $ordo_medic_id
-     *
-     * @return Ordonnance
-     */
-    public function setOrdoMedicId($ordo_medic_id)
-    {
-        $this->ordo_medic_id = $ordo_medic_id;
-
-        return $this;
-    }
-
-    /**
-     * Get ordo_medic_id
-     *
-     * @return int
-     */
-    public function getOrdoMedicId()
-    {
-        return $this->ordo_medic_id;
-    }
 
     /**
      * Set ordo_posologie
@@ -276,5 +208,53 @@ class Ordonnance
     public function getConsultation()
     {
         return $this->consultation;
+    }
+
+    /**
+     * Set ordoDure
+     *
+     * @param string $ordoDure
+     *
+     * @return Ordonnance
+     */
+    public function setOrdoDure($ordoDure)
+    {
+        $this->ordo_dure = $ordoDure;
+
+        return $this;
+    }
+
+    /**
+     * Get ordoDure
+     *
+     * @return string
+     */
+    public function getOrdoDure()
+    {
+        return $this->ordo_dure;
+    }
+
+    /**
+     * Set ordoQuantite
+     *
+     * @param string $ordoQuantite
+     *
+     * @return Ordonnance
+     */
+    public function setOrdoQuantite($ordoQuantite)
+    {
+        $this->ordo_quantite = $ordoQuantite;
+
+        return $this;
+    }
+
+    /**
+     * Get ordoQuantite
+     *
+     * @return string
+     */
+    public function getOrdoQuantite()
+    {
+        return $this->ordo_quantite;
     }
 }

@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Motif
@@ -18,6 +19,7 @@ class Motif
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"motif","entite","patient"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Motif
      * @var string
      *
      * @ORM\Column(name="motif_code", type="string")
+     * @Serializer\Groups({"motif","entite","patient"})
      */
     private $motif_code;
 
@@ -32,6 +35,7 @@ class Motif
      * @var string
      *
      * @ORM\Column(name="motif_libelle", type="string", length=100)
+     * @Serializer\Groups({"motif","entite","patient"})
      */
     private $motif_libelle;
 
@@ -39,6 +43,7 @@ class Motif
      * @var \DateTime
      *
      * @ORM\Column(name="motif_date_enreg", type="datetime")
+     * @Serializer\Groups({"motif","entite"})
      */
     private $motif_date_enreg;
 
@@ -46,6 +51,7 @@ class Motif
      * @var \DateTime
      *
      * @ORM\Column(name="motif_date_modif", type="datetime")
+     * @Serializer\Groups({"motif","entite"})
      */
     private $motif_date_modif;
 

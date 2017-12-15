@@ -17,7 +17,7 @@ class Resultat_examenController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"resultat_exam"})
      * @Rest\Get("/resultat_examens")
      */
     public function getResultat_examensAction()
@@ -55,10 +55,12 @@ class Resultat_examenController extends FOSRestController
     
     }
 
+    
+
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
-     * @Rest\Post("/consultation/{c_id}/examen/{e_id}/resultat_examens/creer")
+     * @Rest\View(statusCode=Response::HTTP_CREATED,serializerGroups={"resultat_exam"})
+     * @Rest\Post("/consultation/{c_id}/etape/{et_id}/examen/{e_id}/resultat_examens/creer")
      */
     public function postResultat_examensAction(Request $request)
     {
@@ -89,22 +91,17 @@ class Resultat_examenController extends FOSRestController
             $em = $this->get('doctrine.orm.entity_manager');
             $em->persist($resultat_examen);
             $em->flush();
+            $this->consultationModification($request->get('c_id'),$request->get('et_id'));
             return $resultat_examen;
         }else{
             return $form;
-        }
-    	
-
-    	
-
-
-    	
+        }    	
     }
 
 
     /**
-    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
-    * @Rest\Delete("/resultat_examens/{id}")
+    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT,serializerGroups={"resultat_exam"})
+    * @Rest\Delete("/resultat_examens/supprimer/{id}")
     */
     public function removeResultat_examensAction(Request $request)
     {
@@ -166,7 +163,7 @@ class Resultat_examenController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"resultat_exam"})
     * @Rest\Put("/consultation/{c_id}/examen/{e_id}/resultat_examens/{id}")
     */
     public function updateResultat_examenAction(Request $request)
@@ -176,12 +173,28 @@ class Resultat_examenController extends FOSRestController
 
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"resultat_exam"})
     * @Rest\Patch("/consultation/{c_id}/examen/{e_id}/resultat_examens/{id}")
     */
     public function patchResultat_examenAction(Request $request)
     {
         return $this->updateResultat_examen($request, false);
+    }
+
+    private function consultationModification($id,$etape_id){
+        $consultation = $this->get("doctrine.orm.entity_manager")
+                        ->getRepository("CmiApiBundle:Consultation")
+                        ->find($id);
+
+        $etape = $this->get("doctrine.orm.entity_manager")
+                        ->getRepository("CmiApiBundle:Etape")
+                        ->find($etape_id);
+
+        $consultation->setEtape($etape);
+        $em = $this->get('doctrine.orm.entity_manager');
+        $em->merge($consultation);
+        $em->flush();
+        
     }
 
 }

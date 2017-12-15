@@ -17,7 +17,7 @@ class Type_examenController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"type_examen"})
      * @Rest\Get("/type_examens")
      */
     public function getType_examensAction()

@@ -73,7 +73,8 @@ class ActeController extends FOSRestController
             $em = $this->get('doctrine.orm.entity_manager');
             $em->persist($acte);
             $em->flush();
-            return $acte;
+            //return $acte;
+            return new JsonResponse(['message' => 'Actes créer'], Response::HTTP_NOT_FOUND);
         }else{
             return $form;
         }

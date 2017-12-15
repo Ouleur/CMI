@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Profession
@@ -18,6 +19,7 @@ class Profession
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"consultation","profession"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Profession
      * @var string
      *
      * @ORM\Column(name="proff_libelle", type="string", length=255, nullable=true)
+     * @Serializer\Groups({"consultation","profession","patient"})
      */
     private $proffLibelle;
 
@@ -32,6 +35,7 @@ class Profession
      * @var string
      *
      * @ORM\Column(name="proff_code", type="string", length=255, nullable=true)
+     * @Serializer\Groups({"consultation","profession","patient"})
      */
     private $proffCode;
 
@@ -39,6 +43,7 @@ class Profession
      * @var \DateTime
      *
      * @ORM\Column(name="proff_date_enreg", type="datetime", nullable=true)
+     * @Serializer\Groups({"profession"})
      */
     private $proffDateEnreg;
 
@@ -46,12 +51,14 @@ class Profession
      * @var \DateTime
      *
      * @ORM\Column(name="proff_date_modif", type="datetime", nullable=true)
+     * @Serializer\Groups({"profession"})
      */
     private $proffDateModif;
 
     /**
      * @ORM\OneToMany(targetEntity="Patient", mappedBy="profession")
      * @var Patient[]
+     * @Serializer\Groups({"profession"})
      */
     private $patients;
 

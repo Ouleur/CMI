@@ -59,12 +59,12 @@ class Acte
     private $acte_date_modif;
 
 
-    /**
-     * @ORM\OneToMany(targetEntity="Soins", mappedBy="acte")
-     * @var Soins[]
-     * @Serializer\Groups({"acte"})
-     */
-    private $soins;
+    // /**
+    //  * @ORM\OneToMany(targetEntity="Soins", mappedBy="acte")
+    //  * @var Soins[]
+    //  * @Serializer\Groups({"acte"})
+    //  */
+    // private $soins;
 
 
     /**
@@ -174,45 +174,5 @@ class Acte
     {
         return $this->acte_date_modif;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->soins = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add soin
-     *
-     * @param \Cmi\ApiBundle\Entity\Soins $soin
-     *
-     * @return Acte
-     */
-    public function addSoin(\Cmi\ApiBundle\Entity\Soins $soin)
-    {
-        $this->soins[] = $soin;
-
-        return $this;
-    }
-
-    /**
-     * Remove soin
-     *
-     * @param \Cmi\ApiBundle\Entity\Soins $soin
-     */
-    public function removeSoin(\Cmi\ApiBundle\Entity\Soins $soin)
-    {
-        $this->soins->removeElement($soin);
-    }
-
-    /**
-     * Get soins
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSoins()
-    {
-        return $this->soins;
-    }
+   
 }

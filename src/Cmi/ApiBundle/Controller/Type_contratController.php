@@ -17,7 +17,7 @@ class Type_contratController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"type_contrat"})
      * @Rest\Get("/type_contrats")
      */
     public function getType_contratsAction()

@@ -17,7 +17,7 @@ class ProfessionController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"profession"})
      * @Rest\Get("/professions")
      */
     public function getProfessionsAction()

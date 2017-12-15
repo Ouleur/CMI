@@ -17,7 +17,7 @@ class NatureLesionController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"naturelesion"})
      * @Rest\Get("/naturelesions/afficher")
      */
     public function getNatureLesionsAction()
@@ -35,7 +35,7 @@ class NatureLesionController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"naturelesion"})
      * @Rest\Get("/naturelesions/rechercher/{id}")
      */
     public function getNatureLesionAction( Request $request)
@@ -53,7 +53,7 @@ class NatureLesionController extends FOSRestController
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED,serializerGroups={"naturelesion"})
      * @Rest\Post("/naturelesions/creer")
      */
     public function postNatureLesionAction(Request $request)
@@ -82,7 +82,7 @@ class NatureLesionController extends FOSRestController
     }
 
     /**
-    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT,serializerGroups={"naturelesion"})
     * @Rest\Delete("/naturelesions/supprimer/{id}")
     */
     public function removeNatureLesionAction(Request $request)
@@ -132,7 +132,7 @@ class NatureLesionController extends FOSRestController
 
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"naturelesion"})
     * @Rest\Put("/naturelesions/modifier/{id}")
     */
     public function updateNatureLesionAction(Request $request)
@@ -141,7 +141,7 @@ class NatureLesionController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"naturelesion"})
     * @Rest\Patch("/naturelesions/modifier/{id}")
     */
     public function patchNatureLesionAction(Request $request)

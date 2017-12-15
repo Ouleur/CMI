@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Carte
@@ -18,6 +19,7 @@ class Carte
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"patient","carte","assurance"})
      */
     private $id;
 
@@ -26,6 +28,7 @@ class Carte
      * @var string
      *
      * @ORM\Column(name="carte_numero", type="string", length=50)
+     * @Serializer\Groups({"patient","carte","assurance"})
      */
     private $carteNumero;
 
@@ -33,6 +36,7 @@ class Carte
      * @var \DateTime
      *
      * @ORM\Column(name="carte_date_delivrance", type="date")
+     * @Serializer\Groups({"patient","carte","assurance"})
      */
     private $carteDateDelivrance;
 
@@ -40,6 +44,7 @@ class Carte
      * @var string
      *
      * @ORM\Column(name="carte_code", type="string", length=100)
+     * @Serializer\Groups({"patient","carte","assurance"})
      */
     private $carteCode;
 
@@ -47,12 +52,14 @@ class Carte
     /**
      * @ORM\ManyToOne(targetEntity="Assurance", inversedBy="cartes")
      * @var Assurance
+     * @Serializer\Groups({"patient","carte"})
      */
     private $assurance;
 
     /**
      * @ORM\ManyToOne(targetEntity="Patient", inversedBy="cartes")
      * @var Patient
+     * @Serializer\Groups({"carte"})
      */
     private $patient;
 
@@ -60,6 +67,7 @@ class Carte
      * @var \DateTime
      *
      * @ORM\Column(name="carte_date_enreg", type="datetime")
+     * @Serializer\Groups({"carte"})
      */
     private $carteDateEnreg;
 
@@ -67,6 +75,7 @@ class Carte
      * @var \DateTime
      *
      * @ORM\Column(name="carte_date_modif", type="datetime")
+     * @Serializer\Groups({"carte"})
      */
     private $carteDateModif;
 

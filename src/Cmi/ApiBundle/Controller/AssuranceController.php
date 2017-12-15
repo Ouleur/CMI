@@ -18,7 +18,7 @@ class AssuranceController extends FOSRestController
 
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"assurance"})
      * @Rest\Get("/assurances")
      */
     public function getAssurancesAction()

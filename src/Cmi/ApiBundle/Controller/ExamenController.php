@@ -18,7 +18,7 @@ class ExamenController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"examen"})
      * @Rest\Get("/examens/afficher")
      */
     public function getExamensAction()
@@ -37,7 +37,7 @@ class ExamenController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"examen"})
      * @Rest\Get("/examens/rechercher/{id}")
      */
     public function getExamenAction( Request $request)
@@ -58,7 +58,7 @@ class ExamenController extends FOSRestController
 
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(serializerGroups={"examen"},statusCode=Response::HTTP_CREATED)
      * @Rest\Post("/type_examen/{te_id}/examens/creer")
      */
     public function postExamensAction(Request $request)
@@ -104,7 +104,7 @@ class ExamenController extends FOSRestController
 
 
     /**
-    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\View(serializerGroups={"examen"},statusCode=Response::HTTP_NO_CONTENT)
     * @Rest\Delete("/examens/supprimer/{id}")
     */
     public function removeExamensAction(Request $request)
@@ -164,7 +164,7 @@ class ExamenController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"examen"})
     * @Rest\Put("/type_examen/{te_id}/examens/modifier/{id}")
     */
     public function updateExamenAction(Request $request)
@@ -174,7 +174,7 @@ class ExamenController extends FOSRestController
 
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"examen"})
     * @Rest\Patch("/type_examen/{te_id}/examens/modifier/{id}")
     */
     public function patchExamenAction(Request $request)

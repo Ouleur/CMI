@@ -17,7 +17,7 @@ class CauseController extends FOSRestController
 {
 
 	/**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"cause"})
      * @Rest\Get("/causes/afficher")
      */
     public function getCausesAction()

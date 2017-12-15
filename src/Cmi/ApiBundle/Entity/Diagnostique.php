@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Diagnostique
@@ -18,36 +19,16 @@ class Diagnostique
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"consultation","diagnostique"})
      */
     private $id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="diagn_id", type="integer")
-     */
-    private $diagn_id;
-
-    /**
-    * @var int
-    *
-    * @ORM\Column(name="diagn_cause_id", type="integer")
-    */
-    private $diagn_cause_id;
-
-    /**
-    * @var int
-    *
-    * @ORM\Column(name="diagn_consul_id", type="integer")
-    */
-    private $diagn_consul_id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="diagn_comment", type="string")
-     */
-    private $diagn_comment;
+     *
+    private $diagn_comment;*/
 
     /**
      * @var \DateTime
@@ -66,18 +47,21 @@ class Diagnostique
     /**
      * @ORM\ManyToOne(targetEntity="Cause", inversedBy="diagnostiques")
      * @var Cause
+     * @Serializer\Groups({"consultation","diagnostique"})
      */
     private $cause;
 
     /**
      * @ORM\ManyToOne(targetEntity="Consultation", inversedBy="diagnostiques")
      * @var Consultation
+     * @Serializer\Groups({"diagnostique"})
      */
     private $consultation;
 
     /**
      * @ORM\ManyToOne(targetEntity="Pathologie", inversedBy="diagnostiques")
      * @var Pathologie
+     * @Serializer\Groups({"consultation","diagnostique"})
      */
     private $pathologie;
 

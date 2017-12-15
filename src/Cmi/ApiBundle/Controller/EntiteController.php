@@ -14,7 +14,7 @@ use Cmi\ApiBundle\Entity\Entite;
 class EntiteController extends FOSRestController
 {
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"entite"})
      * @Rest\Get("/entites/afficher")
      */
     public function getEntitesAction()

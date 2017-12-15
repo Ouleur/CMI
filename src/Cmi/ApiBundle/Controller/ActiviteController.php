@@ -17,7 +17,7 @@ class ActiviteController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"activite"})
      * @Rest\Get("/activites/afficher")
      */
     public function getActivitesAction()
@@ -35,7 +35,7 @@ class ActiviteController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"activite"})
      * @Rest\Get("/activites/rechercher/{id}")
      */
     public function getActiviteAction( Request $request)
@@ -53,7 +53,7 @@ class ActiviteController extends FOSRestController
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED,serializerGroups={"activite"})
      * @Rest\Post("/activites/creer")
      */
     public function postActiviteAction(Request $request)
@@ -82,7 +82,7 @@ class ActiviteController extends FOSRestController
     }
 
     /**
-    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT,serializerGroups={"activite"})
     * @Rest\Delete("/activites/supprimer/{id}")
     */
     public function removeActiviteAction(Request $request)
@@ -132,7 +132,7 @@ class ActiviteController extends FOSRestController
 
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"activite"})
     * @Rest\Put("/activites/modifier/{id}")
     */
     public function updateActiviteAction(Request $request)
@@ -141,7 +141,7 @@ class ActiviteController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"activite"})
     * @Rest\Patch("/activites/modifier/{id}")
     */
     public function patchActiviteAction(Request $request)

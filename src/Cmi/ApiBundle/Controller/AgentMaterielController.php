@@ -17,7 +17,7 @@ class AgentMaterielController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"agent_materiel"})
      * @Rest\Get("/agentmateriels/afficher")
      */
     public function getAgentMaterielsAction()
@@ -35,7 +35,7 @@ class AgentMaterielController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"agent_materiel"})
      * @Rest\Get("/agentmateriels/rechercher/{id}")
      */
     public function getAgentMaterielAction( Request $request)
@@ -53,7 +53,7 @@ class AgentMaterielController extends FOSRestController
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED,serializerGroups={"agent_materiel"})
      * @Rest\Post("/agentmateriels/creer")
      */
     public function postAgentMaterielAction(Request $request)
@@ -82,7 +82,7 @@ class AgentMaterielController extends FOSRestController
     }
 
     /**
-    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT,serializerGroups={"agent_materiel"})
     * @Rest\Delete("/agentmateriels/supprimer/{id}")
     */
     public function removeAgentMaterielAction(Request $request)
@@ -132,7 +132,7 @@ class AgentMaterielController extends FOSRestController
 
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"agent_materiel"})
     * @Rest\Put("/agentmateriels/modifier/{id}")
     */
     public function updateAgentMaterielAction(Request $request)
@@ -141,7 +141,7 @@ class AgentMaterielController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"agent_materiel"})
     * @Rest\Patch("/agentmateriels/modifier/{id}")
     */
     public function patchAgentMaterielAction(Request $request)

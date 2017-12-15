@@ -17,7 +17,7 @@ class SecteurController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"secteur"})
      * @Rest\Get("/secteurs/afficher")
      */
     public function getSecteursAction()

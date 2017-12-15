@@ -17,7 +17,7 @@ class CategorieController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"categorie"})
      * @Rest\Get("/categories")
      */
     public function getCategoriesAction()

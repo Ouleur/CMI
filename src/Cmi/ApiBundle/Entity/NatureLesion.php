@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * NatureLesion
@@ -18,6 +19,7 @@ class NatureLesion
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"naturelesion","accident"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class NatureLesion
      * @var string
      *
      * @ORM\Column(name="nl_code", type="string", length=10, nullable=true)
+     * @Serializer\Groups({"naturelesion","accident"})
      */
     private $nlCode;
 
@@ -32,6 +35,7 @@ class NatureLesion
      * @var string
      *
      * @ORM\Column(name="nl_libelle", type="string", length=150, nullable=true)
+     * @Serializer\Groups({"naturelesion","accident"})
      */
     private $nlLibelle;
 
@@ -39,6 +43,7 @@ class NatureLesion
      * @var \DateTime
      *
      * @ORM\Column(name="nl_date_enreg", type="datetime")
+     * @Serializer\Groups({"naturelesion"})
      */
     private $nlDateEnreg;
 
@@ -46,9 +51,16 @@ class NatureLesion
      * @var \DateTime
      *
      * @ORM\Column(name="nl_date_modif", type="datetime")
+     * @Serializer\Groups({"naturelesion"})
      */
     private $nlDateModif;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AccidentTravail", mappedBy="natureLesion")
+     * @var Accident[]
+     * @Serializer\Groups({"naturelesion"})
+     */
+    private $accidents;
 
     /**
      * Get id
@@ -154,5 +166,46 @@ class NatureLesion
     public function getNlDateModif()
     {
         return $this->nlDateModif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->accidents = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add accident
+     *
+     * @param \Cmi\ApiBundle\Entity\AccidentTravail $accident
+     *
+     * @return NatureLesion
+     */
+    public function addAccident(\Cmi\ApiBundle\Entity\AccidentTravail $accident)
+    {
+        $this->accidents[] = $accident;
+
+        return $this;
+    }
+
+    /**
+     * Remove accident
+     *
+     * @param \Cmi\ApiBundle\Entity\AccidentTravail $accident
+     */
+    public function removeAccident(\Cmi\ApiBundle\Entity\AccidentTravail $accident)
+    {
+        $this->accidents->removeElement($accident);
+    }
+
+    /**
+     * Get accidents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAccidents()
+    {
+        return $this->accidents;
     }
 }

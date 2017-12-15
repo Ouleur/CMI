@@ -20,7 +20,7 @@ class Patient
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Serializer\Groups({"patient","consultation"})
+     * @Serializer\Groups({"patient","p_search","consultation","accident"})
      */
     private $id;
 
@@ -28,7 +28,7 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_matricule", type="string", length=255, unique=true)
-     * @Serializer\Groups({"patient","consultation"})
+     * @Serializer\Groups({"patient","p_search","consultation","accident"})
      */
     private $patMatricule;
 
@@ -36,7 +36,7 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_photo", type="string", length=255)
-     * @Serializer\Groups({"patient","consultation"})
+     * @Serializer\Groups({"patient","p_search","consultation"})
      */
     private $patPhoto;
 
@@ -44,7 +44,7 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_nom", type="string", length=50)
-     * @Serializer\Groups({"patient","consultation"})
+     * @Serializer\Groups({"patient","consultation","accident"})
      */
     private $patNom;
 
@@ -52,15 +52,15 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_prenoms", type="string", length=255)
-     * @Serializer\Groups({"patient","consultation"})
+     * @Serializer\Groups({"patient","p_search","consultation","accident"})
      */
     private $patPrenoms;
 
     /**
      * @var \Date
      *
-     * @ORM\Column(name="pat_date_naiss", type="string")
-     * @Serializer\Groups({"patient","consultation"})
+     * @ORM\Column(name="pat_date_naiss", type="date")
+     * @Serializer\Groups({"patient","p_search","consultation"})
      */
     private $patDateNaiss;
 
@@ -160,9 +160,17 @@ class Patient
      */
     private $cartes;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="AccidentTravail", mappedBy="patient")
+     * @var Accident[]
+     * @Serializer\Groups({"patient","consultation"})
+     */
+    private $accidents;
+
 /**
     /**
-     * @ORM\ManyToOne(targetEntity="Profession", inversedBy="patient")
+     * @ORM\ManyToOne(targetEntity="Profession", inversedBy="patient", nullable=true)
      * @var Profession
      *
     private $profession;
@@ -208,7 +216,7 @@ class Patient
 
     /**
      * @ORM\ManyToOne(targetEntity="Profession", inversedBy="patient")
-     * @var Categorie
+     * @var Proffession
      * @Serializer\Groups({"patient","consultation"})
      */
     private $profession;
@@ -868,5 +876,39 @@ class Patient
     public function getProfession()
     {
         return $this->profession;
+    }
+
+    /**
+     * Add accident
+     *
+     * @param \Cmi\ApiBundle\Entity\AccidentTravail $accident
+     *
+     * @return Patient
+     */
+    public function addAccident(\Cmi\ApiBundle\Entity\AccidentTravail $accident)
+    {
+        $this->accidents[] = $accident;
+
+        return $this;
+    }
+
+    /**
+     * Remove accident
+     *
+     * @param \Cmi\ApiBundle\Entity\AccidentTravail $accident
+     */
+    public function removeAccident(\Cmi\ApiBundle\Entity\AccidentTravail $accident)
+    {
+        $this->accidents->removeElement($accident);
+    }
+
+    /**
+     * Get accidents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAccidents()
+    {
+        return $this->accidents;
     }
 }

@@ -17,7 +17,7 @@ class PathologieController extends FOSRestController
 {
 
 	/**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"pathologie"})
      * @Rest\Get("/pathologies/afficher")
      */
     public function getPathologiesAction()
@@ -35,7 +35,7 @@ class PathologieController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"pathologie"})
      * @Rest\Get("/pathologies/rechercher/{id}")
      */
     public function getPathologieAction( Request $request)
@@ -53,7 +53,7 @@ class PathologieController extends FOSRestController
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED,serializerGroups={"pathologie"})
      * @Rest\Post("/pathologies/creer")
      */
     public function postPathologieAction(Request $request)
@@ -82,7 +82,7 @@ class PathologieController extends FOSRestController
     }
 
     /**
-    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT,serializerGroups={"pathologie"})
     * @Rest\Delete("/pathologies/supprimer/{id}")
     */
     public function removePathologieAction(Request $request)
@@ -97,6 +97,9 @@ class PathologieController extends FOSRestController
     		$em->remove($pathologie);
     		$em->flush();
     	}
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $pathologie = $em->getRepository('CmiApiBundle:Pathologie');
     }
 
 
@@ -132,7 +135,7 @@ class PathologieController extends FOSRestController
 
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"pathologie"})
     * @Rest\Put("/pathologies/modifier/{id}")
     */
     public function updatePathologieAction(Request $request)
@@ -141,7 +144,7 @@ class PathologieController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"pathologie"})
     * @Rest\Patch("/pathologies/modifier/{id}")
     */
     public function patchPathologieAction(Request $request)

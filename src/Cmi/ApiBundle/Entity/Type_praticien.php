@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Type_praticien
@@ -18,6 +19,7 @@ class Type_praticien
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"type_praticien","praticien"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Type_praticien
      * @var string
      *
      * @ORM\Column(name="t_prt_code", type="string")
+     * @Serializer\Groups({"type_praticien","praticien"})
      */
     private $t_prt_code;
 
@@ -32,6 +35,7 @@ class Type_praticien
      * @var string
      *
      * @ORM\Column(name="t_prt_libelle", type="string", length=100)
+     * @Serializer\Groups({"type_praticien","praticien"})
      */
     private $t_prt_libelle;
 
@@ -39,6 +43,7 @@ class Type_praticien
      * @var \DateTime
      *
      * @ORM\Column(name="t_prt_date_enreg", type="datetime")
+     * @Serializer\Groups({"type_praticien"})
      */
     private $t_prt_date_enreg;
 
@@ -46,6 +51,7 @@ class Type_praticien
      * @var \DateTime
      *
      * @ORM\Column(name="t_prt_date_modif", type="datetime")
+     * @Serializer\Groups({"type_praticien"})
      */
     private $t_prt_date_modif;
 
@@ -53,6 +59,7 @@ class Type_praticien
     /**
      * @ORM\OneToMany(targetEntity="Praticien", mappedBy="type_praticien")
      * @var Praticien[]
+     * @Serializer\Groups({"type_praticien"})
      */
     private $praticiens;
 

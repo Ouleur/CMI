@@ -17,7 +17,7 @@ class Forme_medicamentController extends FOSRestController
 {
 
 	/**
-     * @Rest\View()
+     *@Rest\View(serializerGroups={"form_medic"})
      * @Rest\Get("/formes_medicaments/afficher")
      */
     public function getFormesMedicamentsAction()

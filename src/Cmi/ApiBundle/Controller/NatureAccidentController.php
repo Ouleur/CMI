@@ -17,7 +17,7 @@ class NatureAccidentController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"natureAccident"})
      * @Rest\Get("/natureaccidents/afficher")
      */
     public function getNatureAccidentsAction()
@@ -35,7 +35,7 @@ class NatureAccidentController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"natureAccident"})
      * @Rest\Get("/natureaccidents/rechercher/{id}")
      */
     public function getNatureAccidentAction( Request $request)
@@ -53,7 +53,7 @@ class NatureAccidentController extends FOSRestController
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED,serializerGroups={"natureAccident"})
      * @Rest\Post("/natureaccidents/creer")
      */
     public function postNatureAccidentAction(Request $request)
@@ -82,7 +82,7 @@ class NatureAccidentController extends FOSRestController
     }
 
     /**
-    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT,serializerGroups={"natureAccident"})
     * @Rest\Delete("/natureaccidents/supprimer/{id}")
     */
     public function removeNatureAccidentAction(Request $request)
@@ -132,7 +132,7 @@ class NatureAccidentController extends FOSRestController
 
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"natureAccident"})
     * @Rest\Put("/natureaccidents/modifier/{id}")
     */
     public function updateNatureAccidentAction(Request $request)
@@ -141,7 +141,7 @@ class NatureAccidentController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"natureAccident"})
     * @Rest\Patch("/natureaccidents/modifier/{id}")
     */
     public function patchNatureAccidentAction(Request $request)

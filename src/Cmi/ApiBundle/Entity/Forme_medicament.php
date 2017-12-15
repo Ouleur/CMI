@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Forme_medicament
@@ -18,6 +19,7 @@ class Forme_medicament
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"form_medic","medicament"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Forme_medicament
      * @var string
      *
      * @ORM\Column(name="form_medic_code", type="string")
+     * @Serializer\Groups({"form_medic","medicament"})
      */
     private $form_medic_code;
 
@@ -32,6 +35,7 @@ class Forme_medicament
      * @var string
      *
      * @ORM\Column(name="form_medic_libelle", type="string", length=100)
+     * @Serializer\Groups({"form_medic","medicament"})
      */
     private $form_medic_libelle;
 
@@ -39,6 +43,7 @@ class Forme_medicament
      * @var \DateTime
      *
      * @ORM\Column(name="form_medic_date_enreg", type="datetime")
+     * @Serializer\Groups({"form_medic"})
      */
     private $form_medic_date_enreg;
 
@@ -46,12 +51,14 @@ class Forme_medicament
      * @var \DateTime
      *
      * @ORM\Column(name="form_medic_date_modif", type="datetime")
+     * @Serializer\Groups({"form_medic"})
      */
     private $form_medic_date_modif;
 
     /**
      * @ORM\OneToMany(targetEntity="Medicament", mappedBy="forme_medicament")
      * @var Medicament[]
+     * @Serializer\Groups({"form_medic"})
      */
     private $medicaments;
 

@@ -17,7 +17,7 @@ class DiagnostiqueController extends FOSRestController
 {
 
 	/**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"diagnostique"})
      * @Rest\Get("/diagnostiques/afficher")
      */
     public function getDiagnostiquesAction()

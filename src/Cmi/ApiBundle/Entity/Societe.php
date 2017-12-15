@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Societe
@@ -18,12 +19,14 @@ class Societe
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"societe","entite"})
      */
     private $id;
     /**
      * @var string
      *
      * @ORM\Column(name="socie_code", type="string")
+     * @Serializer\Groups({"societe","entite"})
      */
     private $socie_code;
 
@@ -31,6 +34,7 @@ class Societe
      * @var string
      *
      * @ORM\Column(name="socie_libelle", type="string", length=100)
+     * @Serializer\Groups({"societe","entite"})
      */
     private $socie_libelle;
 
@@ -38,6 +42,7 @@ class Societe
      * @var \DateTime
      *
      * @ORM\Column(name="socie_date_enreg", type="datetime")
+     * @Serializer\Groups({"societe"})
      */
     private $socie_date_enreg;
 
@@ -45,6 +50,7 @@ class Societe
      * @var \DateTime
      *
      * @ORM\Column(name="socie_date_modif", type="datetime")
+     * @Serializer\Groups({"societe"})
      */
     private $socie_date_modif;
 
@@ -52,6 +58,7 @@ class Societe
     /**
      * @ORM\OneToMany(targetEntity="Entite", mappedBy="societe")
      * @var Entite[]
+     * @Serializer\Groups({"societe"})
      */
     private $entites;
 

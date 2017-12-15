@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Cmi\ApiBundle\Form\Type\ConsultationType;
 use Cmi\ApiBundle\Entity\Consultation;
+use Symfony\Component\Validator\Constraints\Date;
 
 class ConsultationController extends FOSRestController
 {
@@ -25,6 +26,8 @@ class ConsultationController extends FOSRestController
     	$consultations = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('CmiApiBundle:Consultation')
                 ->findAll();
+
+
         /* @var $consultations Consultation[] */
 
          if (empty($consultations)) {
@@ -53,6 +56,29 @@ class ConsultationController extends FOSRestController
         return $consultation;
     }
 
+    /**
+     * @Rest\View(serializerGroups={"consultation"})
+     * @Rest\Get("/consultationsJour")
+     */
+    public function getConsultationJourAction( Request $request)
+    {
+        $consultation = $this->get('doctrine.orm.entity_manager')->getRepository('CmiApiBundle:Consultation')
+        ->createQueryBuilder('c')
+        ->where("c.cons_date=:date")
+        ->setParameters(array("date"=>Date('Y-m-d')))
+        // // ->sort('price', 'ASC')
+        // ->limit(10)
+        ->getQuery()
+        ->execute();
+
+        /* @var $consultation Consultation[] */
+
+        if (empty($consultation)) {
+            return new JsonResponse(['message' => 'Consultation not found'.Date('Y-m-d')], Response::HTTP_NOT_FOUND);
+        }
+
+        return $consultation;
+    }
 
     /**
      * @Rest\View(serializerGroups={"consultation"})
@@ -79,12 +105,11 @@ class ConsultationController extends FOSRestController
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED,serializerGroups={"consultation"})
      * @Rest\Post("/patient/{p_id}/infirmier/{inf_id}/mofitifs/{mot_id}/specialite/{spe_id}/medecin/{med_id}/etape/{etp_id}/consultations/creer")
      */
     public function postConsultationAction(Request $request)
     {
-
 
         $patient = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('CmiApiBundle:Patient')
@@ -109,7 +134,6 @@ class ConsultationController extends FOSRestController
                     ->getRepository('CmiApiBundle:Motif')
                     ->find($mot_id[$i]);
             $consultation->addMotif($motif);
-
         }
         
         //speci
@@ -256,5 +280,37 @@ class ConsultationController extends FOSRestController
     public function patchConsultationAction(Request $request)
     {
     	return $this->updateConsultation($request, false);
+    }
+
+
+    /**
+     * @Rest\View(serializerGroups={"consultation"})
+    * @Rest\Patch("/consultations/modifier/{id}")
+    */
+    public function patchConsultationPartielAction(Request $request)
+    {
+        $consultation = $this->get("doctrine.orm.entity_manager")
+                        ->getRepository("CmiApiBundle:Consultation")
+                        ->find($request->get('id'));
+
+        if (empty($consultation)) {
+            # code...
+            return new JsonResponse(['message'=>'Consultation not found'],Response::HTTP_NOT_FOUND);
+        }
+
+
+        $form = $this->createForm(ConsultationType::class, $consultation);
+
+
+        $form->submit($request->query->all(),$clearMissing); // Validation des données
+
+        if ($form->isValid()){
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->merge($consultation);
+            $em->flush();
+            return $consultation;
+        }else{
+            return $form;
+        }
     }
 }

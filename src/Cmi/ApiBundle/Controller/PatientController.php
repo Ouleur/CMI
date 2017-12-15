@@ -17,7 +17,7 @@ class PatientController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"patient"})
      * @Rest\Get("/patients")
      */
     public function getPatientsAction()
@@ -27,6 +27,62 @@ class PatientController extends FOSRestController
                 ->getRepository('CmiApiBundle:Patient')
                 ->findAll();
         /* @var $places Place[] */
+     
+
+         if (empty($patients)) {
+            return new JsonResponse(['message' => 'Patient not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $patients;
+    }
+
+
+     /**
+     * @Rest\View(serializerGroups={"patient"})
+     * @Rest\Get("/patientsSearchMtle")
+     */
+    public function getPatientsSearchAction(Request $request)
+    {
+
+    
+            # code...
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $patients = $this->get('doctrine.orm.entity_manager')->getRepository('CmiApiBundle:Patient')
+        ->createQueryBuilder('c')
+        ->where($qb->expr()->like("c.patMatricule",$qb->expr()->literal('%' . $request->get('phrase') . '%')))
+        // ->setParameters(array("mtr"=>$request->get('phrase')))
+        // // ->sort('price', 'ASC')
+        // ->limit(10)
+        ->getQuery()
+        ->execute();
+
+         if (empty($patients)) {
+            return new JsonResponse(['message' => 'Patient not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $patients;
+    }
+
+     /**
+     * @Rest\View(serializerGroups={"patient"})
+     * @Rest\Get("/patientsSearchNom")
+     */
+    public function getPatientsSearchNomAction(Request $request)
+    {
+
+    
+            # code...
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $patients = $this->get('doctrine.orm.entity_manager')->getRepository('CmiApiBundle:Patient')
+        ->createQueryBuilder('c')
+        ->where($qb->expr()->like("c.patNom",$qb->expr()->literal('%' . $request->get('phrase') . '%')))
+        // ->setParameters(array("mtr"=>$request->get('phrase')))
+        // // ->sort('price', 'ASC')
+        // ->limit(10)
+        ->getQuery()
+        ->execute();
 
          if (empty($patients)) {
             return new JsonResponse(['message' => 'Patient not found'], Response::HTTP_NOT_FOUND);
@@ -57,7 +113,7 @@ class PatientController extends FOSRestController
 
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"patient"})
      * @Rest\Get("/patients/matricule/{mat}")
      */
     public function getPatientByMatriculeAction( Request $request)
@@ -87,7 +143,7 @@ class PatientController extends FOSRestController
 
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(serializerGroups={"patient"},statusCode=Response::HTTP_CREATED)
      * @Rest\Post("/entite/{e_id}/lieutravail/{l_id}/profession/{p_id}/typecontrat/{tp_id}/categorie/{c_id}/type_patient/{typ_id}/patient/creer")
      */
     public function postPatientsAction(Request $request)
@@ -161,7 +217,7 @@ class PatientController extends FOSRestController
 
 
     /**
-    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\View(serializerGroups={"patient"},serializerGroups={"patient"},statusCode=Response::HTTP_NO_CONTENT)
     * @Rest\Delete("/patients/{id}")
     */
     public function removePatientsAction(Request $request)
@@ -249,7 +305,7 @@ class PatientController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"patient"},)
     * @Rest\Put("/entite/{e_id}/lieutravail/{l_id}/profession/{p_id}/typecontrat/{tp_id}/categorie/{c_id}/type_patient/{typ_id}/patient/modifier/{id}")
     */
     public function updatePatientsAction(Request $request)
@@ -259,7 +315,7 @@ class PatientController extends FOSRestController
 
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"patient"},)
     * @Rest\Patch("/entite/{e_id}/lieutravail/{l_id}/profession/{p_id}/typecontrat/{tp_id}/categorie/{c_id}/type_patient/{typ_id}/patient/modifier/{id}")
     */
     public function patchPatientsAction(Request $request)

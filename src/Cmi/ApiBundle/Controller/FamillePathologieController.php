@@ -17,7 +17,7 @@ use Cmi\ApiBundle\Entity\Famille_pathologie;
 class FamillePathologieController extends FOSRestController
 {
 	/*
-	*@Rest\View()
+	*@Rest\View(serializerGroups={"fam_pathologie"})
 	*@Rest\Get("/famille_pathologies/afficher")
 	*/
 	public function afficherFamille_pathologieAction(Request $request)

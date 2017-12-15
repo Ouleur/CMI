@@ -17,7 +17,7 @@ use Cmi\ApiBundle\Entity\Forme_medicament;
 class FormeMedicamentController extends FOSRestController
 {
 	/*
-	*@Rest\View()
+	*@Rest\View(serializerGroups={"form_medic"})
 	*@Rest\Get("/forme_medicaments/afficher")
 	*/
 	public function afficherForme_medicamentAction(Request $request)

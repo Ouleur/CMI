@@ -165,6 +165,15 @@ activite:
     type:   rest
     resource: Cmi\ApiBundle\Controller\ActiviteController
 
+accidentTravail:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\AccidentTravailController
+
+arret:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\ArretController
+
+
 #Relation
 
 carte_relation:
@@ -250,3 +259,15 @@ diagnostique_relation:
 famille_pathologie_relation:
     type:   rest
     resource: Cmi\ApiBundle\Controller\Relation\Famille_pathologieRelationController
+
+
+######################## Sécurité ##########################################
+
+user:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\UserController
+
+
+auth-tokens:
+    type:     rest
+    resource: Cmi\ApiBundle\Controller\AuthTokenController

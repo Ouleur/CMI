@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Examen
@@ -18,6 +19,7 @@ class Examen
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"consultation","examen","type_examen"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Examen
      * @var string
      *
      * @ORM\Column(name="exam_code", type="string", length=10, unique=true)
+     * @Serializer\Groups({"consultation","examen","type_examen"})
      */
     private $examCode;
 
@@ -32,6 +35,7 @@ class Examen
      * @var string
      *
      * @ORM\Column(name="exam_libelle", type="string", length=100)
+     * @Serializer\Groups({"consultation","examen","type_examen"})
      */
     private $examLibelle;
 
@@ -39,6 +43,7 @@ class Examen
      * @var \DateTime
      *
      * @ORM\Column(name="exam_date_enreg", type="datetime")
+     * @Serializer\Groups({"examen"})
      */
     private $examDateEnreg;
 
@@ -46,6 +51,7 @@ class Examen
      * @var \DateTime
      *
      * @ORM\Column(name="exam_date_modif", type="datetime")
+     * @Serializer\Groups({"examen"})
      */
     private $examDateModif;
 
@@ -53,6 +59,7 @@ class Examen
     /**
      * @ORM\ManyToOne(targetEntity="Type_examen", inversedBy="examens")
      * @var Type_examen
+     * @Serializer\Groups({"examen","type_examen"})
      */
     public $type_examen;
 

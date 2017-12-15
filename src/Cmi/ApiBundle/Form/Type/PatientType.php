@@ -3,6 +3,7 @@
 
 namespace Cmi\ApiBundle\Form\Type;
 
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,7 +16,10 @@ class PatientType extends AbstractType
 		$builder->add('patPhoto');
 		$builder->add('patNom');
 		$builder->add('patPrenoms');
-		$builder->add('patDateNaiss');
+		$builder->add('patDateNaiss', DateType::class, array(
+		    // render as a single text box
+		    'widget' => 'single_text',
+		));
 		$builder->add('patLieuNaiss');
 		$builder->add('patCivilite');
 		$builder->add('patGrpSanguin');

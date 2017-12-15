@@ -17,7 +17,7 @@ class MotifController extends FOSRestController
 {
 
 	/**
-     * @Rest\View()
+     *@Rest\View(serializerGroups={"motif"})
      * @Rest\Get("/motifs/afficher")
      */
     public function getMotifsAction()

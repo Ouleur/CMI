@@ -17,7 +17,7 @@ class Type_patientController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"type_patient"})
      * @Rest\Get("/type_patient")
      */
     public function getType_patientsAction()

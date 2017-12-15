@@ -35,7 +35,7 @@ class SoinsController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"soins"})
      * @Rest\Get("/soins/rechercher/{id}")
      */
     public function getSoinAction( Request $request)
@@ -53,7 +53,7 @@ class SoinsController extends FOSRestController
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(serializerGroups={"soins"},statusCode=Response::HTTP_CREATED)
      * @Rest\Post("consultation/{c_id}/acte/{a_id}/soins/creer")
      */
     public function postSoinsAction(Request $request)
@@ -63,15 +63,19 @@ class SoinsController extends FOSRestController
                 ->getRepository('CmiApiBundle:Consultation')
                 ->find($request->get('c_id'));
 
-
-        $acte = $this->get('doctrine.orm.entity_manager')
+        $soin = new Soins();
+        $act_id = explode(",",$request->get('a_id'));
+        for ($i=0; $i < count($act_id); $i++) { 
+            # code...
+            //motifs
+            $acte = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('CmiApiBundle:Acte')
-                ->find($request->get('a_id'));
+                ->find($act_id[$i]);
+            $soin->addActe($acte);
 
+        }
+        
 
-    	$soin = new Soins();
-
-        $soin->setActe($acte);
         $soin->setConsultation($consultation);
 
 
@@ -95,7 +99,7 @@ class SoinsController extends FOSRestController
     }
 
     /**
-    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\View(serializerGroups={"soins"},statusCode=Response::HTTP_NO_CONTENT)
     * @Rest\Delete("/soins/supprimer/{id}")
     */
     public function removeSoinsAction(Request $request)
@@ -158,7 +162,7 @@ class SoinsController extends FOSRestController
 
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"soins"})
     * @Rest\Put("/consultation/{c_id}/acte/{a_id}/soins/modifier/{id}")
     */
     public function updateSoinsAction(Request $request)
@@ -167,7 +171,7 @@ class SoinsController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"soins"})
     * @Rest\Patch("/consultation/{c_id}/acte/{a_id}/soins/modifier/{id}")
     */
     public function patchSoinsAction(Request $request)

@@ -17,7 +17,7 @@ class OrdonnanceController extends FOSRestController
 {
 
 	/**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"ordonnance"})
      * @Rest\Get("/ordonnances/afficher")
      */
     public function getordonnancesAction()
@@ -35,7 +35,7 @@ class OrdonnanceController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"ordonnance"})
      * @Rest\Get("/ordonnances/rechercher/{id}")
      */
     public function getOrdonnanceAction( Request $request)
@@ -53,7 +53,7 @@ class OrdonnanceController extends FOSRestController
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(serializerGroups={"ordonnance"},statusCode=Response::HTTP_CREATED)
      * @Rest\Post("/consultation/{c_id}/medicament/{m_id}/ordonnances/creer")
      */
     public function postOrdonnanceAction(Request $request)
@@ -61,11 +61,11 @@ class OrdonnanceController extends FOSRestController
 
         $consultation = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('CmiApiBundle:Consultation')
-                ->find($request->get('id'));
+                ->find($request->get('c_id'));
 
         $medicament = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('CmiApiBundle:Medicament')
-                ->find($request->get('id'));
+                ->find($request->get('m_id'));
 
 
     	$ordonnance = new Ordonnance();
@@ -93,7 +93,7 @@ class OrdonnanceController extends FOSRestController
     }
 
     /**
-    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\View(serializerGroups={"ordonnance"},statusCode=Response::HTTP_NO_CONTENT)
     * @Rest\Delete("/ordonnances/supprimer/{id}")
     */
     public function removeOrdonnanceAction(Request $request)
@@ -155,7 +155,7 @@ class OrdonnanceController extends FOSRestController
 
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"ordonnance"})
     * @Rest\Put("/consultation/{c_id}/medicament/{m_id}/ordonnances/modifier/{id}")
     */
     public function updateOrdonnanceAction(Request $request)
@@ -164,7 +164,7 @@ class OrdonnanceController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"ordonnance"})
     * @Rest\Patch("/consultation/{c_id}/medicament/{m_id}/ordonnances/modifier/{id}")
     */
     public function patchOrdonnanceAction(Request $request)

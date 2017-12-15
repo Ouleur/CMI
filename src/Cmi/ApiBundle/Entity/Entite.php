@@ -19,7 +19,7 @@ class Entite
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Serializer\Groups({"patient","consultation"})
+     * @Serializer\Groups({"entite","patient","consultation"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class Entite
      * @var string
      *
      * @ORM\Column(name="enti_code", type="string", length=10)
-     * @Serializer\Groups({"patient","consultation"})
+     * @Serializer\Groups({"entite","patient","consultation"})
      */
     private $entiCode;
 
@@ -35,7 +35,7 @@ class Entite
      * @var string
      *
      * @ORM\Column(name="enti_libelle", type="string", length=100)
-     * @Serializer\Groups({"patient","consultation"})
+     * @Serializer\Groups({"entite","patient","consultation"})
      */
     private $entiLibelle;
 
@@ -44,7 +44,7 @@ class Entite
      * @var \DateTime
      *
      * @ORM\Column(name="enti_date_enreg", type="datetime")
-     * @Serializer\Groups({"patient"})
+     * @Serializer\Groups({"entite"})
      */
     private $entiDateEnreg;
 
@@ -52,7 +52,7 @@ class Entite
      * @var \DateTime
      *
      * @ORM\Column(name="enti_date_modif", type="datetime")
-     * @Serializer\Groups({"patient"})
+     * @Serializer\Groups({"entite"})
      */
     private $entiDateModif;
 
@@ -60,7 +60,7 @@ class Entite
     /**
      * @ORM\OneToMany(targetEntity="Entite", mappedBy="parent")
      * @var Entite[]
-     * @Serializer\Groups({"patient"})
+     * @Serializer\Groups({"entite"})
      */
     private $enfants;
 
@@ -75,14 +75,14 @@ class Entite
     /**
      * @ORM\ManyToOne(targetEntity="Entite", inversedBy="enfants")
      * @var Entite
-     * @Serializer\Groups({"patient"})
+     * @Serializer\Groups({"entite"})
      */
     private $parent;
 
     /**
      * @ORM\ManyToOne(targetEntity="Societe", inversedBy="entite")
      * @var Societe
-     * @Serializer\Groups({"patient"})
+     * @Serializer\Groups({"entite"})
      */
     private $societe;
 

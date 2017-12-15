@@ -17,7 +17,7 @@ class SiegeLesionController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"siegeLesion"})
      * @Rest\Get("/siegelesions/afficher")
      */
     public function getSiegeLesionsAction()
@@ -35,7 +35,7 @@ class SiegeLesionController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"siegeLesion"})
      * @Rest\Get("/siegelesions/rechercher/{id}")
      */
     public function getSiegeLesionAction( Request $request)
@@ -53,7 +53,7 @@ class SiegeLesionController extends FOSRestController
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED,serializerGroups={"siegeLesion"})
      * @Rest\Post("/siegelesions/creer")
      */
     public function postSiegeLesionAction(Request $request)
@@ -82,7 +82,7 @@ class SiegeLesionController extends FOSRestController
     }
 
     /**
-    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT,serializerGroups={"siegeLesion"})
     * @Rest\Delete("/siegelesions/supprimer/{id}")
     */
     public function removeSiegeLesionAction(Request $request)
@@ -132,7 +132,7 @@ class SiegeLesionController extends FOSRestController
 
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"siegeLesion"})
     * @Rest\Put("/siegelesions/modifier/{id}")
     */
     public function updateSiegeLesionAction(Request $request)
@@ -141,7 +141,7 @@ class SiegeLesionController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"siegeLesion"})
     * @Rest\Patch("/siegelesions/modifier/{id}")
     */
     public function patchSiegeLesionAction(Request $request)

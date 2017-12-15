@@ -17,7 +17,7 @@ class PraticienController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"praticien"})
      * @Rest\Get("/praticiens/afficher")
      */
     public function getPraticiensAction()
@@ -36,7 +36,7 @@ class PraticienController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"praticien"})
      * @Rest\Get("/praticiens/{id}")
      */
     public function getPraticienAction( Request $request)
@@ -57,7 +57,7 @@ class PraticienController extends FOSRestController
 
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(serializerGroups={"praticien"},statusCode=Response::HTTP_CREATED)
      * @Rest\Post("type_praticien/{tp_id}/praticiens/creer")
      */
     public function postPraticiensAction(Request $request)
@@ -102,7 +102,7 @@ class PraticienController extends FOSRestController
 
 
     /**
-    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\View(serializerGroups={"praticien"},statusCode=Response::HTTP_NO_CONTENT)
     * @Rest\Delete("/praticiens/{id}")
     */
     public function removePraticiensAction(Request $request)
@@ -167,7 +167,7 @@ class PraticienController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"praticien"})
     * @Rest\Put("type_praticien/{tp_id}/praticiens/{id}")
     */
     public function updatePraticienAction(Request $request)
@@ -177,7 +177,7 @@ class PraticienController extends FOSRestController
 
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"praticien"})
     * @Rest\Patch("type_praticien/{tp_id}/praticiens/{id}")
     */
     public function patchPraticienAction(Request $request)

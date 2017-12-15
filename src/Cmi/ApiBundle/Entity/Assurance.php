@@ -4,7 +4,7 @@ namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-
+use JMS\Serializer\Annotation as Serializer;
 
 
 /**
@@ -21,6 +21,7 @@ class Assurance
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"assurance","carte"})
      */
     private $id;
 
@@ -31,6 +32,7 @@ class Assurance
      * @var string
      *
      * @ORM\Column(name="assure_code", type="string", length=10)
+     * @Serializer\Groups({"assurance","carte"})
      */
     private $assureCode;
 
@@ -39,6 +41,7 @@ class Assurance
      * @var string
      *
      * @ORM\Column(name="assure_libelle", type="string", length=100)
+     * @Serializer\Groups({"assurance","carte"})
      */
     private $assureLibelle;
 
@@ -46,6 +49,7 @@ class Assurance
      * @var \DateTime
      *
      * @ORM\Column(name="assure_date_enreg", type="datetime")
+     * @Serializer\Groups({"assurance","carte"})
      */
     private $assureDateEnreg;
 
@@ -53,12 +57,14 @@ class Assurance
      * @var \DateTime
      *
      * @ORM\Column(name="assure_date_modif", type="datetime")
+     * @Serializer\Groups({"assurance","carte"})
      */
     private $assureDateModif;
 
     /**
      * @ORM\OneToMany(targetEntity="Carte", mappedBy="assurance")
      * @var Carte[]
+     * @Serializer\Groups({"assurance"})
      */
     private $cartes;
 

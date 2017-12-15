@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Resultat_examen
@@ -18,28 +19,16 @@ class Resultat_examen
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"resultat_exam","consultation"})
      */
     private $id;
 
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="res_consul_id", type="integer")
-     */
-    private $resConsulId;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="res_exam_id", type="integer")
-     */
-    private $resExamId;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="res_etat", type="boolean", nullable=true)
+     * @Serializer\Groups({"resultat_exam","consultation"})
      */
     private $resEtat;
 
@@ -47,6 +36,7 @@ class Resultat_examen
      * @var string
      *
      * @ORM\Column(name="res_observation", type="string", length=255, nullable=true)
+     * @Serializer\Groups({"resultat_exam","consultation"})
      */
     private $resObservation;
 
@@ -54,13 +44,31 @@ class Resultat_examen
      * @var string
      *
      * @ORM\Column(name="res_commentaire", type="string", length=255, nullable=true)
+     * @Serializer\Groups({"resultat_exam","consultation"})
      */
     private $resCommentaire;
 
     /**
      * @var \DateTime
      *
+     * @ORM\Column(name="res_date_pr_fait", type="datetime", nullable=true)
+     * @Serializer\Groups({"resultat_exam","consultation"})
+     */
+    private $resDatePrFait;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="res_date_fait", type="datetime", nullable=true)
+     * @Serializer\Groups({"resultat_exam","consultation"})
+     */
+    private $resDateFait;
+
+    /**
+     * @var \DateTime
+     *
      * @ORM\Column(name="res_date_enreg", type="datetime")
+     * @Serializer\Groups({"resultat_exam"})
      */
     private $resDateEnreg;
 
@@ -68,18 +76,21 @@ class Resultat_examen
      * @var \DateTime
      *
      * @ORM\Column(name="res_date_modif", type="datetime")
+     * @Serializer\Groups({"resultat_exam"})
      */
     private $resDateModif;
 
     /**
      * @ORM\ManyToOne(targetEntity="Examen", inversedBy="resultat_examens")
      * @var Examen
+     * @Serializer\Groups({"resultat_exam","consultation"})
      */
     private $examen;
 
     /**
      * @ORM\ManyToOne(targetEntity="Consultation", inversedBy="resultat_examens")
      * @var Consultation
+     * @Serializer\Groups({"resultat_exam"})
      */
     private $consultation;
 
@@ -91,78 +102,6 @@ class Resultat_examen
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set resId
-     *
-     * @param integer $resId
-     *
-     * @return Resultat_examen
-     */
-    public function setResId($resId)
-    {
-        $this->resId = $resId;
-
-        return $this;
-    }
-
-    /**
-     * Get resId
-     *
-     * @return int
-     */
-    public function getResId()
-    {
-        return $this->resId;
-    }
-
-    /**
-     * Set resConsulId
-     *
-     * @param integer $resConsulId
-     *
-     * @return Resultat_examen
-     */
-    public function setResConsulId($resConsulId)
-    {
-        $this->resConsulId = $resConsulId;
-
-        return $this;
-    }
-
-    /**
-     * Get resConsulId
-     *
-     * @return int
-     */
-    public function getResConsulId()
-    {
-        return $this->resConsulId;
-    }
-
-    /**
-     * Set resExamId
-     *
-     * @param integer $resExamId
-     *
-     * @return Resultat_examen
-     */
-    public function setResExamId($resExamId)
-    {
-        $this->resExamId = $resExamId;
-
-        return $this;
-    }
-
-    /**
-     * Get resExamId
-     *
-     * @return int
-     */
-    public function getResExamId()
-    {
-        return $this->resExamId;
     }
 
     /**
@@ -331,5 +270,53 @@ class Resultat_examen
     public function getConsultation()
     {
         return $this->consultation;
+    }
+
+    /**
+     * Set resDateFait
+     *
+     * @param \DateTime $resDateFait
+     *
+     * @return Resultat_examen
+     */
+    public function setResDateFait($resDateFait)
+    {
+        $this->resDateFait = $resDateFait;
+
+        return $this;
+    }
+
+    /**
+     * Get resDateFait
+     *
+     * @return \DateTime
+     */
+    public function getResDateFait()
+    {
+        return $this->resDateFait;
+    }
+
+    /**
+     * Set resDatePrFait
+     *
+     * @param \DateTime $resDatePrFait
+     *
+     * @return Resultat_examen
+     */
+    public function setResDatePrFait($resDatePrFait)
+    {
+        $this->resDatePrFait = $resDatePrFait;
+
+        return $this;
+    }
+
+    /**
+     * Get resDatePrFait
+     *
+     * @return \DateTime
+     */
+    public function getResDatePrFait()
+    {
+        return $this->resDatePrFait;
     }
 }

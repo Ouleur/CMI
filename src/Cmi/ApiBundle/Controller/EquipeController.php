@@ -17,7 +17,7 @@ class EquipeController extends FOSRestController
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"equipe"})
      * @Rest\Get("/equipes/afficher")
      */
     public function getEquipesAction()

@@ -17,7 +17,7 @@ class EtapeController extends FOSRestController
 {
 
 	/**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"etape"})
      * @Rest\Get("/etapes/afficher")
      */
     public function getEtapesAction()
@@ -35,7 +35,7 @@ class EtapeController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"etape"})
      * @Rest\Get("/etapes/rechercher/{id}")
      */
     public function getEtapeAction( Request $request)
@@ -53,7 +53,7 @@ class EtapeController extends FOSRestController
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED,serializerGroups={"etape"})
      * @Rest\Post("/etapes/creer")
      */
     public function postEtapeAction(Request $request)
@@ -82,7 +82,7 @@ class EtapeController extends FOSRestController
     }
 
     /**
-    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT,serializerGroups={"etape"})
     * @Rest\Delete("/etapes/supprimer/{id}")
     */
     public function removeEtapeAction(Request $request)
@@ -132,7 +132,7 @@ class EtapeController extends FOSRestController
 
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"etape"})
     * @Rest\Put("/etapes/modifier/{id}")
     */
     public function updateEtapeAction(Request $request)
@@ -141,7 +141,7 @@ class EtapeController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"etape"})
     * @Rest\Patch("/etapes/modifier/{id}")
     */
     public function patchEtapeAction(Request $request)

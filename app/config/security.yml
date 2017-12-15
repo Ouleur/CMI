@@ -4,6 +4,9 @@ security:
 
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
+        Cmi\ApiBundle\Entity\User: 
+            algorithm: bcrypt
+            cost: 12
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
@@ -11,6 +14,9 @@ security:
 
         fos_userbundle:
             id: fos_user.user_provider.username
+
+        auth_token_user_provider:
+            id: auth_token_user_provider
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -28,15 +34,22 @@ security:
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
 
-        oauth_token:                                   # Everyone can access the access token URL.
-            pattern: ^/oauth/v2/token
-            security: false
+        # oauth_token:                                   # Everyone can access the access token URL.
+        #     pattern: ^/oauth/v2/token
+        #     security: false
         api:
             pattern: ^/                                # All URLs are protected
             fos_oauth: true                            # OAuth2 protected resource
             stateless: true                            # Do no set session cookies
-            anonymous: true                          # Anonymous access is not allowed
+            anonymous: true                           # Anonymous access is not allowed
 
+        # main:
+        #     pattern: ^/
+        #     stateless: true
+        #     simple_preauth:
+        #         authenticator: auth_token_authenticator
+        #     provider: auth_token_user_provider
+        #     anonymous: ~
     # access_control:
         # - { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }
 

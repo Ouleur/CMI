@@ -26,9 +26,8 @@ class Consultation
 
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="cons_date", type="datetime",nullable=true)
+     * @var \Date
+     * @ORM\Column(name="cons_date", type="date",nullable=true)
      * @Serializer\Groups({"consultation","soins"})
      */
     private $cons_date;
@@ -57,6 +56,30 @@ class Consultation
      * @Serializer\Groups({"consultation"})
      */
     private $cons_poids;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="cons_rdv_date", type="date", nullable=true)
+     * @Serializer\Groups({"consultation"})
+     */
+    private $cons_rdvDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cons_rdv_objet", type="string", length=150, nullable=true)
+     * @Serializer\Groups({"consultation"})
+     */
+    private $cons_rdvObjet;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cons_rdv_commentaire", type="string", length=255, nullable=true)
+     * @Serializer\Groups({"consultation"})
+     */
+    private $cons_rdvCommentaire;
 
     /**
      * @var \DateTime
@@ -115,7 +138,6 @@ class Consultation
      * @ORM\ManyToMany(targetEntity="Motif", cascade={"persist"})
      * @Serializer\Groups({"consultation"})
      */
-
     private $motifs;
 
 
@@ -149,6 +171,13 @@ class Consultation
      * @Serializer\Groups({"consultation"})
      */
     private $ordonnances;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Arret", mappedBy="consultation")
+     * @var Arrets[]
+     * @Serializer\Groups({"consultation"})
+     */
+    private $arrets;
 
     /**
      * @ORM\OneToMany(targetEntity="Diagnostique", mappedBy="consultation")
@@ -631,5 +660,112 @@ class Consultation
     public function getConsPoids()
     {
         return $this->cons_poids;
+    }
+
+
+    /**
+     * Set consRdvDate
+     *
+     * @param \DateTime $consRdvDate
+     *
+     * @return Consultation
+     */
+    public function setConsRdvDate($consRdvDate)
+    {
+        $this->cons_rdvDate = $consRdvDate;
+
+        return $this;
+    }
+
+    /**
+     * Get consRdvDate
+     *
+     * @return \DateTime
+     */
+    public function getConsRdvDate()
+    {
+        return $this->cons_rdvDate;
+    }
+
+    /**
+     * Set consRdvObjet
+     *
+     * @param string $consRdvObjet
+     *
+     * @return Consultation
+     */
+    public function setConsRdvObjet($consRdvObjet)
+    {
+        $this->cons_rdvObjet = $consRdvObjet;
+
+        return $this;
+    }
+
+    /**
+     * Get consRdvObjet
+     *
+     * @return string
+     */
+    public function getConsRdvObjet()
+    {
+        return $this->cons_rdvObjet;
+    }
+
+    /**
+     * Set consRdvCommentaire
+     *
+     * @param string $consRdvCommentaire
+     *
+     * @return Consultation
+     */
+    public function setConsRdvCommentaire($consRdvCommentaire)
+    {
+        $this->cons_rdvCommentaire = $consRdvCommentaire;
+
+        return $this;
+    }
+
+    /**
+     * Get consRdvCommentaire
+     *
+     * @return string
+     */
+    public function getConsRdvCommentaire()
+    {
+        return $this->cons_rdvCommentaire;
+    }
+
+    /**
+     * Add arret
+     *
+     * @param \Cmi\ApiBundle\Entity\Arret $arret
+     *
+     * @return Consultation
+     */
+    public function addArret(\Cmi\ApiBundle\Entity\Arret $arret)
+    {
+        $this->arrets[] = $arret;
+
+        return $this;
+    }
+
+    /**
+     * Remove arret
+     *
+     * @param \Cmi\ApiBundle\Entity\Arret $arret
+     */
+    public function removeArret(\Cmi\ApiBundle\Entity\Arret $arret)
+    {
+        $this->arrets->removeElement($arret);
+    }
+
+    /**
+     * Get arrets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getArrets()
+    {
+        return $this->arrets;
     }
 }

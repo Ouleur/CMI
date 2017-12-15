@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Type_patient
@@ -18,6 +19,7 @@ class Type_patient
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"type_patient","patient"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Type_patient
      * @var string
      *
      * @ORM\Column(name="t_pat_code", type="string", length=20)
+     * @Serializer\Groups({"type_patient","patient"})
      */
     private $tPatCode;
 
@@ -32,6 +35,7 @@ class Type_patient
      * @var string
      *
      * @ORM\Column(name="t_pat_libelle", type="string", length=100)
+     * @Serializer\Groups({"type_patient","patient"})
      */
     private $tPatLibelle;
 
@@ -39,6 +43,7 @@ class Type_patient
      * @var \DateTime
      *
      * @ORM\Column(name="t_pat_date_enreg", type="datetime")
+     * @Serializer\Groups({"type_patient"})
      */
     private $tPatDateEnreg;
 
@@ -46,6 +51,7 @@ class Type_patient
      * @var \DateTime
      *
      * @ORM\Column(name="t_pat_date_modif", type="datetime")
+     * @Serializer\Groups({"type_patient"})
      */
     private $tPatDateModif;
 
@@ -53,6 +59,7 @@ class Type_patient
     /**
      * @ORM\OneToMany(targetEntity="Patient", mappedBy="type_patient")
      * @var Patient[]
+     * @Serializer\Groups({"type_patient"})
      */
     private $patient;
     /**

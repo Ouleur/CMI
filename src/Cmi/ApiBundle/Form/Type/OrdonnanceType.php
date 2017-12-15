@@ -9,10 +9,9 @@ class OrdonnanceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('ordo_id');
-        $builder->add('ordo_consul_id');
-        $builder->add('ordo_medic_id');
+        $builder->add('ordo_dure');
         $builder->add('ordo_posologie');
+        $builder->add('ordo_quantite');
     }
 
     public function configureOptions(OptionsResolver $resolver)

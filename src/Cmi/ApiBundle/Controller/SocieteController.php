@@ -17,7 +17,7 @@ class SocieteController extends FOSRestController
 {
 
 	/**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"societe"})
      * @Rest\Get("/societes/afficher")
      */
     public function getSocietesAction()

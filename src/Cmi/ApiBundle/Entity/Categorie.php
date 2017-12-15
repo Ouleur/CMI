@@ -1,6 +1,7 @@
 <?php
 
 namespace Cmi\ApiBundle\Entity;
+use JMS\Serializer\Annotation as Serializer;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,6 +19,7 @@ class Categorie
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"patient","categorie"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Categorie
      * @var string
      *
      * @ORM\Column(name="cate_code", type="string", length=10)
+     * @Serializer\Groups({"patient","categorie"})
      */
     private $cateCode;
 
@@ -32,6 +35,7 @@ class Categorie
      * @var string
      *
      * @ORM\Column(name="cate_libelle", type="string", length=100)
+     * @Serializer\Groups({"patient","categorie"})
      */
     private $cateLibelle;
 
@@ -39,6 +43,7 @@ class Categorie
      * @var \DateTime
      *
      * @ORM\Column(name="cate_date_enreg", type="datetime")
+     * @Serializer\Groups({"categorie"})
      */
     private $cateDateEnreg;
 
@@ -46,12 +51,14 @@ class Categorie
      * @var \DateTime
      *
      * @ORM\Column(name="cate_date_modif", type="datetime")
+     * @Serializer\Groups({"categorie"})
      */
     private $cateDateModif;
 
     /**
      * @ORM\OneToMany(targetEntity="Patient", mappedBy="categorie")
      * @var Patient[]
+     * @Serializer\Groups({"categorie"})
      */
     private $patients;
 

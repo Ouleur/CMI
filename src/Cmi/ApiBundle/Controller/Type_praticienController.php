@@ -17,7 +17,7 @@ class Type_praticienController extends FOSRestController
 {
 
 	/**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"type_praticien"})
      * @Rest\Get("/type_praticiens/afficher")
      */
     public function getType_praticiensAction()

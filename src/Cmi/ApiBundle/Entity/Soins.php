@@ -56,9 +56,9 @@ class Soins
     private $consultation;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Acte", inversedBy="soins")
+     * @ORM\ManyToMany(targetEntity="Acte", cascade={"persist"})
      * @var Acte
-     * @Serializer\Groups({"consultation","soins"})
+     * @Serializer\Groups({"consultation"})
      */
     private $acte;
 
@@ -169,23 +169,41 @@ class Soins
     }
 
     /**
-     * Set acte
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->acte = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add acte
      *
      * @param \Cmi\ApiBundle\Entity\Acte $acte
      *
      * @return Soins
      */
-    public function setActe(\Cmi\ApiBundle\Entity\Acte $acte = null)
+    public function addActe(\Cmi\ApiBundle\Entity\Acte $acte)
     {
-        $this->acte = $acte;
+        $this->acte[] = $acte;
 
         return $this;
     }
 
     /**
+     * Remove acte
+     *
+     * @param \Cmi\ApiBundle\Entity\Acte $acte
+     */
+    public function removeActe(\Cmi\ApiBundle\Entity\Acte $acte)
+    {
+        $this->acte->removeElement($acte);
+    }
+
+    /**
      * Get acte
      *
-     * @return \Cmi\ApiBundle\Entity\Acte
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getActe()
     {

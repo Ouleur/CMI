@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Famille_pathologie
@@ -18,6 +19,7 @@ class Famille_pathologie
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"fam_pathologie","pathologie"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Famille_pathologie
      * @var string
      *
      * @ORM\Column(name="fam_patho_code", type="string")
+     * @Serializer\Groups({"fam_pathologie","pathologie"})
      */
     private $fam_patho_code;
 
@@ -32,6 +35,7 @@ class Famille_pathologie
      * @var string
      *
      * @ORM\Column(name="fam_patho_libelle", type="string", length=100)
+     * @Serializer\Groups({"fam_pathologie","pathologie"})
      */
     private $fam_patho_libelle;
 
@@ -39,6 +43,7 @@ class Famille_pathologie
      * @var \DateTime
      *
      * @ORM\Column(name="fam_patho_date_enreg", type="datetime")
+     * @Serializer\Groups({"fam_pathologie"})
      */
     private $fam_patho_date_enreg;
 
@@ -46,12 +51,14 @@ class Famille_pathologie
      * @var \DateTime
      *
      * @ORM\Column(name="fam_patho_date_modif", type="datetime")
+     * @Serializer\Groups({"fam_pathologie"})
      */
     private $fam_patho_date_modif;
 
     /**
      * @ORM\OneToMany(targetEntity="Pathologie", mappedBy="famille_pathologie")
      * @var Pathologie[]
+     * @Serializer\Groups({"fam_pathologie"})
      */
     private $pathologie;
 

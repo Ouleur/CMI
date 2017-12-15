@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * SiegeLesion
@@ -18,6 +19,7 @@ class SiegeLesion
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"siegeLesion","accident"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class SiegeLesion
      * @var string
      *
      * @ORM\Column(name="sl_code", type="string", length=10, nullable=true)
+     * @Serializer\Groups({"siegeLesion","accident"})
      */
     private $slCode;
 
@@ -32,6 +35,7 @@ class SiegeLesion
      * @var string
      *
      * @ORM\Column(name="sl_libelle", type="string", length=150)
+     * @Serializer\Groups({"siegeLesion","accident"})
      */
     private $slLibelle;
 
@@ -39,6 +43,7 @@ class SiegeLesion
      * @var \DateTime
      *
      * @ORM\Column(name="sl_date_enreg", type="datetime")
+     * @Serializer\Groups({"siegeLesion"})
      */
     private $slDateEnreg;
 
@@ -46,9 +51,16 @@ class SiegeLesion
      * @var \DateTime
      *
      * @ORM\Column(name="sl_date_modif", type="datetime")
+     * @Serializer\Groups({"siegeLesion"})
      */
     private $slDateModif;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AccidentTravail", mappedBy="siegeLesion")
+     * @var Accident[]
+     * @Serializer\Groups({"siegeLesion"})
+     */
+    private $accidents;
 
     /**
      * Get id
@@ -154,5 +166,46 @@ class SiegeLesion
     public function getSlDateModif()
     {
         return $this->slDateModif;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->accidents = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add accident
+     *
+     * @param \Cmi\ApiBundle\Entity\AccidentTravail $accident
+     *
+     * @return SiegeLesion
+     */
+    public function addAccident(\Cmi\ApiBundle\Entity\AccidentTravail $accident)
+    {
+        $this->accidents[] = $accident;
+
+        return $this;
+    }
+
+    /**
+     * Remove accident
+     *
+     * @param \Cmi\ApiBundle\Entity\AccidentTravail $accident
+     */
+    public function removeAccident(\Cmi\ApiBundle\Entity\AccidentTravail $accident)
+    {
+        $this->accidents->removeElement($accident);
+    }
+
+    /**
+     * Get accidents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAccidents()
+    {
+        return $this->accidents;
     }
 }

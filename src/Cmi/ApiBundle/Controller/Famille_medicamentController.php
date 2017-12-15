@@ -17,7 +17,7 @@ class Famille_medicamentController extends FOSRestController
 {
 
 	/**
-     * @Rest\View()
+     *@Rest\View(serializerGroups={"fam_medicament"})
      * @Rest\Get("/familles_medicaments/afficher")
      */
     public function getFamillesMedicamentsAction()

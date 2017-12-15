@@ -17,7 +17,7 @@ class CarteController extends FOSRestController
 {
 
     /**
-     * @Rest\View(serializerGroups={})
+     * @Rest\View(serializerGroups={"carte"})
      * @Rest\Get("/cartes")
      */
     public function getCartesAction()

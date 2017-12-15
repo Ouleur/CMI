@@ -1,6 +1,7 @@
 <?php
 
 namespace Cmi\ApiBundle\Entity;
+use JMS\Serializer\Annotation as Serializer;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,6 +19,7 @@ class Etape
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"consultation","etape"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Etape
      * @var string
      *
      * @ORM\Column(name="etp_code", type="string")
+     * @Serializer\Groups({"consultation","etape"})
      */
     private $etp_code;
 
@@ -32,6 +35,7 @@ class Etape
      * @var string
      *
      * @ORM\Column(name="etp_libelle", type="string", length=100)
+     * @Serializer\Groups({"consultation","etape"})
      */
     private $etp_libelle;
 
@@ -39,6 +43,7 @@ class Etape
      * @var \DateTime
      *
      * @ORM\Column(name="etp_date_enreg", type="datetime")
+     * @Serializer\Groups({"etape"})
      */
     private $etp_date_enreg;
 
@@ -46,12 +51,14 @@ class Etape
      * @var \DateTime
      *
      * @ORM\Column(name="etp_date_modif", type="datetime")
+     * @Serializer\Groups({"etape"})
      */
     private $etp_date_modif;
 
     /**
      * @ORM\OneToMany(targetEntity="Consultation", mappedBy="etape")
      * @var Consultation[]
+     * @Serializer\Groups({"etape"})
      */
     private $consultations;
 

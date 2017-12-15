@@ -3,6 +3,7 @@
 namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Type_contrat
@@ -18,6 +19,7 @@ class Type_contrat
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"type_contrat","patient"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class Type_contrat
      * @var string
      *
      * @ORM\Column(name="t_contrat_code", type="string", length=10)
+     * @Serializer\Groups({"type_contrat","patient"})
      */
     private $tContratCode;
 
@@ -32,6 +35,7 @@ class Type_contrat
      * @var string
      *
      * @ORM\Column(name="t_contrat_libelle", type="string", length=100)
+     * @Serializer\Groups({"type_contrat","patient"})
      */
     private $tContratLibelle;
 
@@ -39,6 +43,7 @@ class Type_contrat
      * @var \DateTime
      *
      * @ORM\Column(name="t_contrat_date_enreg", type="datetime")
+     * @Serializer\Groups({"type_contrat"})
      */
     private $tContratDateEnreg;
 
@@ -46,6 +51,7 @@ class Type_contrat
      * @var \DateTime
      *
      * @ORM\Column(name="t_contrat_date_modif", type="datetime")
+     * @Serializer\Groups({"type_contrat"})
      */
     private $tContratDateModif;
 
@@ -53,6 +59,7 @@ class Type_contrat
     /**
      * @ORM\OneToMany(targetEntity="Patient", mappedBy="type_contrat")
      * @var Patient[]
+     * @Serializer\Groups({"type_contrat"})
      */
     private $patient;
 

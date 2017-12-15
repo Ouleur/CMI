@@ -17,7 +17,7 @@ class Famille_pathologieController extends FOSRestController
 {
 
 	/**
-     * @Rest\View()
+     *@Rest\View(serializerGroups={"fam_pathologie"})
      * @Rest\Get("/familles_pathologies/afficher")
      */
     public function getFamillesPathologiesAction()
