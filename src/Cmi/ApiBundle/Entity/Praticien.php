@@ -102,6 +102,20 @@ class Praticien
     private $consultationsInf;
 
     /**
+     * @ORM\OneToMany(targetEntity="Visite", mappedBy="infirmier")
+     * @var Visites[]
+     * @Serializer\Groups({"praticien"})
+     */
+    private $visiteInf;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Visite", mappedBy="infirmier")
+     * @var Visites[]
+     * @Serializer\Groups({"praticien"})
+     */
+    private $visiteMed;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Type_praticien", inversedBy="praticiens")
      * @var Type_praticien
      * @Serializer\Groups({"praticien"})
@@ -421,5 +435,73 @@ class Praticien
     public function getPratSexe()
     {
         return $this->pratSexe;
+    }
+
+    /**
+     * Add visiteInf
+     *
+     * @param \Cmi\ApiBundle\Entity\Visite $visiteInf
+     *
+     * @return Praticien
+     */
+    public function addVisiteInf(\Cmi\ApiBundle\Entity\Visite $visiteInf)
+    {
+        $this->visiteInf[] = $visiteInf;
+
+        return $this;
+    }
+
+    /**
+     * Remove visiteInf
+     *
+     * @param \Cmi\ApiBundle\Entity\Visite $visiteInf
+     */
+    public function removeVisiteInf(\Cmi\ApiBundle\Entity\Visite $visiteInf)
+    {
+        $this->visiteInf->removeElement($visiteInf);
+    }
+
+    /**
+     * Get visiteInf
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVisiteInf()
+    {
+        return $this->visiteInf;
+    }
+
+    /**
+     * Add visiteMed
+     *
+     * @param \Cmi\ApiBundle\Entity\Visite $visiteMed
+     *
+     * @return Praticien
+     */
+    public function addVisiteMed(\Cmi\ApiBundle\Entity\Visite $visiteMed)
+    {
+        $this->visiteMed[] = $visiteMed;
+
+        return $this;
+    }
+
+    /**
+     * Remove visiteMed
+     *
+     * @param \Cmi\ApiBundle\Entity\Visite $visiteMed
+     */
+    public function removeVisiteMed(\Cmi\ApiBundle\Entity\Visite $visiteMed)
+    {
+        $this->visiteMed->removeElement($visiteMed);
+    }
+
+    /**
+     * Get visiteMed
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVisiteMed()
+    {
+        return $this->visiteMed;
     }
 }

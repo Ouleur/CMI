@@ -64,6 +64,22 @@ class Ordonnance
      */
     private $ordo_date_modif;
 
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ordo_motif_remplacement", type="string", nullable=true)
+     * @Serializer\Groups({"consultation","ordonnance"})
+     */
+    private $ordo_motif_remplacement;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="ordo_servir", type="integer")
+     * @Serializer\Groups({"consultation","ordonnance"})
+     */
+    private $ordo_servir;
 
     /**
      * @ORM\ManyToOne(targetEntity="Medicament", inversedBy="ordonnances")
@@ -71,6 +87,13 @@ class Ordonnance
      * @Serializer\Groups({"consultation","ordonnance"})
      */
     private $medicament;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Medicament", inversedBy="ordonnances")
+     * @var Medicament
+     * @Serializer\Groups({"consultation","ordonnance"})
+     */
+    private $medic_remplacement;
 
     /**
      * @ORM\ManyToOne(targetEntity="Consultation", inversedBy="ordonnances")
@@ -256,5 +279,77 @@ class Ordonnance
     public function getOrdoQuantite()
     {
         return $this->ordo_quantite;
+    }
+
+    /**
+     * Set ordoMotifRemplacement
+     *
+     * @param string $ordoMotifRemplacement
+     *
+     * @return Ordonnance
+     */
+    public function setOrdoMotifRemplacement($ordoMotifRemplacement)
+    {
+        $this->ordo_motif_remplacement = $ordoMotifRemplacement;
+
+        return $this;
+    }
+
+    /**
+     * Get ordoMotifRemplacement
+     *
+     * @return string
+     */
+    public function getOrdoMotifRemplacement()
+    {
+        return $this->ordo_motif_remplacement;
+    }
+
+    /**
+     * Set medicRemplacement
+     *
+     * @param \Cmi\ApiBundle\Entity\Medicament $medicRemplacement
+     *
+     * @return Ordonnance
+     */
+    public function setMedicRemplacement(\Cmi\ApiBundle\Entity\Medicament $medicRemplacement = null)
+    {
+        $this->medic_remplacement = $medicRemplacement;
+
+        return $this;
+    }
+
+    /**
+     * Get medicRemplacement
+     *
+     * @return \Cmi\ApiBundle\Entity\Medicament
+     */
+    public function getMedicRemplacement()
+    {
+        return $this->medic_remplacement;
+    }
+
+    /**
+     * Set ordoServir
+     *
+     * @param boolean $ordoServir
+     *
+     * @return Ordonnance
+     */
+    public function setOrdoServir($ordoServir)
+    {
+        $this->ordo_servir = $ordoServir;
+
+        return $this;
+    }
+
+    /**
+     * Get ordoServir
+     *
+     * @return boolean
+     */
+    public function getOrdoServir()
+    {
+        return $this->ordo_servir;
     }
 }

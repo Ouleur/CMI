@@ -55,6 +55,55 @@ class PraticienController extends FOSRestController
     
     }
 
+     /**
+     * @Rest\View(serializerGroups={"praticien"})
+     * @Rest\Get("/praticienSearch")
+     */
+    public function getPraticienSearchAction(Request $request)
+    {
+        # code...
+        $em = $this->getDoctrine()->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $patients = $this->get('doctrine.orm.entity_manager')->getRepository('CmiApiBundle:Praticien')
+        ->createQueryBuilder('c')
+        ->where($qb->expr()->like("c.pratNom",$qb->expr()->literal('%' . $request->get('phrase') . '%')))
+        // ->setParameters(array("mtr"=>$request->get('phrase')))
+        // // ->sort('price', 'ASC')
+        // ->limit(10)
+        ->getQuery()
+        ->execute();
+
+         if (empty($patients)) {
+            return new JsonResponse(['message' => 'Praticien not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $patients;
+    }
+
+    /**
+     * @Rest\View(serializerGroups={"praticien"})
+     * @Rest\Get("/praticien/selection")
+     */
+    public function getPraticiensSelectAction()
+    {
+        $praticiens = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Praticien')
+                ->findAll();
+        /* @var $praticiens Motif[] */
+
+         if (empty($praticiens)) {
+            return new JsonResponse(['message' => 'Praticiens not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        for ($i=0; $i < count($praticiens); $i++) { 
+            # code...
+            $json[] = ['id'=>$praticiens[$i]->getId(), 'text'=>$praticiens[$i]->getPratNom()." ".$praticiens[$i]->getPratPrenoms()];
+
+        }
+
+        return new JsonResponse($json);
+    }
+
 
     /**
      * @Rest\View(serializerGroups={"praticien"},statusCode=Response::HTTP_CREATED)

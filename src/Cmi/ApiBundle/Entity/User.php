@@ -26,7 +26,7 @@ class User implements UserInterface
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Serializer\Groups({"user","auth-token"})
+     * @Serializer\Groups({"userconected","user","auth-token"})
      */
     protected $id;
 
@@ -34,7 +34,7 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="firstname", type="string")
-     * @Serializer\Groups({"user","auth-token"})
+     * @Serializer\Groups({"userconected","user","auth-token"})
      */
     private $firstname;
 
@@ -42,7 +42,7 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="lastname", type="string")
-     * @Serializer\Groups({"user","auth-token"})
+     * @Serializer\Groups({"userconected","user","auth-token"})
      */
     private $lastname;
 
@@ -50,7 +50,7 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="email", type="string")
-     * @Serializer\Groups({"user","auth-token"})
+     * @Serializer\Groups({"userconected","user","auth-token"})
      */
     private $email;
 

@@ -53,6 +53,30 @@ class SpecialiteController extends FOSRestController
     }
 
     /**
+     * @Rest\View(serializerGroups={"praticien"})
+     * @Rest\Get("/specialite/selection")
+     */
+    public function getSpecialiteSelectAction()
+    {
+        $specialites = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Specialite')
+                ->findAll();
+        /* @var $specialites Motif[] */
+
+         if (empty($specialites)) {
+            return new JsonResponse(['message' => 'Specialite not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        for ($i=0; $i < count($specialites); $i++) { 
+            # code...
+            $json[] = ['id'=>$specialites[$i]->getId(), 'text'=>$specialites[$i]->getSpLibelle()];
+
+        }
+
+        return new JsonResponse($json);
+    }
+
+    /**
      * @Rest\View(statusCode=Response::HTTP_CREATED)
      * @Rest\Post("/specialites/creer")
      */

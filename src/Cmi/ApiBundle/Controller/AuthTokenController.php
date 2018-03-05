@@ -60,6 +60,26 @@ class AuthTokenController extends Controller
     }
 
 
+    /**
+     * @Rest\View(serializerGroups={"auth-token"})
+     * @Rest\Get("/auth-tokens/{id}")
+     */
+    public function getAuthTokenqAction( Request $request)
+    {
+
+        $authTokens = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:AuthToken')
+                ->find($request->get('id'));
+        /* @var $places Place[] */
+
+        if (empty($authTokens)) {
+            return new JsonResponse(['message' => 'AuthToken not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $authTokens;
+    
+    }
+
 
     /**
      * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
@@ -81,5 +101,7 @@ class AuthTokenController extends Controller
             throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException();
         }
     }
+
+    
 
 }

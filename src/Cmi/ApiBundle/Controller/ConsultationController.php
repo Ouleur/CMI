@@ -86,9 +86,20 @@ class ConsultationController extends FOSRestController
      */
     public function getConsultationEtapeAction( Request $request)
     {
+
+        $condition  ="";
+        if ($request->get('n_id')==4 || $request->get('n_id')==3) {
+            # code...
+            $condition = "c.etape=:niveau_id or c.etape=5";
+        }else {
+            # code...
+            $condition = "c.etape=:niveau_id";
+
+        }
+
         $consultation = $this->get('doctrine.orm.entity_manager')->getRepository('CmiApiBundle:Consultation')
         ->createQueryBuilder('c')
-        ->where("c.etape=:niveau_id")
+        ->where($condition)
         ->setParameters(array("niveau_id"=>$request->get('n_id')))
         // // ->sort('price', 'ASC')
         // ->limit(10)
@@ -118,6 +129,7 @@ class ConsultationController extends FOSRestController
         $etape = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('CmiApiBundle:Etape')
                 ->find($request->get('etp_id'));
+
 
         $consultation = new Consultation(); 
 
@@ -191,6 +203,9 @@ class ConsultationController extends FOSRestController
     }
 
 
+
+
+
     public function updateConsultation(Request $request, $clearMissing)
     {
 
@@ -201,8 +216,6 @@ class ConsultationController extends FOSRestController
         $etape = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('CmiApiBundle:Etape')
                 ->find($request->get('etp_id'));
-
-        $consultation = new Consultation(); 
 
         //infirmier
         $infirmier = $this->get('doctrine.orm.entity_manager')
@@ -236,6 +249,12 @@ class ConsultationController extends FOSRestController
                         ->find($request->get('id'));
 
         $consultation->setPatient($patient);
+        if ($consultation->getEtape()->getId()==4 && $etape->getId()<4) {
+            # code...
+            $etape = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Etape')
+                ->find(5);
+        }
         $consultation->setEtape($etape);
         $consultation->setInfirmier($infirmier);
         $consultation->setSpecialite($specialite);
@@ -284,6 +303,36 @@ class ConsultationController extends FOSRestController
 
 
     /**
+    *Save Motif off medecin
+    * @Rest\View(serializerGroups={"consultation"})
+    * @Rest\Patch("/motifs/{mot_id}/consultations/modifier/{id}")
+    */
+    public function patchConsultationMotifsAction(Request $request)
+    {
+        $consultation = $this->get("doctrine.orm.entity_manager")
+                        ->getRepository("CmiApiBundle:Consultation")
+                        ->find($request->get('id'));
+
+        $mot_id = explode(",",$request->get('mot_id'));
+        for ($i=0; $i < count($mot_id); $i++) { 
+            # code...
+            //motifs
+            $motif = $this->get('doctrine.orm.entity_manager')
+                    ->getRepository('CmiApiBundle:Motif')
+                    ->find($mot_id[$i]);
+            $consultation->addMotif($motif);
+
+        }
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $em->merge($consultation);
+        $em->flush();
+
+        return $consultation;
+    }
+
+
+    /**
      * @Rest\View(serializerGroups={"consultation"})
     * @Rest\Patch("/consultations/modifier/{id}")
     */
@@ -312,5 +361,43 @@ class ConsultationController extends FOSRestController
         }else{
             return $form;
         }
+    }
+
+
+    /**
+    * @Rest\View(serializerGroups={"consultation"})
+    * @Rest\Patch("/etape/{etp_id}/consultations/modifier/{id}")
+    */
+    public function patchConsultationModifierEtapeAction(Request $request)
+    {
+        $consultation = $this->get("doctrine.orm.entity_manager")
+                        ->getRepository("CmiApiBundle:Consultation")
+                        ->find($request->get('id'));
+
+        $etape = $this->get("doctrine.orm.entity_manager")
+                        ->getRepository("CmiApiBundle:Etape")
+                        ->find($request->get('etp_id'));
+
+        $consultation->setEtape($etape);
+
+        if (empty($consultation)) {
+            # code...
+            return new JsonResponse(['message'=>'Consultation not found'],Response::HTTP_NOT_FOUND);
+        }
+
+
+        // $form = $this->createForm(ConsultationType::class, $consultation);
+
+
+        // $form->submit($request->query->all(),$clearMissing); // Validation des données
+
+        // if ($form->isValid()){
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->merge($consultation);
+            $em->flush();
+            return $consultation;
+        // }else{
+        //     return $form;
+        // }
     }
 }

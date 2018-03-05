@@ -64,16 +64,15 @@ class SoinsController extends FOSRestController
                 ->find($request->get('c_id'));
 
         $soin = new Soins();
-        $act_id = explode(",",$request->get('a_id'));
-        for ($i=0; $i < count($act_id); $i++) { 
+        /*for ($i=0; $i < count($act_id); $i++) { 
             # code...
-            //motifs
-            $acte = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('CmiApiBundle:Acte')
-                ->find($act_id[$i]);
-            $soin->addActe($acte);
+            //motifs*/
+        $acte = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('CmiApiBundle:Acte')
+            ->find($request->get('a_id'));
+        $soin->addActe($acte);
 
-        }
+        /*}*/
         
 
         $soin->setConsultation($consultation);

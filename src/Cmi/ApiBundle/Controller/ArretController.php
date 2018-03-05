@@ -194,7 +194,7 @@ class ArretController extends FOSRestController
         $arret->setMedicament($medicament);
 
         
-        $arret->setOrdoDateModif(new \DateTime("now"));
+        $arret->setArretDateModif(new \DateTime("now"));
 
         if (empty($arret)) {
             # code...
@@ -233,5 +233,60 @@ class ArretController extends FOSRestController
     public function patchArretAction(Request $request)
     {
         return $this->updateArret($request, false);
+    }
+
+    public function updateAccidentArret(Request $request, $clearMissing)
+    {
+
+        $accident = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:AccidentTravail')
+                ->find($request->get('a_id'));
+
+
+        $arret = $this->get("doctrine.orm.entity_manager")
+                        ->getRepository("CmiApiBundle:Arret")
+                        ->find($request->get('id'));
+
+        $arret->setAccident($accident);
+
+        
+        $arret->setArretDateModif(new \DateTime("now"));
+
+        if (empty($arret)) {
+            # code...
+            return new JsonResponse(['message'=>'Arret not found'],Response::HTTP_NOT_FOUND);
+        }
+
+        $form = $this->createForm(ArretType::class, $arret);
+
+
+        $form->submit($request->query->all(),$clearMissing); // Validation des données
+
+        if ($form->isValid()){
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->merge($arret);
+            $em->flush();
+            return $arret;
+        }else{
+            return $form;
+        }
+    }
+
+    /**
+    * @Rest\View(serializerGroups={"arret"})
+    * @Rest\Put("/accident/{a_id}/arrets/modifier/{id}")
+    */
+    public function updateArretAccidentAction(Request $request)
+    {
+        return $this->updateAccidentArret($request, false);
+    }
+
+    /**
+    * @Rest\View(serializerGroups={"arret"})
+    * @Rest\Patch("/accident/{a_id}/arrets/modifier/{id}")
+    */
+    public function patchArretAccidentAction(Request $request)
+    {
+        return $this->updateAccidentArret($request, false);
     }
 }

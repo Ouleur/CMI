@@ -155,3 +155,27 @@ Cmi\ApiBundle\Entity\Profession:
       groups: [categorie,patient]
     patients:
       groups: [categorie]
+
+Cmi\ApiBundle\Entity\User:
+    attributes:
+        id:
+            groups: ['user', 'preference', 'auth-token']
+        firstname:
+            groups: ['user', 'preference', 'auth-token']
+        lastname:
+            groups: ['user', 'preference', 'auth-token']
+        email:
+            groups: ['user', 'preference', 'auth-token']
+        preferences:
+            groups: ['user']
+
+Cmi\ApiBundle\Entity\AuthToken:
+    attributes:
+        id:
+            groups: ['auth-token']
+        value:
+            groups: ['auth-token']
+        createdAt:
+            groups: ['auth-token']
+        user:
+            groups: ['auth-token']

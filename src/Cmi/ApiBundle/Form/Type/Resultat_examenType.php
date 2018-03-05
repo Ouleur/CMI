@@ -17,7 +17,7 @@ class Resultat_examenType extends AbstractType
 		    // render as a single text box
 		    'widget' => 'single_text',
 		));
-		$builder->add('resDatePrFait', DateType::class, array(
+		$builder->add('resDatePrescrit', DateType::class, array(
 		    // render as a single text box
 		    'widget' => 'single_text',
 		));

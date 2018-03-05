@@ -35,7 +35,7 @@ class DiagnostiqueController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"diagnostique"})
      * @Rest\Get("/diagnostiques/rechercher/{id}")
      */
     public function getDiagnostiqueAction( Request $request)
@@ -53,7 +53,7 @@ class DiagnostiqueController extends FOSRestController
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED,serializerGroups={"diagnostique"})
      * @Rest\Post("/consultation/{c_id}/cause/{ca_id}/pathologie/{pa_id}/diagnostiques/creer")
      */
     public function postDiagnostiqueAction(Request $request)
@@ -97,7 +97,7 @@ class DiagnostiqueController extends FOSRestController
     }
 
     /**
-    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+    * @Rest\View(statusCode=Response::HTTP_NO_CONTENT,serializerGroups={"diagnostique"})
     * @Rest\Delete("/diagnostiques/supprimer/{id}")
     */
     public function removeDiagnostiqueAction(Request $request)
@@ -162,7 +162,7 @@ class DiagnostiqueController extends FOSRestController
 
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"diagnostique"})
     * @Rest\Put("/consultation/{c_id}/cause/{ca_id}/pathologie/{pa_id}/diagnostiques/modifier/{id}")
     */
     public function updateDiagnostiqueAction(Request $request)
@@ -171,7 +171,7 @@ class DiagnostiqueController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"diagnostique"})
     * @Rest\Patch("/consultation/{c_id}/cause/{ca_id}/pathologie/{pa_id}/diagnostiques/modifier/{id}")
     */
     public function patchDiagnostiqueAction(Request $request)

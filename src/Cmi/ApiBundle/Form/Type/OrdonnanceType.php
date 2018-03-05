@@ -12,6 +12,8 @@ class OrdonnanceType extends AbstractType
         $builder->add('ordo_dure');
         $builder->add('ordo_posologie');
         $builder->add('ordo_quantite');
+        $builder->add('ordo_motif_remplacement');
+        $builder->add('ordo_servir');
     }
 
     public function configureOptions(OptionsResolver $resolver)

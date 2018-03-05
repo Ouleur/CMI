@@ -156,11 +156,54 @@ class OrdonnanceController extends FOSRestController
 
     /**
     * @Rest\View(serializerGroups={"ordonnance"})
-    * @Rest\Put("/consultation/{c_id}/medicament/{m_id}/ordonnances/modifier/{id}")
+    * @Rest\Put("/consultation/{c_id}/medicamentremp/{m_id}/ordonnances/modifier/{id}")
     */
     public function updateOrdonnanceAction(Request $request)
     {
-    	return $this->updateOrdonnance($request, false);
+    	$consultation = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Consultation')
+                ->find($request->get('c_id'));
+
+        // $medicament = $this->get('doctrine.orm.entity_manager')
+        //         ->getRepository('CmiApiBundle:Medicament')
+        //         ->find($request->get('m_id'));
+
+        
+
+        $ordonnance = $this->get("doctrine.orm.entity_manager")
+                        ->getRepository("CmiApiBundle:Ordonnance")
+                        ->find($request->get('id'));
+
+        $ordonnance->setConsultation($consultation);
+        if ($request->get('m_id')!=="non"){
+            $medicament_remp = $this->get('doctrine.orm.entity_manager')
+                    ->getRepository('CmiApiBundle:Medicament')
+                    ->find($request->get('m_id'));
+        
+            $ordonnance->setMedicRemplacement($medicament_remp);
+        }
+
+        
+        $ordonnance->setOrdoDateModif(new \DateTime("now"));
+
+        if (empty($ordonnance)) {
+            # code...
+            return new JsonResponse(['message'=>'Ordonnance not found'],Response::HTTP_NOT_FOUND);
+        }
+
+        $form = $this->createForm(OrdonnanceType::class, $ordonnance);
+
+
+        $form->submit($request->query->all(),false); // Validation des données
+
+        if ($form->isValid()){
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->merge($ordonnance);
+            $em->flush();
+            return $ordonnance;
+        }else{
+            return $form;
+        }
     }
 
     /**

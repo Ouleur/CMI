@@ -19,7 +19,7 @@ class Arret
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Serializer\Groups({"arret","accident"})
+     * @Serializer\Groups({"arret","accident","consultation"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class Arret
      * @var \DateTime
      *
      * @ORM\Column(name="arret_debut", type="date")
-     * @Serializer\Groups({"arret","accident"})
+     * @Serializer\Groups({"arret","accident","consultation"})
      */
     private $arretDebut;
 
@@ -35,7 +35,7 @@ class Arret
      * @var \DateTime
      *
      * @ORM\Column(name="arret_fin", type="date")
-     * @Serializer\Groups({"arret","accident"})
+     * @Serializer\Groups({"arret","accident","consultation"})
      */
     private $arretFin;
 
@@ -43,7 +43,7 @@ class Arret
      * @var \DateTime
      *
      * @ORM\Column(name="arret_date_enreg", type="datetime")
-     * @Serializer\Groups({"arret","accident"})
+     * @Serializer\Groups({"arret","accident","consultation"})
      */
     private $arretDateEnreg;
 
@@ -51,7 +51,7 @@ class Arret
      * @var \DateTime
      *
      * @ORM\Column(name="arret_date_modif", type="datetime")
-     * @Serializer\Groups({"arret","accident"})
+     * @Serializer\Groups({"arret","accident","consultation"})
      */
     private $arretDateModif;
 

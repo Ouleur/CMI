@@ -35,6 +35,30 @@ class ActeController extends FOSRestController
     }
 
     /**
+     * @Rest\View(serializerGroups={"acte"})
+     * @Rest\Get("/acte/selection")
+     */
+    public function getActesSelectAction()
+    {
+        $actes = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Acte')
+                ->findAll();
+        /* @var $actes Acte[] */
+
+         if (empty($actes)) {
+            return new JsonResponse(['message' => 'Actes not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        for ($i=0; $i < count($actes); $i++) { 
+            # code...
+            $json[] = ['id'=>$actes[$i]->getId(), 'text'=>$actes[$i]->getActeLibelle()];
+
+        }
+
+        return new JsonResponse($json);
+    }
+
+    /**
      * @Rest\View()
      * @Rest\Get("/actes/rechercher/{id}")
      */

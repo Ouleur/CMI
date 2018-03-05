@@ -62,6 +62,13 @@ class Etape
      */
     private $consultations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Visite", mappedBy="etape")
+     * @var Visite[]
+     * @Serializer\Groups({"etape"})
+     */
+    private $visite;
+
 
     /**
      * Get id
@@ -209,5 +216,39 @@ class Etape
     public function getConsultations()
     {
         return $this->consultations;
+    }
+
+    /**
+     * Add visite
+     *
+     * @param \Cmi\ApiBundle\Entity\Visite $visite
+     *
+     * @return Etape
+     */
+    public function addVisite(\Cmi\ApiBundle\Entity\Visite $visite)
+    {
+        $this->visite[] = $visite;
+
+        return $this;
+    }
+
+    /**
+     * Remove visite
+     *
+     * @param \Cmi\ApiBundle\Entity\Visite $visite
+     */
+    public function removeVisite(\Cmi\ApiBundle\Entity\Visite $visite)
+    {
+        $this->visite->removeElement($visite);
+    }
+
+    /**
+     * Get visite
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVisite()
+    {
+        return $this->visite;
     }
 }

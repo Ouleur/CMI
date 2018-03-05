@@ -34,23 +34,23 @@ services:
     #     arguments:
     #         $someArgument: 'some_value'
     
-    # auth_token_user_provider:
-    #     class: 'Cmi\ApiBundle\Security\AuthTokenUserProvider'
-    #     arguments: ["@auth_token_repository", "@user_repository"]
-    #     public:    false
+    auth_token_user_provider:
+        class: 'Cmi\ApiBundle\Security\AuthTokenUserProvider'
+        arguments: ["@auth_token_repository", "@user_repository"]
+        public:    false
 
-    # auth_token_repository:
-    #     class:   'Doctrine\ORM\EntityManager'
-    #     factory: ["@doctrine.orm.entity_manager", "getRepository"]
-    #     arguments: ['CmiApiBundle:AuthToken']
+    auth_token_repository:
+        class:   'Doctrine\ORM\EntityManager'
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: ['CmiApiBundle:AuthToken']
 
-    # user_repository:
-    #     class:   Doctrine\ORM\EntityManager
-    #     factory: ["@doctrine.orm.entity_manager", "getRepository"]
-    #     arguments: ['CmiApiBundle:User']
+    user_repository:
+        class:   Doctrine\ORM\EntityManager
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: ['CmiApiBundle:User']
 
 
-    # auth_token_authenticator:
-    #     class:     'Cmi\ApiBundle\Security\AuthTokenAuthenticator'
-    #     arguments: ["@security.http_utils"]
-    #     public:    false
+    auth_token_authenticator:
+        class:     'Cmi\ApiBundle\Security\AuthTokenAuthenticator'
+        arguments: ["@security.http_utils"]
+        public:    false

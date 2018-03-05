@@ -19,7 +19,7 @@ class Motif
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Serializer\Groups({"motif","entite","patient"})
+     * @Serializer\Groups({"motif","entite","patient","consultation"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class Motif
      * @var string
      *
      * @ORM\Column(name="motif_code", type="string")
-     * @Serializer\Groups({"motif","entite","patient"})
+     * @Serializer\Groups({"motif","entite","patient","consultation"})
      */
     private $motif_code;
 
@@ -35,7 +35,7 @@ class Motif
      * @var string
      *
      * @ORM\Column(name="motif_libelle", type="string", length=100)
-     * @Serializer\Groups({"motif","entite","patient"})
+     * @Serializer\Groups({"motif","entite","patient","consultation"})
      */
     private $motif_libelle;
 

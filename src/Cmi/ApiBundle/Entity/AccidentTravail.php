@@ -39,13 +39,45 @@ class AccidentTravail
      */
     private $atReference;
 
-    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lieu_accident", type="string", length=255, nullable=true)
+     * @Serializer\Groups({"accident","arret"})
+     */
+    private $lieu_accident;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="circonstance_accident", type="string", length=255, nullable=true)
+     * @Serializer\Groups({"accident","arret"})
+     */
+    private $circonstance_accident;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nature_travail_accident", type="string", length=255, nullable=true)
+     * @Serializer\Groups({"accident","arret"})
+     */
+    private $nature_travail_accident;
+
+
     /**
      * @ORM\OneToMany(targetEntity="Arret", mappedBy="accident")
      * @var Arrets[]
      * @Serializer\Groups({"accident"})
      */
     private $arrets;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Temoin", mappedBy="accident")
+     * @var Temoins[]
+     * @Serializer\Groups({"accident"})
+     */
+    private $temoins;
 
     /**
      * @var Arret
@@ -456,5 +488,111 @@ class AccidentTravail
     public function getArrets()
     {
         return $this->arrets;
+    }
+
+    /**
+     * Set lieuAccident
+     *
+     * @param string $lieuAccident
+     *
+     * @return AccidentTravail
+     */
+    public function setLieuAccident($lieuAccident)
+    {
+        $this->lieu_accident = $lieuAccident;
+
+        return $this;
+    }
+
+    /**
+     * Get lieuAccident
+     *
+     * @return string
+     */
+    public function getLieuAccident()
+    {
+        return $this->lieu_accident;
+    }
+
+    /**
+     * Set circonstanceAccident
+     *
+     * @param string $circonstanceAccident
+     *
+     * @return AccidentTravail
+     */
+    public function setCirconstanceAccident($circonstanceAccident)
+    {
+        $this->circonstance_accident = $circonstanceAccident;
+
+        return $this;
+    }
+
+    /**
+     * Get circonstanceAccident
+     *
+     * @return string
+     */
+    public function getCirconstanceAccident()
+    {
+        return $this->circonstance_accident;
+    }
+
+    /**
+     * Set natureTravailAccident
+     *
+     * @param string $natureTravailAccident
+     *
+     * @return AccidentTravail
+     */
+    public function setNatureTravailAccident($natureTravailAccident)
+    {
+        $this->nature_travail_accident = $natureTravailAccident;
+
+        return $this;
+    }
+
+    /**
+     * Get natureTravailAccident
+     *
+     * @return string
+     */
+    public function getNatureTravailAccident()
+    {
+        return $this->nature_travail_accident;
+    }
+
+    /**
+     * Add temoin
+     *
+     * @param \Cmi\ApiBundle\Entity\Temoin $temoin
+     *
+     * @return AccidentTravail
+     */
+    public function addTemoin(\Cmi\ApiBundle\Entity\Temoin $temoin)
+    {
+        $this->temoins[] = $temoin;
+
+        return $this;
+    }
+
+    /**
+     * Remove temoin
+     *
+     * @param \Cmi\ApiBundle\Entity\Temoin $temoin
+     */
+    public function removeTemoin(\Cmi\ApiBundle\Entity\Temoin $temoin)
+    {
+        $this->temoins->removeElement($temoin);
+    }
+
+    /**
+     * Get temoins
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTemoins()
+    {
+        return $this->temoins;
     }
 }

@@ -43,9 +43,7 @@ class PatientController extends FOSRestController
      */
     public function getPatientsSearchAction(Request $request)
     {
-
-    
-            # code...
+        # code...
         $em = $this->getDoctrine()->getEntityManager();
         $qb = $em->createQueryBuilder();
         $patients = $this->get('doctrine.orm.entity_manager')->getRepository('CmiApiBundle:Patient')
@@ -139,6 +137,31 @@ class PatientController extends FOSRestController
 
         return $patients;
     
+    }
+
+
+    /**
+     * @Rest\View(serializerGroups={"patient"})
+     * @Rest\Get("/patient/selection")
+     */
+    public function getPatientsSelectAction()
+    {
+        $patients = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Patient')
+                ->findAll();
+        /* @var $patients Motif[] */
+
+         if (empty($patients)) {
+            return new JsonResponse(['message' => 'Patient not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        for ($i=0; $i < count($patients); $i++) { 
+            # code...
+            $json[] = ['id'=>$patients[$i]->getId(), 'text'=>$patients[$i]->getPatNom()." ".$patients[$i]->getPatPrenoms()];
+
+        }
+
+        return new JsonResponse($json);
     }
 
 

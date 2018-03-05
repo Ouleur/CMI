@@ -42,5 +42,3 @@ L'utilisation de l'outil [Postman](https://www.getpostman.com/) facilitera les t
  |  DELETE    | http://127.0.0.1:8000/cartes/{id}	|   Suppression           |id 							 |
  |	 PUT      | http://127.0.0.1:8000/cartes/{id}   |  Modificaton Conplète   |```carteNumero,  carteDateDelivrance[year],  carteDateDelivrance[month],  carteDateDelivrance[day],  carteCode```|
  |   PATCH    | http://127.0.0.1:8000/cartes/{id}   |  Modification Partielle | Les paramettres sont au choix|
-
-

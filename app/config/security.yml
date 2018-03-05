@@ -37,19 +37,19 @@ security:
         # oauth_token:                                   # Everyone can access the access token URL.
         #     pattern: ^/oauth/v2/token
         #     security: false
-        api:
-            pattern: ^/                                # All URLs are protected
-            fos_oauth: true                            # OAuth2 protected resource
-            stateless: true                            # Do no set session cookies
-            anonymous: true                           # Anonymous access is not allowed
+        # api:
+        #     pattern: ^/                                # All URLs are protected
+        #     fos_oauth: true                            # OAuth2 protected resource
+        #     stateless: true                            # Do no set session cookies
+        #     anonymous: true                           # Anonymous access is not allowed
 
-        # main:
-        #     pattern: ^/
-        #     stateless: true
-        #     simple_preauth:
-        #         authenticator: auth_token_authenticator
-        #     provider: auth_token_user_provider
-        #     anonymous: ~
+        main:
+            pattern: ^/
+            stateless: true
+            simple_preauth:
+                authenticator: auth_token_authenticator
+            provider: auth_token_user_provider
+            anonymous: ~
     # access_control:
-        # - { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }
+    #     - { path: ^/, roles: [ IS_AUTHENTICATED_FULLY ] }
 

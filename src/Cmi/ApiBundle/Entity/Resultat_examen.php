@@ -25,9 +25,9 @@ class Resultat_examen
 
 
     /**
-     * @var bool
+     * @var int
      *
-     * @ORM\Column(name="res_etat", type="boolean", nullable=true)
+     * @ORM\Column(name="res_etat", type="integer", nullable=true)
      * @Serializer\Groups({"resultat_exam","consultation"})
      */
     private $resEtat;
@@ -55,6 +55,14 @@ class Resultat_examen
      * @Serializer\Groups({"resultat_exam","consultation"})
      */
     private $resDatePrFait;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="res_date_prescrit", type="datetime", nullable=true)
+     * @Serializer\Groups({"resultat_exam","consultation"})
+     */
+    private $resDatePrescrit;
 
     /**
      * @var \DateTime
@@ -93,6 +101,13 @@ class Resultat_examen
      * @Serializer\Groups({"resultat_exam"})
      */
     private $consultation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Visite", inversedBy="resultat_examens")
+     * @var Visite
+     * @Serializer\Groups({"resultat_exam"})
+     */
+    private $visite;
 
     /**
      * Get id
@@ -318,5 +333,53 @@ class Resultat_examen
     public function getResDatePrFait()
     {
         return $this->resDatePrFait;
+    }
+
+    /**
+     * Set resDatePrescrit
+     *
+     * @param \DateTime $resDatePrescrit
+     *
+     * @return Resultat_examen
+     */
+    public function setResDatePrescrit($resDatePrescrit)
+    {
+        $this->resDatePrescrit = $resDatePrescrit;
+
+        return $this;
+    }
+
+    /**
+     * Get resDatePrescrit
+     *
+     * @return \DateTime
+     */
+    public function getResDatePrescrit()
+    {
+        return $this->resDatePrescrit;
+    }
+
+    /**
+     * Set visite
+     *
+     * @param \Cmi\ApiBundle\Entity\Visite $visite
+     *
+     * @return Resultat_examen
+     */
+    public function setVisite(\Cmi\ApiBundle\Entity\Visite $visite = null)
+    {
+        $this->visite = $visite;
+
+        return $this;
+    }
+
+    /**
+     * Get visite
+     *
+     * @return \Cmi\ApiBundle\Entity\Visite
+     */
+    public function getVisite()
+    {
+        return $this->visite;
     }
 }

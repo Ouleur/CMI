@@ -20,22 +20,24 @@ class UserController extends Controller
 {
 
 	/**
-     * @Rest\View(serializerGroups={"user"})
-     * @Rest\Get("/users")
+     * @Rest\View(serializerGroups={"userconected"})
+     * @Rest\Get("/usersConnected/{id}")
      */
-    public function getType_patientsAction()
+    public function getUsersAction(Request $request)
     {
 
-        $type_patient = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('CmiApiBundle:User')
-                ->findAll();
-        /* @var $places Place[] */
+        $em = $this->get('doctrine.orm.entity_manager');
+        $authToken = $em->getRepository('CmiApiBundle:AuthToken')
+                    ->find($request->get('id'));
+        /* @var $authToken AuthToken */
 
-         if (empty($type_patient)) {
-            return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+        $connectedUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        if ($authToken && $authToken->getUser()->getId() === $connectedUser->getId()) {
+            return $connectedUser;
+        } else {
+            throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException();
         }
-
-        return $type_patient;
     }
 	
 	/**
@@ -64,7 +66,7 @@ class UserController extends Controller
         }
     }
 
-     /**
+    /**
      * @Rest\View(serializerGroups={"user"})
      * @Rest\Put("/users/{id}")
      */

@@ -76,7 +76,7 @@ class EtapeRelationController extends FOSRestController
     }
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"consultation"})
     * @Rest\Put("/consultation/{id}/etape/{et_id}")
     */
     public function updateConsultationEtapeAction(Request $request)
@@ -86,7 +86,7 @@ class EtapeRelationController extends FOSRestController
 
 
     /**
-    * @Rest\View()
+    * @Rest\View(serializerGroups={"consultation"})
     * @Rest\Patch("/consultation/{id}/etape/{et_id}")
     */
     public function patchConsultationEtapeAction(Request $request)

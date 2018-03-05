@@ -58,7 +58,7 @@ class Soins
     /**
      * @ORM\ManyToMany(targetEntity="Acte", cascade={"persist"})
      * @var Acte
-     * @Serializer\Groups({"consultation"})
+     * @Serializer\Groups({"soins","consultation"})
      */
     private $acte;
 

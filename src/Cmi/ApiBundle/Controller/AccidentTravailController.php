@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Cmi\ApiBundle\Form\Type\AccidentTravailType;
 use Cmi\ApiBundle\Entity\AccidentTravail;
+use Cmi\ApiBundle\Entity\Arret;
 
 class AccidentTravailController extends FOSRestController
 {
@@ -124,7 +125,7 @@ class AccidentTravailController extends FOSRestController
             $em = $this->get('doctrine.orm.entity_manager');
             $em->persist($accident);
             $em->flush();
-            return $secteur;
+            return $accident;
         }else{
             return $form;
         }
@@ -143,6 +144,15 @@ class AccidentTravailController extends FOSRestController
                     ->find($request->get('id'));
     
          /* @var $accident Accident */
+
+        $arrets = $accident->getArrets();
+
+        for ($i=0; $i < sizeof($arrets); $i++) { 
+            # code...
+            $em->remove($arrets[$i]);
+            $em->flush();
+
+        }
 
         if ($accident) {
             $em->remove($accident);
