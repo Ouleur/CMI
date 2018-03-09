@@ -19,7 +19,7 @@ class Praticien
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Serializer\Groups({"consultation","praticien"})
+     * @Serializer\Groups({"consultation","visite","praticien"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class Praticien
      * @var string
      *
      * @ORM\Column(name="prat_nom", type="string", length=100)
-     * @Serializer\Groups({"consultation","praticien"})
+     * @Serializer\Groups({"consultation","visite","praticien"})
      */
     private $pratNom;
 
@@ -42,7 +42,7 @@ class Praticien
      * @var string
      *
      * @ORM\Column(name="prat_prenoms", type="string", length=150)
-     * @Serializer\Groups({"consultation","praticien"})
+     * @Serializer\Groups({"consultation","visite","praticien"})
      */
     private $pratPrenoms;
 
@@ -58,7 +58,7 @@ class Praticien
      * @var string
      *
      * @ORM\Column(name="prat_email", type="string", length=100)
-     * @Serializer\Groups({"consultation","praticien"})
+     * @Serializer\Groups({"consultation","visite","praticien"})
      */
     private $pratEmail;
 
@@ -118,7 +118,7 @@ class Praticien
     /**
      * @ORM\ManyToOne(targetEntity="Type_praticien", inversedBy="praticiens")
      * @var Type_praticien
-     * @Serializer\Groups({"praticien"})
+     * @Serializer\Groups({"praticien","visite"})
      */
     private $type_praticien;
 

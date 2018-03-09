@@ -39,6 +39,24 @@ class Medicament
      */
     private $medic_libelle;
 
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="medic_nb_dispo", type="integer")
+     * @Serializer\Groups({"consultation","medicament","fam_medicament","ordonnance"})
+     */
+    private $medic_nb_dispo;
+
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="medic_nb_seuil", type="integer")
+     * @Serializer\Groups({"consultation","medicament","fam_medicament","ordonnance"})
+     */
+    private $medic_nb_seuil;
+
     /**
      * @var \DateTime
      *
@@ -270,5 +288,53 @@ class Medicament
     public function getFamilleMedicament()
     {
         return $this->famille_medicament;
+    }
+
+    /**
+     * Set medicNbDispo
+     *
+     * @param integer $medicNbDispo
+     *
+     * @return Medicament
+     */
+    public function setMedicNbDispo($medicNbDispo)
+    {
+        $this->medic_nb_dispo = $medicNbDispo;
+
+        return $this;
+    }
+
+    /**
+     * Get medicNbDispo
+     *
+     * @return integer
+     */
+    public function getMedicNbDispo()
+    {
+        return $this->medic_nb_dispo;
+    }
+
+    /**
+     * Set medicNbSeuil
+     *
+     * @param integer $medicNbSeuil
+     *
+     * @return Medicament
+     */
+    public function setMedicNbSeuil($medicNbSeuil)
+    {
+        $this->medic_nb_seuil = $medicNbSeuil;
+
+        return $this;
+    }
+
+    /**
+     * Get medicNbSeuil
+     *
+     * @return integer
+     */
+    public function getMedicNbSeuil()
+    {
+        return $this->medic_nb_seuil;
     }
 }

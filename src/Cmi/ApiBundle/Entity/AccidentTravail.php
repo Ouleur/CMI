@@ -80,7 +80,7 @@ class AccidentTravail
     private $temoins;
 
     /**
-     * @var Arret
+     * @var \DateTime
      *
      * @ORM\Column(name="at_date_enreg", type="datetime")
      * @Serializer\Groups({"accident"})

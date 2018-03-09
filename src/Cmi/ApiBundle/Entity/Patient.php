@@ -20,87 +20,87 @@ class Patient
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Serializer\Groups({"patient","p_search","consultation","accident"})
+     * @Serializer\Groups({"patient","visite","p_search","consultation","accident"})
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pat_matricule", type="string", length=255, unique=true)
-     * @Serializer\Groups({"patient","p_search","consultation","accident"})
+     * @ORM\Column(name="pat_matricule", type="string", length=255, unique=true, nullable=true)
+     * @Serializer\Groups({"patient","visite","p_search","consultation","accident"})
      */
     private $patMatricule;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pat_photo", type="string", length=255)
-     * @Serializer\Groups({"patient","p_search","consultation"})
+     * @ORM\Column(name="pat_photo", type="string", length=255, nullable=true)
+     * @Serializer\Groups({"patient","visite","p_search","consultation"})
      */
     private $patPhoto;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pat_nom", type="string", length=50)
-     * @Serializer\Groups({"patient","consultation","accident"})
+     * @ORM\Column(name="pat_nom", type="string", length=50, nullable=true)
+     * @Serializer\Groups({"patient","visite","consultation","accident"})
      */
     private $patNom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pat_prenoms", type="string", length=255)
-     * @Serializer\Groups({"patient","p_search","consultation","accident"})
+     * @ORM\Column(name="pat_prenoms", type="string", length=255, nullable=true)
+     * @Serializer\Groups({"patient","visite","p_search","consultation","accident"})
      */
     private $patPrenoms;
 
     /**
      * @var \Date
      *
-     * @ORM\Column(name="pat_date_naiss", type="date")
-     * @Serializer\Groups({"patient","p_search","consultation"})
+     * @ORM\Column(name="pat_date_naiss", type="date", nullable=true)
+     * @Serializer\Groups({"patient","visite","p_search","consultation"})
      */
     private $patDateNaiss;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pat_civilite", type="string", length=30)
-     * @Serializer\Groups({"patient","consultation"})
+     * @ORM\Column(name="pat_civilite", type="string", length=30, nullable=true)
+     * @Serializer\Groups({"patient","visite","consultation"})
      */
     private $patCivilite;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pat_grp_sanguin", type="string", length=5)
-     * @Serializer\Groups({"patient","consultation"})
+     * @ORM\Column(name="pat_grp_sanguin", type="string", length=5, nullable=true)
+     * @Serializer\Groups({"patient","visite","consultation"})
      */
     private $patGrpSanguin;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="pat_nbre_enfant", type="integer")
-     * @Serializer\Groups({"patient","consultation"})
+     * @ORM\Column(name="pat_nbre_enfant", type="integer", nullable=true)
+     * @Serializer\Groups({"patient","visite","consultation"})
      */
     private $patNbreEnfant;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pat_contact", type="string", length=255)
-     * @Serializer\Groups({"patient","consultation"})
+     * @ORM\Column(name="pat_contact", type="string", length=255, nullable=true)
+     * @Serializer\Groups({"patient","visite","consultation"})
      */
     private $patContact;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pat_sit_mat", type="string", length=20)
-     * @Serializer\Groups({"patient","consultation"})
+     * @ORM\Column(name="pat_sit_mat", type="string", length=20, nullable=true)
+     * @Serializer\Groups({"patient","visite","consultation"})
      */
     private $patSitMat;
 
@@ -108,31 +108,31 @@ class Patient
      * @var string
      *
      * @ORM\Column(name="pat_email", type="string", length=255, nullable=true)
-     * @Serializer\Groups({"patient","consultation"})
+     * @Serializer\Groups({"patient","visite","consultation"})
      */
     private $patEmail;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pat_lieu_naiss", type="string", length=100)
-     * @Serializer\Groups({"patient","consultation"})
+     * @ORM\Column(name="pat_lieu_naiss", type="string", length=100, nullable=true)
+     * @Serializer\Groups({"patient","visite","consultation"})
      */
     private $patLieuNaiss;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pat_localite", type="string", length=100)
-     * @Serializer\Groups({"patient","consultation"})
+     * @ORM\Column(name="pat_localite", type="string", length=100, nullable=true)
+     * @Serializer\Groups({"patient","visite","consultation"})
      */
     private $patLocalite;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pat_sexe", type="string", length=2)
-     * @Serializer\Groups({"patient","consultation"})
+     * @ORM\Column(name="pat_sexe", type="string", length=2, nullable=true)
+     * @Serializer\Groups({"patient","visite","consultation"})
      */
     private $patSexe;
 
@@ -140,23 +140,23 @@ class Patient
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="pat_date_enreg", type="datetime")
-     * @Serializer\Groups({"patient"})
+     * @ORM\Column(name="pat_date_enreg", type="datetime", nullable=true)
+     * @Serializer\Groups({"patient","visite"})
      */
     private $patDateEnreg;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="pat_date_modif", type="datetime")
-     * @Serializer\Groups({"patient"})
+     * @ORM\Column(name="pat_date_modif", type="datetime", nullable=true)
+     * @Serializer\Groups({"patient","visite"})
      */
     private $patDateModif;
 
     /**
      * @ORM\OneToMany(targetEntity="Carte", mappedBy="patient")
      * @var Carte[]
-     * @Serializer\Groups({"patient","consultation"})
+     * @Serializer\Groups({"patient","visite","consultation"})
      */
     private $cartes;
 
@@ -164,13 +164,13 @@ class Patient
     /**
      * @ORM\OneToMany(targetEntity="AccidentTravail", mappedBy="patient")
      * @var Accident[]
-     * @Serializer\Groups({"patient","consultation"})
+     * @Serializer\Groups({"patient","visite","consultation"})
      */
     private $accidents;
 
 /**
     /**
-     * @ORM\ManyToOne(targetEntity="Profession", inversedBy="patient", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Profession", inversedBy="patient")
      * @var Profession
      *
     private $profession;
@@ -179,7 +179,7 @@ class Patient
  /**
      * @ORM\ManyToOne(targetEntity="Entite", inversedBy="patient")
      * @var Entite
-     * @Serializer\Groups({"patient","consultation"})
+     * @Serializer\Groups({"patient","visite","consultation"})
      */
     private $entite;
 
@@ -187,7 +187,7 @@ class Patient
      /**
      * @ORM\ManyToOne(targetEntity="Type_patient", inversedBy="patient")
      * @var Type_patient
-     * @Serializer\Groups({"patient"})
+     * @Serializer\Groups({"patient","visite"})
      */
     private $type_patient;
 
@@ -196,36 +196,36 @@ class Patient
     /**
      * @ORM\ManyToOne(targetEntity="Lieu_travail", inversedBy="patients")
      * @var Lieu_travail
-     * @Serializer\Groups({"patient"})
+     * @Serializer\Groups({"patient","visite"})
      */
     private $lieu_travail;
 
     /**
      * @ORM\ManyToOne(targetEntity="Type_contrat", inversedBy="patient")
      * @var Type_contrat
-     * @Serializer\Groups({"patient"})
+     * @Serializer\Groups({"patient","visite"})
      */
     private $type_contrat;
 
     /**
      * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="patient")
      * @var Categorie
-     * @Serializer\Groups({"patient"})
+     * @Serializer\Groups({"patient","visite"})
      */
     private $categorie;
 
     /**
      * @ORM\ManyToOne(targetEntity="Profession", inversedBy="patient")
      * @var Proffession
-     * @Serializer\Groups({"patient","consultation"})
+     * @Serializer\Groups({"patient","visite","consultation"})
      */
     private $profession;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ay_droit_qualite", type="string", length=255,nullable=true)
-     * @Serializer\Groups({"patient"})
+     * @ORM\Column(name="ay_droit_qualite", type="string", length=255, nullable=true)
+     * @Serializer\Groups({"patient","visite"})
      */
     private $ayDroitQualite;
 
@@ -233,9 +233,16 @@ class Patient
     /**
      * @ORM\OneToMany(targetEntity="Consultation", mappedBy="patient")
      * @var Consultation[]
-     * @Serializer\Groups({"patient"})
+     * @Serializer\Groups({"patient","visite"})
      */
     private $consultations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Visite", mappedBy="patient")
+     * @var Visites[]
+     * @Serializer\Groups({"patient"})
+     */
+    private $visites;
 
 
     /**
@@ -910,5 +917,39 @@ class Patient
     public function getAccidents()
     {
         return $this->accidents;
+    }
+
+    /**
+     * Add visite
+     *
+     * @param \Cmi\ApiBundle\Entity\Visite $visite
+     *
+     * @return Patient
+     */
+    public function addVisite(\Cmi\ApiBundle\Entity\Visite $visite)
+    {
+        $this->visites[] = $visite;
+
+        return $this;
+    }
+
+    /**
+     * Remove visite
+     *
+     * @param \Cmi\ApiBundle\Entity\Visite $visite
+     */
+    public function removeVisite(\Cmi\ApiBundle\Entity\Visite $visite)
+    {
+        $this->visites->removeElement($visite);
+    }
+
+    /**
+     * Get visites
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVisites()
+    {
+        return $this->visites;
     }
 }

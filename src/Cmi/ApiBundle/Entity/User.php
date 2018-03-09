@@ -26,7 +26,7 @@ class User implements UserInterface
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Serializer\Groups({"userconected","user","auth-token"})
+     * @Serializer\Groups({"droitAcces","userconected","user","auth-token"})
      */
     protected $id;
 
@@ -34,7 +34,7 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="firstname", type="string")
-     * @Serializer\Groups({"userconected","user","auth-token"})
+     * @Serializer\Groups({"droitAcces","userconected","user","auth-token"})
      */
     private $firstname;
 
@@ -42,7 +42,7 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="lastname", type="string")
-     * @Serializer\Groups({"userconected","user","auth-token"})
+     * @Serializer\Groups({"droitAcces","userconected","user","auth-token"})
      */
     private $lastname;
 
@@ -50,9 +50,16 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="email", type="string")
-     * @Serializer\Groups({"userconected","user","auth-token"})
+     * @Serializer\Groups({"droitAcces","userconected","user","auth-token"})
      */
     private $email;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DroitAcces", mappedBy="user")
+     * @var DroitAcces[]
+     * @Serializer\Groups({"userconected"})
+     */
+    private $droitAcces;
 
 
     private $plainPassword;
@@ -218,4 +225,45 @@ class User implements UserInterface
     }
 
     
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->droitAcces = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add droitAcce
+     *
+     * @param \Cmi\ApiBundle\Entity\DroitAcces $droitAcce
+     *
+     * @return User
+     */
+    public function addDroitAcce(\Cmi\ApiBundle\Entity\DroitAcces $droitAcce)
+    {
+        $this->droitAcces[] = $droitAcce;
+
+        return $this;
+    }
+
+    /**
+     * Remove droitAcce
+     *
+     * @param \Cmi\ApiBundle\Entity\DroitAcces $droitAcce
+     */
+    public function removeDroitAcce(\Cmi\ApiBundle\Entity\DroitAcces $droitAcce)
+    {
+        $this->droitAcces->removeElement($droitAcce);
+    }
+
+    /**
+     * Get droitAcces
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDroitAcces()
+    {
+        return $this->droitAcces;
+    }
 }

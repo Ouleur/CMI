@@ -100,6 +100,48 @@ class Resultat_examenController extends FOSRestController
 
 
     /**
+     * @Rest\View(statusCode=Response::HTTP_CREATED,serializerGroups={"resultat_exam"})
+     * @Rest\Post("/visite/{v_id}/examen/{e_id}/resultat_examens/creer")
+     */
+    public function postResultat_examensVisiteAction(Request $request)
+    {
+
+        $visite = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Visite')
+                ->find($request->get('v_id'));
+
+        $resultat_examen = new Resultat_examen();
+        
+        $examen = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Examen')
+                ->find($request->get('e_id'));
+
+
+
+        // $resultat_examen->setResultat_examenNumero($request->get("numero"));
+        // $resultat_examen->setResultat_examenCode($request->get("code"));
+        $resultat_examen->setVisite($visite);
+        $resultat_examen->setExamen($examen);
+        $resultat_examen->setResDateEnreg(new \DateTime("now"));
+        $resultat_examen->setResDateModif(new \DateTime("now"));
+
+        $form = $this->createForm(Resultat_examenType::class, $resultat_examen);
+
+
+        $form->submit($request->query->all()); // Validation des données
+
+        if ($form->isValid()){
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($resultat_examen);
+            $em->flush();
+            return $resultat_examen;
+        }else{
+            return $form;
+        }       
+    }
+
+
+    /**
     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT,serializerGroups={"resultat_exam"})
     * @Rest\Delete("/resultat_examens/supprimer/{id}")
     */

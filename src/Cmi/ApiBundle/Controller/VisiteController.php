@@ -18,13 +18,45 @@ class VisiteController extends FOSRestController
 
 	/**
      * @Rest\View(serializerGroups={"visite"})
-     * @Rest\Get("/visites/afficher")
+     * @Rest\Get("/visites/afficher/{motif}")
      */
-    public function getVisitesAction()
+    public function getVisitesAction(Request $request)
     {
     	$visites = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('CmiApiBundle:Visite')
-                ->findAll();
+        ->createQueryBuilder('p')
+    ->where("p.vstMotif=:motif")
+    ->setParameters(array("motif"=>$request->get('motif')))
+        // ->setParameters(array("mtr"=>$request->get('phrase')))
+        // // ->sort('price', 'ASC')
+        // ->limit(10)
+        ->getQuery()
+        ->execute();
+        /* @var $visites Visite[] */
+
+         if (empty($visites)) {
+            return new JsonResponse(['message' => 'Visites not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $visites;
+    }
+
+    /**
+     * @Rest\View(serializerGroups={"visite"})
+     * @Rest\Get("/visites/afficher/{motif}/{et_id}")
+     */
+    public function getVisitesEtapeAction(Request $request)
+    {
+        $visites = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Visite')
+        ->createQueryBuilder('p')
+    ->where("p.vstMotif=:motif and p.etape=:etape")
+    ->setParameters(array("motif"=>$request->get('motif'),"etape"=>$request->get('et_id')))
+        // ->setParameters(array("mtr"=>$request->get('phrase')))
+        // // ->sort('price', 'ASC')
+        // ->limit(10)
+        ->getQuery()
+        ->execute();
         /* @var $visites Visite[] */
 
          if (empty($visites)) {
@@ -54,22 +86,34 @@ class VisiteController extends FOSRestController
 
     /**
      * @Rest\View(statusCode=Response::HTTP_CREATED,serializerGroups={"visite"})
-     * @Rest\Post("/medecin/{med_id}/etape/{etp_id}/visites/creer")
+     * @Rest\Post("/patient/{pat_id}/infirm/{inf_id}/medecin/{med_id}/etape/{etp_id}/visites/creer")
      */
     public function postVisiteAction(Request $request)
     {
 
+         $patient = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Patient')
+                ->find($request->get('pat_id'));
+
         $medecin = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('CmiApiBundle:Medecin')
-                ->find($request->get('f_id'));
+                ->getRepository('CmiApiBundle:Praticien')
+                ->find($request->get('med_id'));
 
         if (empty($medecin)) {
             return new JsonResponse(['message' => 'Medecin not found'], Response::HTTP_NOT_FOUND);
         }
 
+        $infirmier = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Praticien')
+                ->find($request->get('inf_id'));
+
+        if (empty($infirmier)) {
+            return new JsonResponse(['message' => 'Infirmier not found'], Response::HTTP_NOT_FOUND);
+        }
+
         $etape = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('CmiApiBundle:Etape')
-                ->find($request->get('fo_id'));
+                ->find($request->get('etp_id'));
 
         if (empty($etape)) {
             return new JsonResponse(['message' => 'Etape not found'], Response::HTTP_NOT_FOUND);
@@ -78,7 +122,9 @@ class VisiteController extends FOSRestController
     	$visite = new Visite();
 
         $visite->setMedecin($medecin);
+        $visite->setInfirmier($infirmier);
         $visite->setEtape($etape);
+        $visite->setPatient($patient);
 
         $visite->setVstDateModif(new \DateTime("now")); 
         $visite->setVstDateEnreg(new \DateTime("now"));
@@ -119,31 +165,43 @@ class VisiteController extends FOSRestController
     public function updateMedVisite(Request $request, $clearMissing)
     {
 
+         $patient = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Patient')
+                ->find($request->get('pat_id'));
+
         $medecin = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('CmiApiBundle:Medecin')
-                ->find($request->get('f_id'));
+                ->getRepository('CmiApiBundle:Praticien')
+                ->find($request->get('med_id'));
 
         if (empty($medecin)) {
             return new JsonResponse(['message' => 'Medecin not found'], Response::HTTP_NOT_FOUND);
         }
 
+        $infirmier = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Praticien')
+                ->find($request->get('inf_id'));
+
+        if (empty($infirmier)) {
+            return new JsonResponse(['message' => 'Infirmier not found'], Response::HTTP_NOT_FOUND);
+        }
+
         $etape = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('CmiApiBundle:Etape')
-                ->find($request->get('fo_id'));
+                ->find($request->get('etp_id'));
 
-        if (empty($forme_visite)) {
+        if (empty($etape)) {
             return new JsonResponse(['message' => 'Etape not found'], Response::HTTP_NOT_FOUND);
         }
 
-
     	$visite = $this->get("doctrine.orm.entity_manager")
                         ->getRepository("CmiApiBundle:Visite")
-                        ->find($request->get('id'));
+                        ->find($request->get('v_id'));
 
         $visite->setEtape($etape);
         $visite->setMedecin($medecin);
+        $visite->setInfirmier($infirmier);
 
-        $visite->setMedicDateModif(new \DateTime("now"));
+        $visite->setVstDateModif(new \DateTime("now"));
 
         if (empty($visite)) {
             # code...
@@ -169,31 +227,45 @@ class VisiteController extends FOSRestController
     public function updateInfVisite(Request $request, $clearMissing)
     {
 
+         $patient = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Patient')
+                ->find($request->get('pat_id'));
+
         $medecin = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('CmiApiBundle:Medecin')
-                ->find($request->get('f_id'));
+                ->getRepository('CmiApiBundle:Praticien')
+                ->find($request->get('med_id'));
 
         if (empty($medecin)) {
             return new JsonResponse(['message' => 'Medecin not found'], Response::HTTP_NOT_FOUND);
         }
 
+        $infirmier = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Praticien')
+                ->find($request->get('inf_id'));
+
+        if (empty($infirmier)) {
+            return new JsonResponse(['message' => 'Infirmier not found'], Response::HTTP_NOT_FOUND);
+        }
+
         $etape = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('CmiApiBundle:Etape')
-                ->find($request->get('fo_id'));
+                ->find($request->get('etp_id'));
 
-        if (empty($forme_visite)) {
+        if (empty($etape)) {
             return new JsonResponse(['message' => 'Etape not found'], Response::HTTP_NOT_FOUND);
         }
 
 
+
         $visite = $this->get("doctrine.orm.entity_manager")
                         ->getRepository("CmiApiBundle:Visite")
-                        ->find($request->get('id'));
+                        ->find($request->get('v_id'));
 
         $visite->setEtape($etape);
         $visite->setMedecin($medecin);
+        $visite->setInfirmier($infirmier);
 
-        $visite->setMedicDateModif(new \DateTime("now"));
+        $visite->setVstDateModif(new \DateTime("now"));
 
         if (empty($visite)) {
             # code...
@@ -218,38 +290,38 @@ class VisiteController extends FOSRestController
 
     /**
     * @Rest\View()
-    * @Rest\Put("/medcin/{med_id}/etape/{etp_id}/visites/modifier/{id}")
+    * @Rest\Put("/patient/{pat_id}/infirm/{inf_id}/medecin/{med_id}/etape/{etp_id}/visites/{v_id}/Med/modifier")
     */
     public function updateVisiteMedAction(Request $request)
     {
-    	return $this->updateVisite($request, false);
+    	return $this->updateMedVisite($request, false);
     }
 
     /**
     * @Rest\View()
-    * @Rest\Patch("/medcin/{med_id}/etape/{etp_id}/{fo_id}/visites/modifier/{id}")
+    * @Rest\Patch("/patient/{pat_id}/infirm/{inf_id}/medecin/{med_id}/etape/{etp_id}/visites/{v_id}/MedPart/modifier")
     */
     public function patchVisiteMedAction(Request $request)
     {
-    	return $this->updateVisite($request, false);
+    	return $this->updateMedVisite($request, false);
     }
 
 
     /**
     * @Rest\View()
-    * @Rest\Put("/medcin/{inf_id}/etape/{etp_id}/{fo_id}/visites/modifier/{id}")
+    * @Rest\Put("/patient/{pat_id}/infirm/{inf_id}/medecin/{med_id}/etape/{etp_id}/visites/{v_id}/Inf/modifier")
     */
     public function updateVisiteInfAction(Request $request)
     {
-        return $this->updateVisite($request, false);
+        return $this->updateInfVisite($request, false);
     }
 
     /**
     * @Rest\View()
-    * @Rest\Patch("/medcin/{inf_id}/etape/{etp_id}/{fo_id}/visites/modifier/{id}")
+    * @Rest\Patch("/patient/{pat_id}/infirm/{inf_id}/medecin/{med_id}/etape/{etp_id}/visites/{v_id}/InfPart/modifier")
     */
     public function patchVisiteInfAction(Request $request)
     {
-        return $this->updateVisite($request, false);
+        return $this->updateInfVisite($request, false);
     }
 }

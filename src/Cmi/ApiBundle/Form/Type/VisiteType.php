@@ -6,6 +6,10 @@ namespace Cmi\ApiBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+
+
 
 class VisiteType extends AbstractType
 {
@@ -17,11 +21,11 @@ class VisiteType extends AbstractType
         $builder->add('vstPouls');
         $builder->add('vstTemperature');
         $builder->add('vstOphtamologie');
-        $builder->add('vstDateRDV', DateType::class, array(
+        $builder->add('vstDateRdv', DateType::class, array(
             // render as a single text box
             'widget' => 'single_text',
         ));
-        $builder->add('vstHeureRDV', DateType::class, array(
+        $builder->add('vstHeureRdv', TimeType::class, array(
             // render as a single text box
             'widget' => 'single_text',
         ));

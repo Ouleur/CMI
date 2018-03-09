@@ -19,7 +19,7 @@ class Resultat_examen
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Serializer\Groups({"resultat_exam","consultation"})
+     * @Serializer\Groups({"resultat_exam","visite","consultation"})
      */
     private $id;
 
@@ -28,7 +28,7 @@ class Resultat_examen
      * @var int
      *
      * @ORM\Column(name="res_etat", type="integer", nullable=true)
-     * @Serializer\Groups({"resultat_exam","consultation"})
+     * @Serializer\Groups({"resultat_exam","visite","consultation"})
      */
     private $resEtat;
 
@@ -36,7 +36,7 @@ class Resultat_examen
      * @var string
      *
      * @ORM\Column(name="res_observation", type="string", length=255, nullable=true)
-     * @Serializer\Groups({"resultat_exam","consultation"})
+     * @Serializer\Groups({"resultat_exam","visite","consultation"})
      */
     private $resObservation;
 
@@ -44,7 +44,7 @@ class Resultat_examen
      * @var string
      *
      * @ORM\Column(name="res_commentaire", type="string", length=255, nullable=true)
-     * @Serializer\Groups({"resultat_exam","consultation"})
+     * @Serializer\Groups({"resultat_exam","visite","consultation"})
      */
     private $resCommentaire;
 
@@ -52,7 +52,7 @@ class Resultat_examen
      * @var \DateTime
      *
      * @ORM\Column(name="res_date_pr_fait", type="datetime", nullable=true)
-     * @Serializer\Groups({"resultat_exam","consultation"})
+     * @Serializer\Groups({"resultat_exam","visite","consultation"})
      */
     private $resDatePrFait;
 
@@ -60,7 +60,7 @@ class Resultat_examen
      * @var \DateTime
      *
      * @ORM\Column(name="res_date_prescrit", type="datetime", nullable=true)
-     * @Serializer\Groups({"resultat_exam","consultation"})
+     * @Serializer\Groups({"resultat_exam","visite","consultation"})
      */
     private $resDatePrescrit;
 
@@ -68,7 +68,7 @@ class Resultat_examen
      * @var \DateTime
      *
      * @ORM\Column(name="res_date_fait", type="datetime", nullable=true)
-     * @Serializer\Groups({"resultat_exam","consultation"})
+     * @Serializer\Groups({"resultat_exam","visite","consultation"})
      */
     private $resDateFait;
 
@@ -91,7 +91,7 @@ class Resultat_examen
     /**
      * @ORM\ManyToOne(targetEntity="Examen", inversedBy="resultat_examens")
      * @var Examen
-     * @Serializer\Groups({"resultat_exam","consultation"})
+     * @Serializer\Groups({"resultat_exam","visite","consultation"})
      */
     private $examen;
 

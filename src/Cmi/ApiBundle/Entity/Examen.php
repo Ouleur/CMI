@@ -19,7 +19,7 @@ class Examen
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Serializer\Groups({"consultation","examen","type_examen"})
+     * @Serializer\Groups({"consultation","examen","visite","type_examen"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class Examen
      * @var string
      *
      * @ORM\Column(name="exam_code", type="string", length=10, unique=true)
-     * @Serializer\Groups({"consultation","examen","type_examen","resultat_exam"})
+     * @Serializer\Groups({"consultation","examen","visite","type_examen","resultat_exam"})
      */
     private $examCode;
 
@@ -35,7 +35,7 @@ class Examen
      * @var string
      *
      * @ORM\Column(name="exam_libelle", type="string", length=100)
-     * @Serializer\Groups({"consultation","examen","type_examen","resultat_exam"})
+     * @Serializer\Groups({"consultation","examen","visite","type_examen","resultat_exam"})
      */
     private $examLibelle;
 

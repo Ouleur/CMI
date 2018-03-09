@@ -39,6 +39,24 @@ class UserController extends Controller
             throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException();
         }
     }
+
+
+    /**
+     * @Rest\View(serializerGroups={"userconected"})
+     * @Rest\Get("/user/afficher")
+     */
+    public function getUsersAllAction(Request $request)
+    {
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $user = $em->getRepository('CmiApiBundle:User')->findAll();
+        /* @var $authToken AuthToken */
+        if (empty($user)) {
+            return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $user;
+    }
 	
 	/**
      * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"user"})
@@ -77,7 +95,7 @@ class UserController extends Controller
 
     /**
      * @Rest\View(serializerGroups={"user"})
-     * @Rest\Patch("/users/{id}")
+     * @Rest\Patch("/droitAcces/{d_a}/users/{id}")
      */
     public function patchUserAction(Request $request)
     {

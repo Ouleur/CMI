@@ -270,6 +270,12 @@ famille_pathologie_relation:
     resource: Cmi\ApiBundle\Controller\Relation\Famille_pathologieRelationController
 
 
+######################## Dashboard #########################################
+dashboard:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\DashboardController
+
+
 ######################## Sécurité ##########################################
 
 user:
@@ -281,3 +287,6 @@ auth-tokens:
     type:     rest
     resource: Cmi\ApiBundle\Controller\AuthTokenController
 
+droit:
+    type:   rest
+    resource: Cmi\ApiBundle\Controller\DroitAccesController

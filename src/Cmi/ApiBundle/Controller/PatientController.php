@@ -90,6 +90,33 @@ class PatientController extends FOSRestController
     }
 
     /**
+     * @Rest\View(serializerGroups={"patient"})
+     * @Rest\Get("/patients/typePatient/{typ_id}")
+     */
+    public function getPatientsSearchTypeAction(Request $request)
+    {
+    // $patients = $this->get('doctrine.orm.entity_manager')
+        //         ->getRepository('CmiApiBundle:Patient')
+        //         ->find($request->get('id'));
+
+        $patients = $this->get('doctrine.orm.entity_manager')->getRepository('CmiApiBundle:Patient')
+    ->createQueryBuilder('p')
+    ->where("p.type_patient=:type_id")
+    ->setParameters(array("type_id"=>$request->get('typ_id')))
+    // // ->sort('price', 'ASC')
+    // ->limit(10)
+    ->getQuery()
+    ->execute();
+        /* @var $places Place[] */
+
+        if (empty($patients)) {
+            return new JsonResponse(['message' => 'Patient not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $patients;
+    }
+
+    /**
      * @Rest\View()
      * @Rest\Get("/patients/{id}")
      */
@@ -164,7 +191,6 @@ class PatientController extends FOSRestController
         return new JsonResponse($json);
     }
 
-
     /**
      * @Rest\View(serializerGroups={"patient"},statusCode=Response::HTTP_CREATED)
      * @Rest\Post("/entite/{e_id}/lieutravail/{l_id}/profession/{p_id}/typecontrat/{tp_id}/categorie/{c_id}/type_patient/{typ_id}/patient/creer")
@@ -229,13 +255,77 @@ class PatientController extends FOSRestController
             return $patient;
         }else{
             return $form;
-        }
-    	
-
-    	
+        }    	
+    }
 
 
-    	
+    /**
+     * @Rest\View(serializerGroups={"patient"},statusCode=Response::HTTP_CREATED)
+     * @Rest\Post("/type_patient/{typ_id}/patient/creer")
+     */
+    public function postPatientsAutreAction(Request $request)
+    {
+
+        /*$entite = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Entite')
+                ->find($request->get('e_id'));
+
+        $lieu_travail = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Lieu_travail')
+                ->find($request->get('l_id'));
+
+        $type_contrat = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Type_contrat')
+                ->find($request->get('tp_id'));
+
+        $categorie = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Categorie')
+                ->find($request->get('c_id'));
+
+        $profession = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Profession')
+                ->find($request->get('p_id'));
+
+        */
+        $type_patient = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Type_patient')
+                ->find($request->get('typ_id'));
+
+
+
+        $patient = new Patient();
+        /*$patient->setEntite($entite);
+        //lieu_travail
+        $patient->setLieuTravail($lieu_travail);
+        //type_contrat
+        $patient->setTypeContrat($type_contrat);
+        //categorie
+        $patient->setCategorie($categorie);
+        //profession
+        $patient->setProfession($profession);
+        //type_parent
+        */
+        $patient->setTypePatient($type_patient);
+
+
+        // $patient->setPatientNumero($request->get("numero"));
+        // $patient->setPatientCode($request->get("code"));
+        $patient->setPatDateEnreg(new \DateTime("now"));
+        $patient->setPatDateModif(new \DateTime("now"));
+
+        $form = $this->createForm(PatientType::class, $patient);
+
+
+        $form->submit($request->query->all()); // Validation des données
+
+        if ($form->isValid()){
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($patient);
+            $em->flush();
+            return $patient;
+        }else{
+            return $form;
+        }        
     }
 
 

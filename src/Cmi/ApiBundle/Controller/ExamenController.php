@@ -38,6 +38,31 @@ class ExamenController extends FOSRestController
 
     /**
      * @Rest\View(serializerGroups={"examen"})
+     * @Rest\Get("/examens/selection")
+     */
+    public function getExamensSelectionAction()
+    {
+
+        $praticiens = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Examen')
+                ->findAll();
+        /* @var $praticiens Motif[] */
+
+         if (empty($praticiens)) {
+            return new JsonResponse(['message' => 'Examens not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        for ($i=0; $i < count($praticiens); $i++) { 
+            # code...
+            $json[] = ['id'=>$praticiens[$i]->getId(), 'text'=>$praticiens[$i]->getExamLibelle()];
+
+        }
+
+        return new JsonResponse($json);
+    }
+
+    /**
+     * @Rest\View(serializerGroups={"examen"})
      * @Rest\Get("/examens/rechercher/{id}")
      */
     public function getExamenAction( Request $request)

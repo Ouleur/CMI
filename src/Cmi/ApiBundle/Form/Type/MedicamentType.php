@@ -11,6 +11,8 @@ class MedicamentType extends AbstractType
     {
         $builder->add('medic_code');
         $builder->add('medic_libelle');
+        $builder->add('medic_nb_dispo');
+        $builder->add('medic_nb_seuil');
     }
 
     public function configureOptions(OptionsResolver $resolver)

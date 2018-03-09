@@ -90,23 +90,23 @@ class Visite
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="vstDateRDV", type="date")
+     * @ORM\Column(name="vstDateRdv", type="date", nullable=true)
      * @Serializer\Groups({"visite"})
      */
-    private $vstDateRDV;
+    private $vstDateRdv;
+
+    /**
+     * @var \Time
+     *
+     * @ORM\Column(name="vstHeureRdv", type="time", nullable=true)
+     * @Serializer\Groups({"visite"})
+     */
+    private $vstHeureRdv;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="vstHeureRDV", type="time")
-     * @Serializer\Groups({"visite"})
-     */
-    private $vstHeureRDV;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="vstDateFait", type="datetime")
+     * @ORM\Column(name="vstDateFait", type="datetime", nullable=true)
      * @Serializer\Groups({"visite"})
      */
     private $vstDateFait;
@@ -138,27 +138,44 @@ class Visite
      * @var string
      *
      * @ORM\Column(name="vstMotif", type="string", length=200, nullable=true)
+     * @Serializer\Groups({"visite"})
      */
     private $vstMotif;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Etape", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Etape", cascade={"persist"})
      * @Serializer\Groups({"visite"})
      */
     private $etape;
 
 
+     /**
+     * @Serializer\Groups({"visite"})
+     * @ORM\ManyToOne(targetEntity="Patient", inversedBy="visite")
+     * @var Patient
+     * 
+     */
+    private $patient;
+
+
     /**
      * @var string
-     *
+     * @Serializer\Groups({"visite"})
      * @ORM\Column(name="vstType", type="string", length=200, nullable=true)
      */
     private $vstType;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->resultat_examens = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -168,7 +185,7 @@ class Visite
     /**
      * Set vstTension
      *
-     * @param integer $vstTension
+     * @param string $vstTension
      *
      * @return Visite
      */
@@ -182,7 +199,7 @@ class Visite
     /**
      * Get vstTension
      *
-     * @return int
+     * @return string
      */
     public function getVstTension()
     {
@@ -254,7 +271,7 @@ class Visite
     /**
      * Get vstPouls
      *
-     * @return int
+     * @return integer
      */
     public function getVstPouls()
     {
@@ -278,7 +295,7 @@ class Visite
     /**
      * Get vstTemperature
      *
-     * @return int
+     * @return integer
      */
     public function getVstTemperature()
     {
@@ -358,51 +375,51 @@ class Visite
     }
 
     /**
-     * Set vstDateRDV
+     * Set vstDateRdv
      *
-     * @param \DateTime $vstDateRDV
+     * @param \DateTime $vstDateRdv
      *
      * @return Visite
      */
-    public function setVstDateRDV($vstDateRDV)
+    public function setVstDateRdv($vstDateRdv)
     {
-        $this->vstDateRDV = $vstDateRDV;
+        $this->vstDateRdv = $vstDateRdv;
 
         return $this;
     }
 
     /**
-     * Get vstDateRDV
+     * Get vstDateRdv
      *
      * @return \DateTime
      */
-    public function getVstDateRDV()
+    public function getVstDateRdv()
     {
-        return $this->vstDateRDV;
+        return $this->vstDateRdv;
     }
 
     /**
-     * Set vstHeureRDV
+     * Set vstHeureRdv
      *
-     * @param \DateTime $vstHeureRDV
+     * @param \Time $vstHeureRdv
      *
      * @return Visite
      */
-    public function setVstHeureRDV($vstHeureRDV)
+    public function setVstHeureRdv($vstHeureRdv)
     {
-        $this->vstHeureRDV = $vstHeureRDV;
+        $this->vstHeureRdv = $vstHeureRdv;
 
         return $this;
     }
 
     /**
-     * Get vstHeureRDV
+     * Get vstHeureRdv
      *
-     * @return \DateTime
+     * @return \Time
      */
-    public function getVstHeureRDV()
+    public function getVstHeureRdv()
     {
-        return $this->vstHeureRDV;
+        return $this->vstHeureRdv;
     }
 
     /**
@@ -428,14 +445,6 @@ class Visite
     {
         return $this->vstDateFait;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->resultat_examens = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->etape = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Set vstMotif
@@ -459,6 +468,30 @@ class Visite
     public function getVstMotif()
     {
         return $this->vstMotif;
+    }
+
+    /**
+     * Set vstType
+     *
+     * @param string $vstType
+     *
+     * @return Visite
+     */
+    public function setVstType($vstType)
+    {
+        $this->vstType = $vstType;
+
+        return $this;
+    }
+
+    /**
+     * Get vstType
+     *
+     * @return string
+     */
+    public function getVstType()
+    {
+        return $this->vstType;
     }
 
     /**
@@ -544,33 +577,23 @@ class Visite
     }
 
     /**
-     * Add etape
+     * Set etape
      *
      * @param \Cmi\ApiBundle\Entity\Etape $etape
      *
      * @return Visite
      */
-    public function addEtape(\Cmi\ApiBundle\Entity\Etape $etape)
+    public function setEtape(\Cmi\ApiBundle\Entity\Etape $etape = null)
     {
-        $this->etape[] = $etape;
+        $this->etape = $etape;
 
         return $this;
     }
 
     /**
-     * Remove etape
-     *
-     * @param \Cmi\ApiBundle\Entity\Etape $etape
-     */
-    public function removeEtape(\Cmi\ApiBundle\Entity\Etape $etape)
-    {
-        $this->etape->removeElement($etape);
-    }
-
-    /**
      * Get etape
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Cmi\ApiBundle\Entity\Etape
      */
     public function getEtape()
     {
@@ -578,26 +601,26 @@ class Visite
     }
 
     /**
-     * Set vstType
+     * Set patient
      *
-     * @param string $vstType
+     * @param \Cmi\ApiBundle\Entity\Patient $patient
      *
      * @return Visite
      */
-    public function setVstType($vstType)
+    public function setPatient(\Cmi\ApiBundle\Entity\Patient $patient = null)
     {
-        $this->vstType = $vstType;
+        $this->patient = $patient;
 
         return $this;
     }
 
     /**
-     * Get vstType
+     * Get patient
      *
-     * @return string
+     * @return \Cmi\ApiBundle\Entity\Patient
      */
-    public function getVstType()
+    public function getPatient()
     {
-        return $this->vstType;
+        return $this->patient;
     }
 }
