@@ -7,6 +7,9 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    file_img_directory: '%kernel.root_dir%/../web/uploads/assets/images'
+    file_doc_directory: '%kernel.root_dir%/../web/uploads/assets/documentations'
+
 
 framework:
     #esi: ~
@@ -127,3 +130,7 @@ nelmio_cors:
             allow_headers: ['*']
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE','PATCH']
             max_age: 3600
+
+
+
+

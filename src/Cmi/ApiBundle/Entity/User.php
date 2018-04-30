@@ -61,6 +61,12 @@ class User implements UserInterface
      */
     private $droitAcces;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Praticien")
+     * @Serializer\Groups({"userconected"})
+     */
+    private $praticen;
+    
 
     private $plainPassword;
 
@@ -265,5 +271,29 @@ class User implements UserInterface
     public function getDroitAcces()
     {
         return $this->droitAcces;
+    }
+
+    /**
+     * Set praticen
+     *
+     * @param \Cmi\ApiBundle\Entity\Praticien $praticen
+     *
+     * @return User
+     */
+    public function setPraticen(\Cmi\ApiBundle\Entity\Praticien $praticen = null)
+    {
+        $this->praticen = $praticen;
+
+        return $this;
+    }
+
+    /**
+     * Get praticen
+     *
+     * @return \Cmi\ApiBundle\Entity\Praticien
+     */
+    public function getPraticen()
+    {
+        return $this->praticen;
     }
 }

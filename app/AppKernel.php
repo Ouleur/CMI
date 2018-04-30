@@ -23,6 +23,8 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new Cmi\ApiBundle\CmiApiBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
+            new SRIO\RestUploadBundle\SRIORestUploadBundle(),
+            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

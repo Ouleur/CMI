@@ -12,9 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Cmi\ApiBundle\Form\Type\PatientType;
 use Cmi\ApiBundle\Entity\Patient;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class PatientController extends FOSRestController
 {
+
+
 
     /**
      * @Rest\View(serializerGroups={"patient"})
@@ -245,10 +248,22 @@ class PatientController extends FOSRestController
 
         $form = $this->createForm(PatientType::class, $patient);
 
+        /** @var $uploadHandler UploadHandler */
+        $uploadHandler = $this->get('srio_rest_upload.upload_handler');
+        $result = $uploadHandler->handleRequest($request, $form);
 
         $form->submit($request->query->all()); // Validation des données
 
+         if (($response = $result->getResponse()) != null) {
+            return $response;
+        }
+
         if ($form->isValid()){
+
+            if (($file = $result->getFile()) !== null) {
+                $patient->setFile($file);
+            }
+
             $em = $this->get('doctrine.orm.entity_manager');
             $em->persist($patient);
             $em->flush();
@@ -257,6 +272,65 @@ class PatientController extends FOSRestController
             return $form;
         }    	
     }
+
+   
+    public function uploadAction(Request $request) {
+        try {
+            $file = $request->files->get ( 'my_file' );
+            $fileName = md5 ( uniqid () ) . '.' . $file->guessExtension ();
+            $original_name = $file->getClientOriginalName ();
+            $file->move ( $this->container->getParameter ( 'file_directory' ), $fileName );
+            $file_entity = new UploadedFile ();
+            $file_entity->setFileName ( $fileName );
+            $file_entity->setActualName ( $original_name );
+            $file_entity->setCreated ( new \DateTime () );
+                
+            $manager = $this->getDoctrine ()->getManager ();
+            $manager->persist ( $file_entity );
+            $manager->flush ();
+            $array = array (
+                'status' => 1,
+                'file_id' => $file_entity->getFileId () 
+            );
+            $response = new JsonResponse ( $array, 200 );
+            return $response;
+        } catch ( Exception $e ) {
+            $array = array('status'=> 0 );
+            $response = new JsonResponse($array, 400);
+            return $response;
+        }
+    }
+
+
+    public function downloadAction($id) {
+        try {
+            $file = $this->getDoctrine ()->getRepository ( 'AppBundle:UploadedFile' )->find ( $id );
+            if (! $file) {
+                $array = array (
+                    'status' => 0,
+                    'message' => 'File does not exist' 
+                );
+                $response = new JsonResponse ( $array, 200 );
+                return $response;
+            }
+            $displayName = $file->getActualName ();
+            $fileName = $file->getFileName ();
+            $file_with_path = $this->container->getParameter ( 'file_directory' ) . "/" . $fileName;
+            $response = new BinaryFileResponse ( $file_with_path );
+            $response->headers->set ( 'Content-Type', 'text/plain' );
+            $response->setContentDisposition ( ResponseHeaderBag::DISPOSITION_ATTACHMENT, $displayName );
+            return $response;
+        } catch ( Exception $e ) {
+            $array = array (
+                'status' => 0,
+                'message' => 'Download error' 
+            );
+            $response = new JsonResponse ( $array, 400 );
+            return $response;
+        }
+    }
+
+
 
 
     /**

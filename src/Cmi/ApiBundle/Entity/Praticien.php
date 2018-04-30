@@ -19,7 +19,7 @@ class Praticien
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Serializer\Groups({"consultation","visite","praticien"})
+     * @Serializer\Groups({"consultation","visite","praticien","userconected"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class Praticien
      * @var string
      *
      * @ORM\Column(name="prat_nom", type="string", length=100)
-     * @Serializer\Groups({"consultation","visite","praticien"})
+     * @Serializer\Groups({"consultation","visite","praticien","userconected"})
      */
     private $pratNom;
 
@@ -35,6 +35,7 @@ class Praticien
      * @var string
      *
      * @ORM\Column(name="prat_sexe", type="string", length=15)
+     * @Serializer\Groups({"consultation","visite","praticien","userconected"})
      */
     private $pratSexe;
 
@@ -42,7 +43,7 @@ class Praticien
      * @var string
      *
      * @ORM\Column(name="prat_prenoms", type="string", length=150)
-     * @Serializer\Groups({"consultation","visite","praticien"})
+     * @Serializer\Groups({"consultation","visite","praticien","userconected"})
      */
     private $pratPrenoms;
 
@@ -122,7 +123,11 @@ class Praticien
      */
     private $type_praticien;
 
-
+    /**
+     * @ORM\OneToOne(targetEntity="User", inversedBy="praticien")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
 
     /**
      * Get id
@@ -503,5 +508,29 @@ class Praticien
     public function getVisiteMed()
     {
         return $this->visiteMed;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Cmi\ApiBundle\Entity\User $user
+     *
+     * @return Praticien
+     */
+    public function setUser(\Cmi\ApiBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Cmi\ApiBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

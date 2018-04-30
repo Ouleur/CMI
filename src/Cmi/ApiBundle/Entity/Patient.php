@@ -4,7 +4,8 @@ namespace Cmi\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-
+use SRIO\RestUploadBundle\Model\UploadableFileInterface;
+use SRIO\RestUploadBundle\Storage\UploadedFile;
 
 /**
  * Patient
@@ -39,6 +40,8 @@ class Patient
      * @Serializer\Groups({"patient","visite","p_search","consultation"})
      */
     private $patPhoto;
+
+
 
     /**
      * @var string
@@ -261,6 +264,19 @@ class Patient
     {
         $this->cartes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->consultations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+    public function setFile(UploadedFile $uploaded)
+    {
+        $this->patPhoto = $uploaded->getFile()->getName();
+        // $this->size = $uploaded->getFile()->getSize();
+
+        // // TODO Add mimetype on `UploadedFile`
+        // $this->mimeType = $uploaded->getStorage()->getFilesystem()->mimeType($this->path);
+
+        // // TODO Add original name
+        // $this->originalName = $uploaded->getFile()->getName();
     }
 
     /**

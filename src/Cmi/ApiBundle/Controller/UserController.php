@@ -84,6 +84,38 @@ class UserController extends Controller
         }
     }
 
+
+    /**
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"user"})
+     * @Rest\Post("/partner/{p_id}/users")
+     */
+    public function postUsersPartnerAction(Request $request)
+    {
+        $user = new User();
+        $partner = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Praticien')
+                ->find($request->get('p_id'));
+
+        $form = $this->createForm(UserType::class, $user, ['validation_groups'=>['Default', 'New']]);
+        
+        $form->submit($request->query->all());
+
+        if ($form->isValid()) {
+            $encoder = $this->get('security.password_encoder');
+            // le mot de passe en claire est encodé avant la sauvegarde
+            $encoded = $encoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($encoded);
+            $user->setPraticien($partner);
+
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($user);
+            $em->flush();
+            return $user;
+        } else {
+            return $form;
+        }
+    }
+
     /**
      * @Rest\View(serializerGroups={"user"})
      * @Rest\Put("/users/{id}")
@@ -95,7 +127,17 @@ class UserController extends Controller
 
     /**
      * @Rest\View(serializerGroups={"user"})
-     * @Rest\Patch("/droitAcces/{d_a}/users/{id}")
+     * @Rest\Patch("/partner/{p_id}/users/{id}")
+     */
+    public function patchUserPartnerAction(Request $request)
+    {
+        return $this->updateUser($request, false);
+    }
+
+
+    /**
+     * @Rest\View(serializerGroups={"user"})
+     * @Rest\Patch("/users/{id}")
      */
     public function patchUserAction(Request $request)
     {
@@ -113,6 +155,9 @@ class UserController extends Controller
             return $this->userNotFound();
         }
 
+
+       
+
         if ($clearMissing) { // Si une mise à jour complète, le mot de passe doit être validé
             $options = ['validation_groups'=>['Default', 'FullUpdate']];
         } else {
@@ -129,6 +174,14 @@ class UserController extends Controller
                 $encoder = $this->get('security.password_encoder');
                 $encoded = $encoder->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($encoded);
+            }
+            if ($request->get('p_id')!== null) {
+            # code...
+             $partner = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('CmiApiBundle:Praticien')
+                ->find($request->get('p_id'));
+
+            $user->setPraticen($partner);
             }
             $em = $this->get('doctrine.orm.entity_manager');
             $em->merge($user);

@@ -290,3 +290,9 @@ auth-tokens:
 droit:
     type:   rest
     resource: Cmi\ApiBundle\Controller\DroitAccesController
+
+
+############################# Upload #######################################
+upload:
+    type:   rest
+    resource:   Cmi\ApiBundle\Controller\FileController

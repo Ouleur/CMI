@@ -99,10 +99,7 @@ class DashboardController extends FOSRestController
     public function getAccidentParDepAction( Request $request)
     {
 
-    	$query = 'SELECT femme.id,femme.enti_libelle,(homme.qte_patientM+femme.qte_patientF) as Total,femme.qte_patientF,homme.qte_patientM FROM 
-(SELECT en.id, en.enti_libelle, COUNT(atf.id) AS qte_patientF FROM entite AS en LEFT JOIN (select pa.id,pa.pat_sexe,pa.entite_id FROM accident_travail as at,patient as pa WHERE pa.id=at.patient_id and pa.pat_sexe="F") as atf on (atf.entite_id = en.id and atf.pat_sexe="F") GROUP BY en.id ORDER BY en.enti_libelle DESC) as femme
- LEFT JOIN 
-(SELECT en.id, en.enti_libelle, COUNT(atf.id) AS qte_patientM FROM entite AS en LEFT JOIN (select pa.id,pa.pat_sexe,pa.entite_id FROM accident_travail as at,patient as pa WHERE pa.id=at.patient_id and pa.pat_sexe="M") as atf on (atf.entite_id = en.id and atf.pat_sexe="M") GROUP BY en.id ORDER BY en.enti_libelle DESC) as homme ON femme.id=homme.id ';
+    	$query = 'SELECT femme.id,femme.enti_libelle,(homme.qte_patientM+femme.qte_patientF) as Total,femme.qte_patientF,homme.qte_patientM FROM (SELECT en.id, en.enti_libelle, COUNT(atf.id) AS qte_patientF FROM entite AS en LEFT JOIN (select pa.id,pa.pat_sexe,pa.entite_id FROM accident_travail as at,patient as pa WHERE pa.id=at.patient_id and pa.pat_sexe="F") as atf on (atf.entite_id = en.id and atf.pat_sexe="F") GROUP BY en.id ORDER BY en.enti_libelle DESC) as femme LEFT JOIN (SELECT en.id, en.enti_libelle, COUNT(atf.id) AS qte_patientM FROM entite AS en LEFT JOIN (select pa.id,pa.pat_sexe,pa.entite_id FROM accident_travail as at,patient as pa WHERE pa.id=at.patient_id and pa.pat_sexe="M") as atf on (atf.entite_id = en.id and atf.pat_sexe="M") GROUP BY en.id ORDER BY en.enti_libelle DESC) as homme ON femme.id=homme.id ';
 		$em = $this->getDoctrine()->getManager();
 
         $connection = $em->getConnection();

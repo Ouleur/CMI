@@ -19,7 +19,7 @@ class Profession
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Serializer\Groups({"consultation","profession"})
+     * @Serializer\Groups({"consultation","profession","patient"})
      */
     private $id;
 
